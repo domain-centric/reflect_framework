@@ -1,0 +1,17 @@
+targets:
+  $default:
+    builders:
+      reflect_framework|reflect_info_builder:
+        generate_for:
+          - lib/**.dart
+        enabled: True
+
+builders:
+  reflect_info_builder:
+    import: 'package:reflect_framework/reflect_builder_factory.dart'
+    builder_factories: ['reflectInfoJsonBuilder']
+    build_extensions:
+      .txt:
+        - .json
+    build_to: source
+    auto_apply: root_package
