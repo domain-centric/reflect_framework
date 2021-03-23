@@ -6,7 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab.dart' as ReflectTab;
+import 'gui_tab.dart' as ReflectTab;
 import '../domain_objects.dart';
 
 ///Forms:

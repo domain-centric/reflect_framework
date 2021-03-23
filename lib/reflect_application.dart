@@ -1,4 +1,4 @@
-import 'package:reflect_framework/reflect_meta_temp.dart';
+import 'reflect_meta_temp.dart';
 
 class ReflectFramework {
   static final ReflectFramework _reflectFramework =

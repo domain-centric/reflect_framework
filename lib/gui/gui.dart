@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab.dart' as ReflectTabs;
-import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab.dart';
-import 'package:reflect_framework/reflect_localizations.dart';
-import 'package:reflect_framework/reflect_meta_temp.dart';
-import 'package:reflect_framework/reflect_application.dart';
+import 'gui_tab.dart' as ReflectTabs;
+import 'gui_tab.dart';
+import '../reflect_localizations.dart';
+import '../reflect_meta_temp.dart';
+import '../reflect_application.dart';
 
 const kTabletBreakpoint = 720.0;
 const kDesktopBreakpoint = 1200.0;

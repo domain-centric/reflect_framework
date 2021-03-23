@@ -1,5 +1,5 @@
-import 'package:reflect_framework/reflect_annotations.dart';
-import 'package:reflect_framework/reflect_meta_action_method_pre_processor_context.dart';
+import 'reflect_annotations.dart';
+import 'reflect_meta_action_method_pre_processor_context.dart';
 
 @ActionMethodProcessor(100)
 void showPopupTextForMethodsReturningVoid(

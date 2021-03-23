@@ -1,7 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:reflect_framework/reflect_annotations.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'reflect_annotations.dart';
 
 /// Used by the [ReflectInfoJsonBuilder] to create intermediate json files to generate meta code later by another builder (TODO link to builder).
 /// The meta data comes from source files using the [LibraryElement] class from the source_gen package
@@ -174,7 +175,7 @@ class TypeInfo {
         genericTypes = const [];
 
   TypeInfo.fromDartType(DartType dartType)
-      : library =dartType.element.source.fullName,
+      : library = dartType.element.source==null?null: dartType.element.source.fullName,
         //TODO
         name = dartType.element.name,
         //TODO
@@ -289,15 +290,14 @@ class ExecutableInfo {
   }
 
   static TypeInfo _createReturnType(ExecutableElement executableElement) {
-    DartType returnType=executableElement.returnType;
-    var returnTypeVoid = returnType.element==null;
+    DartType returnType = executableElement.returnType;
+    var returnTypeVoid = returnType.element == null;
     if (returnTypeVoid) {
       return null;
     } else {
       return TypeInfo.fromDartType(returnType);
     }
   }
-
 }
 
 /// TODO: explain what a property is.

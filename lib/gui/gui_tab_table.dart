@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab.dart' as ReflectTab;
+import 'gui_tab.dart' as ReflectTab;
 
 class TableExampleTab extends ReflectTab.Tab {
   final List<_Row> _rows = [
