@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_framework/reflect_gui_tab_form.dart';
-import 'package:reflect_framework/reflect_gui_tab_table.dart';
-import 'package:reflect_framework/reflect_gui_tab.dart';
+import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab_form.dart';
+import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab_table.dart';
+import 'file:///C:/Users/nilsth/AndroidStudioProjects/reflect_framework/lib/gui/gui_tab.dart';
 
 class Reflection {
   final ApplicationInfo applicationInfo = ApplicationInfo();
