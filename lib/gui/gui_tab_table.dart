@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'gui_tab.dart' as ReflectTab;
 
 class TableExampleTab extends ReflectTab.Tab {
   final List<_Row> _rows = [
-    for (int i=1;i<100;i++)
-    _Row('Cell A$i', 'CellB$i', 'CellC$i', i),
+    for (int i = 1; i < 100; i++) _Row('Cell A$i', 'CellB$i', 'CellC$i', i),
   ];
 
   @override
@@ -19,12 +19,14 @@ class TableExampleTab extends ReflectTab.Tab {
           DataColumn(label: Text('Header C')),
           DataColumn(label: Text('Header D')),
         ],
-        rows: _rows.map((row) => DataRow(cells: [
-              DataCell(Text(row.valueA)),
-              DataCell(Text(row.valueB)),
-              DataCell(Text(row.valueC)),
-              DataCell(Text(row.valueD.toString()))
-            ])).toList(),
+        rows: _rows
+            .map((row) => DataRow(cells: [
+                  DataCell(Text(row.valueA)),
+                  DataCell(Text(row.valueB)),
+                  DataCell(Text(row.valueC)),
+                  DataCell(Text(row.valueD.toString()))
+                ]))
+            .toList(),
       ),
     ]);
   }
@@ -60,7 +62,7 @@ class _Row {
   bool selected = false;
 }
 
-class TableExampleTabFactory implements ReflectTab.TabFactory{
+class TableExampleTabFactory implements ReflectTab.TabFactory {
   @override
   ReflectTab.Tab create() {
     return TableExampleTab();

@@ -1,9 +1,9 @@
 import 'dart:collection';
 import 'dart:math';
-import 'package:intl/intl.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   List<Tab> _tabs = new List();
@@ -113,15 +113,14 @@ abstract class Tab extends StatelessWidget {
 
 enum TabCloseResult { CANCELED, CLOSED }
 
-
 abstract class TabFactory {
   Tab create();
 }
 
-
 ///TODO remove, only intended for testing
 class ExampleTab extends Tab {
-  final String _title = DateFormat('kk:mm:ss \n EEE d MMM').format( DateTime.now());
+  final String _title =
+      DateFormat('kk:mm:ss \n EEE d MMM').format(DateTime.now());
 
   @override
   bool get canCloseDirectly => true;
@@ -161,9 +160,6 @@ class ExampleTab extends Tab {
   }
 }
 
-
-
-
 ///TODO remove, only intended for testing
 class ExampleTabFactory implements TabFactory {
   @override
@@ -171,4 +167,3 @@ class ExampleTabFactory implements TabFactory {
     return ExampleTab();
   }
 }
-

@@ -1,4 +1,3 @@
-
 /// TODO [DomainObject]s are ....
 ///
 /// [DomainObject]s do not have to extend the [DomainObject] class nor need any annotation.
@@ -12,4 +11,3 @@
 class DomainObject {
   /// For documentation only
 }
-

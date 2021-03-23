@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+
+import 'gui/gui_tab.dart';
 import 'gui/gui_tab_form.dart';
 import 'gui/gui_tab_table.dart';
-import 'gui/gui_tab.dart';
 
 class Reflection {
   final ApplicationInfo applicationInfo = ApplicationInfo();
   final List<ServiceObjectInfo> serviveObjectInfos = [
-    ServiceObjectInfo(title:"Login"),
-    ServiceObjectInfo(title:"Orders")
+    ServiceObjectInfo(title: "Login"),
+    ServiceObjectInfo(title: "Orders")
   ];
 }
 
@@ -22,7 +23,7 @@ class ApplicationInfo {
 }
 
 class ServiceObjectInfo {
-  final String title ;
+  final String title;
 
   ServiceObjectInfo({this.title});
 
@@ -62,5 +63,3 @@ class ActionMethodInfo {
     tabs.add(tab);
   }
 }
-
-

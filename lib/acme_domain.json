@@ -1,100 +1,100 @@
 {
-     "classes": [
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/acme_domain.dart",
-                    "name": "Product"
-               },
-               "properties": [
-                    {
-                         "name": "upsCode",
-                         "hasSetter": false,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         },
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "Translation"
-                                   },
-                                   "values": {
-                                        "englishText": "UPS code"
-                                   }
-                              }
-                         ]
-                    },
-                    {
-                         "name": "availability",
-                         "hasSetter": false,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         },
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "Translation"
-                                   },
-                                   "values": {
-                                        "keySuffix": "soldOut",
-                                        "englishText": "Sold out"
-                                   }
-                              }
-                         ]
-                    }
-               ]
+  "classes": [
+    {
+      "type": {
+        "library": "/reflect_framework/lib/acme_domain.dart",
+        "name": "Product"
+      },
+      "properties": [
+        {
+          "name": "upsCode",
+          "hasSetter": false,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
           },
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/acme_domain.dart",
-                    "name": "Translations"
-               },
-               "methods": [
-                    {
-                         "name": "forThisApp",
-                         "returnType": {
-                              "library": "/reflect_framework/lib/acme_domain.dart",
-                              "name": "Translations"
-                         }
-                    }
-               ],
-               "properties": [
-                    {
-                         "name": "acmeDomain",
-                         "hasSetter": false,
-                         "type": {
-                              "library": "/reflect_framework/lib/acme_domain.dart",
-                              "name": "_AcmeDomain"
-                         }
-                    }
-               ]
+          "annotations": [
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "Translation"
+              },
+              "values": {
+                "englishText": "UPS code"
+              }
+            }
+          ]
+        },
+        {
+          "name": "availability",
+          "hasSetter": false,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
           },
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/acme_domain.dart",
-                    "name": "TranslationsEn"
-               },
-               "properties": [
-                    {
-                         "name": "acmeDomain",
-                         "hasSetter": false,
-                         "type": {
-                              "library": "/reflect_framework/lib/acme_domain.dart",
-                              "name": "_AcmeDomain"
-                         },
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "dart:core/annotations.dart",
-                                        "name": "_Override"
-                                   }
-                              }
-                         ]
-                    }
-               ]
+          "annotations": [
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "Translation"
+              },
+              "values": {
+                "keySuffix": "soldOut",
+                "englishText": "Sold out"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": {
+        "library": "/reflect_framework/lib/acme_domain.dart",
+        "name": "Translations"
+      },
+      "methods": [
+        {
+          "name": "forThisApp",
+          "returnType": {
+            "library": "/reflect_framework/lib/acme_domain.dart",
+            "name": "Translations"
           }
-     ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "acmeDomain",
+          "hasSetter": false,
+          "type": {
+            "library": "/reflect_framework/lib/acme_domain.dart",
+            "name": "_AcmeDomain"
+          }
+        }
+      ]
+    },
+    {
+      "type": {
+        "library": "/reflect_framework/lib/acme_domain.dart",
+        "name": "TranslationsEn"
+      },
+      "properties": [
+        {
+          "name": "acmeDomain",
+          "hasSetter": false,
+          "type": {
+            "library": "/reflect_framework/lib/acme_domain.dart",
+            "name": "_AcmeDomain"
+          },
+          "annotations": [
+            {
+              "type": {
+                "library": "dart:core/annotations.dart",
+                "name": "_Override"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

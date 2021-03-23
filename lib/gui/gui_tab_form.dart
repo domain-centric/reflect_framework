@@ -6,8 +6,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'gui_tab.dart' as ReflectTab;
+
 import '../domain_objects.dart';
+import 'gui_tab.dart' as ReflectTab;
 
 ///Forms:
 // ======
@@ -143,7 +144,7 @@ class _PaymentFormState extends State<PaymentForm> {
   final _formKey = GlobalKey<FormState>();
   final _addressLineController = TextEditingController();
   final List yearsList = List.generate(12, (int index) => index + 2020);
-  static const double formSpacing=20;
+  static const double formSpacing = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +164,9 @@ class _PaymentFormState extends State<PaymentForm> {
                       filled: true,
                       icon: Icon(Icons.account_circle)),
                 ),
-                SizedBox(height: formSpacing,),
+                SizedBox(
+                  height: formSpacing,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -209,7 +212,9 @@ class _PaymentFormState extends State<PaymentForm> {
                     ),
                   ],
                 ),
-                SizedBox(height: formSpacing,),
+                SizedBox(
+                  height: formSpacing,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -281,7 +286,9 @@ class _PaymentFormState extends State<PaymentForm> {
                     ),
                   ],
                 ),
-                SizedBox(height: formSpacing,),
+                SizedBox(
+                  height: formSpacing,
+                ),
                 TypeAheadFormField(
                   textFieldConfiguration: TextFieldConfiguration(
                     decoration: InputDecoration(
@@ -306,7 +313,9 @@ class _PaymentFormState extends State<PaymentForm> {
                   },
                   onSaved: (val) => this._paymentAddress.postCode = val,
                 ),
-                SizedBox(height: formSpacing,),
+                SizedBox(
+                  height: formSpacing,
+                ),
                 TextFormField(
                   onSaved: (val) => _paymentAddress.addressLine = val,
                   controller: _addressLineController,
@@ -321,7 +330,9 @@ class _PaymentFormState extends State<PaymentForm> {
                     ),
                   ),
                 ),
-                SizedBox(height: formSpacing,),
+                SizedBox(
+                  height: formSpacing,
+                ),
                 CheckboxListTile(
                   value: rememberInfo,
                   onChanged: (val) {
@@ -404,7 +415,7 @@ class _PaymentFormState extends State<PaymentForm> {
   }
 }
 
-class FormExampleTabFactory implements ReflectTab.TabFactory{
+class FormExampleTabFactory implements ReflectTab.TabFactory {
   @override
   ReflectTab.Tab create() {
     return FormExampleTab();

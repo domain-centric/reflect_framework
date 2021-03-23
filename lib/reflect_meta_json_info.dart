@@ -175,7 +175,9 @@ class TypeInfo {
         genericTypes = const [];
 
   TypeInfo.fromDartType(DartType dartType)
-      : library = dartType.element.source==null?null: dartType.element.source.fullName,
+      : library = dartType.element.source == null
+            ? null
+            : dartType.element.source.fullName,
         //TODO
         name = dartType.element.name,
         //TODO

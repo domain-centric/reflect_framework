@@ -1,7 +1,6 @@
-import 'package:flutter/widgets.dart' ;
+import 'package:flutter/widgets.dart';
+
 import 'reflect_meta_action_method.dart';
-
-
 
 class ActionMethodPreProcessorContext {
   final BuildContext buildContext;
@@ -9,7 +8,3 @@ class ActionMethodPreProcessorContext {
 
   ActionMethodPreProcessorContext(this.buildContext, this.actionMethodInfo);
 }
-
-
-
-

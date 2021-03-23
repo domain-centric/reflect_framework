@@ -18,8 +18,8 @@ class ActionMethodPreProcessor {
   /// If the [ActionMethod] must have a [ProcessDirectly] annotation, in order to be pre-processed by the [ActionMethodPreProcessor]. Default=false
   final bool actionMethodMustHaveProcessDirectlyAnnotation;
 
-  const ActionMethodPreProcessor({this.index,
-      this.actionMethodMustHaveProcessDirectlyAnnotation = false});
+  const ActionMethodPreProcessor(
+      {this.index, this.actionMethodMustHaveProcessDirectlyAnnotation = false});
 }
 
 /// A [ActionMethodProcessor] processes the [ActionMethod] results (e.g. displays the results to the user or sends back an reply)

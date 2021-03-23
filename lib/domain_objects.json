@@ -1,262 +1,262 @@
 {
-     "classes": [
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/domain_objects.dart",
-                    "name": "Payment"
-               },
-               "properties": [
-                    {
-                         "name": "address",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "/reflect_framework/lib/domain_objects.dart",
-                              "name": "Address"
-                         }
-                    },
-                    {
-                         "name": "cardDetails",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "/reflect_framework/lib/domain_objects.dart",
-                              "name": "CardDetails"
-                         }
-                    }
-               ]
-          },
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/domain_objects.dart",
-                    "name": "CardDetails"
-               },
-               "properties": [
-                    {
-                         "name": "cardHolderName",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    },
-                    {
-                         "name": "cardNumber",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    },
-                    {
-                         "name": "expiryMonth",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    },
-                    {
-                         "name": "expiryYear",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    },
-                    {
-                         "name": "securityCode",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/int.dart",
-                              "name": "int"
-                         }
-                    }
-               ]
-          },
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/domain_objects.dart",
-                    "name": "Address"
-               },
-               "properties": [
-                    {
-                         "name": "postCode",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    },
-                    {
-                         "name": "addressLine",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    }
-               ]
-          },
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/domain_objects.dart",
-                    "name": "PersonService"
-               },
-               "annotations": [
-                    {
-                         "type": {
-                              "library": "/reflect_framework/lib/reflect_meta_service_object.dart",
-                              "name": "ServiceClass"
-                         }
-                    },
-                    {
-                         "type": {
-                              "library": "/reflect_framework/lib/reflect_annotations.dart",
-                              "name": "ActionMethodPreProcessor"
-                         },
-                         "values": {
-                              "index": 11.0,
-                              "actionMethodMustHaveProcessDirectlyAnnotation": false
-                         }
-                    }
-               ],
-               "methods": [
-                    {
-                         "name": "allPersons",
-                         "returnType": {
-                              "library": "dart:core/list.dart",
-                              "name": "List",
-                              "genericTypes": [
-                                   {
-                                        "library": "/reflect_framework/lib/domain_objects.dart",
-                                        "name": "Person"
-                                   }
-                              ]
-                         },
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "DomainClass"
-                                   }
-                              },
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "ActionMethodPreProcessor"
-                                   },
-                                   "values": {
-                                        "index": 22.0,
-                                        "actionMethodMustHaveProcessDirectlyAnnotation": false
-                                   }
-                              }
-                         ]
-                    },
-                    {
-                         "name": "findPersons",
-                         "returnType": {
-                              "library": "dart:core/list.dart",
-                              "name": "List",
-                              "genericTypes": [
-                                   {
-                                        "library": "/reflect_framework/lib/domain_objects.dart",
-                                        "name": "Person"
-                                   }
-                              ]
-                         },
-                         "parameterTypes": [
-                              {
-                                   "library": "dart:core/string.dart",
-                                   "name": "String"
-                              }
-                         ],
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "DomainClass"
-                                   }
-                              },
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "ActionMethodPreProcessor"
-                                   },
-                                   "values": {
-                                        "index": 33.0,
-                                        "actionMethodMustHaveProcessDirectlyAnnotation": false
-                                   }
-                              }
-                         ]
-                    }
-               ]
-          },
-          {
-               "type": {
-                    "library": "/reflect_framework/lib/domain_objects.dart",
-                    "name": "Person"
-               },
-               "properties": [
-                    {
-                         "name": "givenName",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         }
-                    },
-                    {
-                         "name": "surName",
-                         "hasSetter": true,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         },
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "DomainClass"
-                                   }
-                              },
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "ActionMethodPreProcessor"
-                                   },
-                                   "values": {
-                                        "index": 111.0,
-                                        "actionMethodMustHaveProcessDirectlyAnnotation": false
-                                   }
-                              }
-                         ]
-                    },
-                    {
-                         "name": "fullName",
-                         "hasSetter": false,
-                         "type": {
-                              "library": "dart:core/string.dart",
-                              "name": "String"
-                         },
-                         "annotations": [
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "DomainClass"
-                                   }
-                              },
-                              {
-                                   "type": {
-                                        "library": "/reflect_framework/lib/reflect_annotations.dart",
-                                        "name": "ActionMethodPreProcessor"
-                                   },
-                                   "values": {
-                                        "index": 222.0,
-                                        "actionMethodMustHaveProcessDirectlyAnnotation": false
-                                   }
-                              }
-                         ]
-                    }
-               ]
+  "classes": [
+    {
+      "type": {
+        "library": "/reflect_framework/lib/domain_objects.dart",
+        "name": "Payment"
+      },
+      "properties": [
+        {
+          "name": "address",
+          "hasSetter": true,
+          "type": {
+            "library": "/reflect_framework/lib/domain_objects.dart",
+            "name": "Address"
           }
-     ]
+        },
+        {
+          "name": "cardDetails",
+          "hasSetter": true,
+          "type": {
+            "library": "/reflect_framework/lib/domain_objects.dart",
+            "name": "CardDetails"
+          }
+        }
+      ]
+    },
+    {
+      "type": {
+        "library": "/reflect_framework/lib/domain_objects.dart",
+        "name": "CardDetails"
+      },
+      "properties": [
+        {
+          "name": "cardHolderName",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        },
+        {
+          "name": "cardNumber",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        },
+        {
+          "name": "expiryMonth",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        },
+        {
+          "name": "expiryYear",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        },
+        {
+          "name": "securityCode",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/int.dart",
+            "name": "int"
+          }
+        }
+      ]
+    },
+    {
+      "type": {
+        "library": "/reflect_framework/lib/domain_objects.dart",
+        "name": "Address"
+      },
+      "properties": [
+        {
+          "name": "postCode",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        },
+        {
+          "name": "addressLine",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        }
+      ]
+    },
+    {
+      "type": {
+        "library": "/reflect_framework/lib/domain_objects.dart",
+        "name": "PersonService"
+      },
+      "annotations": [
+        {
+          "type": {
+            "library": "/reflect_framework/lib/reflect_meta_service_object.dart",
+            "name": "ServiceClass"
+          }
+        },
+        {
+          "type": {
+            "library": "/reflect_framework/lib/reflect_annotations.dart",
+            "name": "ActionMethodPreProcessor"
+          },
+          "values": {
+            "index": 11.0,
+            "actionMethodMustHaveProcessDirectlyAnnotation": false
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "allPersons",
+          "returnType": {
+            "library": "dart:core/list.dart",
+            "name": "List",
+            "genericTypes": [
+              {
+                "library": "/reflect_framework/lib/domain_objects.dart",
+                "name": "Person"
+              }
+            ]
+          },
+          "annotations": [
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "DomainClass"
+              }
+            },
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "ActionMethodPreProcessor"
+              },
+              "values": {
+                "index": 22.0,
+                "actionMethodMustHaveProcessDirectlyAnnotation": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "findPersons",
+          "returnType": {
+            "library": "dart:core/list.dart",
+            "name": "List",
+            "genericTypes": [
+              {
+                "library": "/reflect_framework/lib/domain_objects.dart",
+                "name": "Person"
+              }
+            ]
+          },
+          "parameterTypes": [
+            {
+              "library": "dart:core/string.dart",
+              "name": "String"
+            }
+          ],
+          "annotations": [
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "DomainClass"
+              }
+            },
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "ActionMethodPreProcessor"
+              },
+              "values": {
+                "index": 33.0,
+                "actionMethodMustHaveProcessDirectlyAnnotation": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": {
+        "library": "/reflect_framework/lib/domain_objects.dart",
+        "name": "Person"
+      },
+      "properties": [
+        {
+          "name": "givenName",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          }
+        },
+        {
+          "name": "surName",
+          "hasSetter": true,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          },
+          "annotations": [
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "DomainClass"
+              }
+            },
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "ActionMethodPreProcessor"
+              },
+              "values": {
+                "index": 111.0,
+                "actionMethodMustHaveProcessDirectlyAnnotation": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "fullName",
+          "hasSetter": false,
+          "type": {
+            "library": "dart:core/string.dart",
+            "name": "String"
+          },
+          "annotations": [
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "DomainClass"
+              }
+            },
+            {
+              "type": {
+                "library": "/reflect_framework/lib/reflect_annotations.dart",
+                "name": "ActionMethodPreProcessor"
+              },
+              "values": {
+                "index": 222.0,
+                "actionMethodMustHaveProcessDirectlyAnnotation": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
