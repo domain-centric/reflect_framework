@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'gui/gui.dart';
+import 'reflect_gui.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyFirstApp());
 }
 
-class MyApp extends ReflectGuiApplication {
+class MyFirstApp extends ReflectGuiApplication {
   @override
   ThemeData get lightTheme =>
       ThemeData(primarySwatch: Colors.red, brightness: Brightness.light);

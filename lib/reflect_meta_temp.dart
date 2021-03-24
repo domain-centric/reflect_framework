@@ -1,26 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-
-import 'gui/gui_tab.dart';
-import 'gui/gui_tab_form.dart';
-import 'gui/gui_tab_table.dart';
-
-class Reflection {
-  final ApplicationInfo applicationInfo = ApplicationInfo();
-  final List<ServiceObjectInfo> serviveObjectInfos = [
-    ServiceObjectInfo(title: "Login"),
-    ServiceObjectInfo(title: "Orders")
-  ];
-}
-
-class ApplicationInfo {
-  String get title {
-    return "Application title"; //TODO get using reflection of [ReflectApplication] or https://pub.dev/packages/package_info
-  }
-
-  String get titleImagePath => 'assets/my_first_app.png';
-}
+import 'package:reflect_framework/reflect_gui_tab.dart';
+import 'package:reflect_framework/reflect_gui_tab_form.dart';
+import 'package:reflect_framework/reflect_gui_tab_table.dart';
 
 class ServiceObjectInfo {
   final String title;

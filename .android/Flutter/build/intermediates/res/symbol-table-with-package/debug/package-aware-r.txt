@@ -11,6 +11,8 @@ attr fontStyle
 attr fontVariationSettings
 attr fontWeight
 attr ttcIndex
+color androidx_core_ripple_material_light
+color androidx_core_secondary_text_default_material_light
 color notification_action_color_filter
 color notification_icon_bg_color
 color ripple_material_light
@@ -108,10 +110,15 @@ id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
 id tag_accessibility_pane_title
+id tag_on_apply_window_listener
+id tag_on_receive_content_listener
+id tag_on_receive_content_mime_types
 id tag_screen_reader_focusable
+id tag_state_description
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
+id tag_window_insets_animation_callback
 id text
 id text2
 id time
