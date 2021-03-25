@@ -74,7 +74,7 @@ class DomainClass {
 ///
 /// e.g.:
 ///
-/// import 'package:reflect_framework/reflect_annotations.dart';
+/// import 'package:reflect_framework/annotations.dart';
 ///
 /// //library acme_domain
 ///

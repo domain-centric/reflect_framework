@@ -1,14 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
-import 'domain_objects.dart';
-
-// import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:http/http.dart';
-import 'reflect_gui_tab.dart' as ReflectTab;
+import '../domain/domain_objects.dart';
+import '../gui/reflect_gui_tab.dart' as ReflectTab;
 
 ///Forms:
 // ======
@@ -290,30 +290,30 @@ class _PaymentFormState extends State<PaymentForm> {
                   height: formSpacing,
                 ),
                 TextField(),
-                // TypeAheadFormField(
-                //   textFieldConfiguration: TextFieldConfiguration(
-                //     decoration: InputDecoration(
-                //       labelText: 'Post Code',
-                //       icon: Icon(Icons.location_on),
-                //       floatingLabelBehavior: FloatingLabelBehavior.always,
-                //       filled: true,
-                //     ),
-                //   ),
-                //   suggestionsCallback: (pattern) async {
-                //     return await _fetchAddress(pattern);
-                //   },
-                //   itemBuilder: (context, Address address) {
-                //     return ListTile(
-                //       leading: Icon(Icons.location_city),
-                //       title: Text(address.addressLine),
-                //       subtitle: Text(address.postCode),
-                //     );
-                //   },
-                //   onSuggestionSelected: (Address address) {
-                //     _addressLineController.text = address.addressLine;
-                //   },
-                //   onSaved: (val) => this._paymentAddress.postCode = val,
-                // ),
+                TypeAheadFormField(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    decoration: InputDecoration(
+                      labelText: 'Post Code',
+                      icon: Icon(Icons.location_on),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      filled: true,
+                    ),
+                  ),
+                  suggestionsCallback: (pattern) async {
+                    return await _fetchAddress(pattern);
+                  },
+                  itemBuilder: (context, Address address) {
+                    return ListTile(
+                      leading: Icon(Icons.location_city),
+                      title: Text(address.addressLine),
+                      subtitle: Text(address.postCode),
+                    );
+                  },
+                  onSuggestionSelected: (Address address) {
+                    _addressLineController.text = address.addressLine;
+                  },
+                  onSaved: (val) => this._paymentAddress.postCode = val,
+                ),
                 SizedBox(
                   height: formSpacing,
                 ),
@@ -353,36 +353,36 @@ class _PaymentFormState extends State<PaymentForm> {
                       },
                     ),
                     RaisedButton(
-                        // child: loading
-                        //     ? SpinKitWave(
-                        //         size: 15.0,
-                        //       )
-                        //     : Text('Process Payment'),
-                        // textColor: Theme.of(context).accentTextTheme.button.color,
-                        // highlightColor: Theme.of(context).accentColor,
-                        // color: Theme.of(context).accentColor,
-                        // onPressed: () {
-                        //   if (_formKey.currentState.validate()) {
-                        //     setState(() {
-                        //       loading = true;
-                        //     });
-                        //     _formKey.currentState.save();
-                        //     Timer(Duration(seconds: 4), () {
-                        //       Payment payment = new Payment(
-                        //           address: _paymentAddress,
-                        //           cardDetails: _cardDetails);
-                        //       print(payment);
-                        //       setState(() {
-                        //         loading = false;
-                        //       });
-                        //       final snackBar =
-                        //           SnackBar(content: Text('Payment Proccessed'));
-                        //       Scaffold.of(context).showSnackBar(snackBar);
-                        //       print('Saved');
-                        //     });
-                        //   }
-                        // },
-                        ),
+                      child: loading
+                          ? SpinKitWave(
+                              size: 15.0,
+                            )
+                          : Text('Process Payment'),
+                      textColor: Theme.of(context).accentTextTheme.button.color,
+                      highlightColor: Theme.of(context).accentColor,
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          setState(() {
+                            loading = true;
+                          });
+                          _formKey.currentState.save();
+                          Timer(Duration(seconds: 4), () {
+                            Payment payment = new Payment(
+                                address: _paymentAddress,
+                                cardDetails: _cardDetails);
+                            print(payment);
+                            setState(() {
+                              loading = false;
+                            });
+                            final snackBar =
+                                SnackBar(content: Text('Payment Proccessed'));
+                            Scaffold.of(context).showSnackBar(snackBar);
+                            print('Saved');
+                          });
+                        }
+                      },
+                    ),
                   ],
                 )
               ],
@@ -394,26 +394,26 @@ class _PaymentFormState extends State<PaymentForm> {
   }
 
   Future<List<Address>> _fetchAddress(String postCode) async {
-    // final response = await http.get(
-    //     "https://my-json-server.typicode.com/refactord/deep-dive-db/addresses");
-    // if (response.statusCode == 200) {
-    //   return _searchAddresses(response, postCode);
-    // } else {
-    throw Exception('Failed to load addresses');
-    // }
+    final response = await http.get(
+        "https://my-json-server.typicode.com/refactord/deep-dive-db/addresses");
+    if (response.statusCode == 200) {
+      return _searchAddresses(response, postCode);
+    } else {
+      throw Exception('Failed to load addresses');
+    }
   }
 
-// ///This should be done on the server side but due to the use of a basic custom JSON server
-// /// I'll manually do the search here
-// List<Address> _searchAddresses(Response response, String postCode) {
-//   Map<String, dynamic> body = json.decode(response.body);
-//   var addresses = body[postCode];
-//   if (addresses != null) {
-//     addresses = (addresses as List).map((a) => Address.fromJson(a)).toList();
-//     return addresses;
-//   }
-//   return null;
-// }
+  ///This should be done on the server side but due to the use of a basic custom JSON server
+  /// I'll manually do the search here
+  List<Address> _searchAddresses(Response response, String postCode) {
+    Map<String, dynamic> body = json.decode(response.body);
+    var addresses = body[postCode];
+    if (addresses != null) {
+      addresses = (addresses as List).map((a) => Address.fromJson(a)).toList();
+      return addresses;
+    }
+    return null;
+  }
 }
 
 class FormExampleTabFactory implements ReflectTab.TabFactory {

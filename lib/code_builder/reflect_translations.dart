@@ -1,5 +1,5 @@
 //TODO reuse in TranslationBuilder
-// import 'package:reflect_framework/reflect_annotations.dart';
+// import 'package:reflect_framework/annotations.dart';
 
 import 'package:recase/recase.dart';
 

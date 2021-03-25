@@ -1,4 +1,4 @@
-import 'reflect_annotations.dart';
+import '../core/annotations.dart';
 
 //library acme_domain
 

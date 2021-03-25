@@ -1,7 +1,7 @@
-import '../reflect_documentation.dart';
-import '../reflect_framework.dart';
-import '../reflect_info_service.dart';
-import 'reflect_info_action_method.dart';
+import '../core/action_method_info.dart';
+import '../core/reflect_documentation.dart';
+import '../core/reflect_framework.dart';
+import '../core/service_class_info.dart';
 
 /// [DomainObject]s represent entities: the nouns of the domain. If your application is a sales application it’s likely that your domain model contains [DomainObject]s such as: customers, products and orders.
 ///

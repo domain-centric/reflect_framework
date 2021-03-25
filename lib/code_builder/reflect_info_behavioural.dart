@@ -1,6 +1,6 @@
 import 'package:code_builder/code_builder.dart';
 
-import '../reflect_documentation.dart';
+import '../core/reflect_documentation.dart';
 import 'reflect_info_json.dart';
 import 'reflect_translations.dart';
 

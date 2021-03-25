@@ -18,7 +18,7 @@ class ApplicationInfoFactory {
     PubSpecYaml pubSpecYaml = PubSpecYaml();
     return Class((b) => b
       ..name = 'ApplicationInfo'
-      //..extend = refer('ClassInfo','package:reflect_framework/reflect_info_service.dart')
+      //..extend = refer('ClassInfo','package:reflect_framework/service_class_info.dart')
       ..methods.add(DisplayName.createMethod(applicationClassJson.type))
       ..methods.add(
           TitleImage.createMethod(applicationClassJson, pubSpecYaml.assets))

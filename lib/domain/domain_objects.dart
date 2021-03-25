@@ -1,4 +1,4 @@
-import 'reflect_annotations.dart';
+import '../core/annotations.dart';
 
 class Payment {
   Address address;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_framework/reflect_gui_tab.dart';
-import 'package:reflect_framework/reflect_gui_tab_form.dart';
-import 'package:reflect_framework/reflect_gui_tab_table.dart';
 
+import '../gui/reflect_gui_tab.dart';
+import '../gui/reflect_gui_tab_form.dart';
+import '../gui/reflect_gui_tab_table.dart';
+
+//TODO replace this class with a generated class. See [reflect_builder_factory]
 class ServiceObjectInfo {
   final String title;
 

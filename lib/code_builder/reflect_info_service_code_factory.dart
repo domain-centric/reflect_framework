@@ -40,7 +40,7 @@ class ServiceClassInfoFactory {
     return Class((b) => b
           ..name = classJson.type.codeName
           ..extend = refer('ServiceClassInfo',
-              'package:reflect_framework/reflect_info_service.dart')
+              'package:reflect_framework/service_class_info.dart')
           ..methods.add(DisplayName.createMethod(classJson.type))
           ..fields.add(_createServiceObjectField(classJson.type))
 
@@ -83,7 +83,7 @@ class ActionMethodInfoFactory {
     return Class((b) => b
           ..name = 'Some Action Method' //TODO
           ..extend = refer('ActionMethodInfo',
-              'package:reflect_framework/reflect_info_action_method.dart')
+              'package:reflect_framework/action_method_info.dart')
         //TODO ..methods.add(DisplayName.createMethod(classJson.type));
         // ..methods.add(
         //     TitleImage.createMethod(applicationClassJson, pubSpecYaml.assets))

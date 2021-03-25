@@ -325,7 +325,7 @@ class TypeJson {
                 .map((model) => TypeJson.fromJson(model)));
 
   TypeJson.serviceClassAnnotation()
-      : library = '/reflect_framework/lib/reflect_info_service.dart',
+      : library = '/reflect_framework/lib/service_class_info.dart',
         name = 'ServiceClass',
         genericTypes = null;
 

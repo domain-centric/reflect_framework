@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shine/flutter_shine.dart';
 import 'package:provider/provider.dart';
 
-import 'reflect_annotations.dart';
-import 'reflect_framework.dart';
-import 'reflect_gui_tab.dart' as ReflectTabs;
-import 'reflect_gui_tab.dart';
-import 'reflect_localizations.dart';
-import 'reflect_meta_temp.dart';
+import '../core/annotations.dart';
+import '../core/reflect_framework.dart';
+import '../core/reflect_meta_temp.dart';
+import '../gui/reflect_gui_tab.dart' as ReflectTabs;
+import '../gui/reflect_gui_tab.dart';
+import '../localization/reflect_localizations.dart';
 
 const kTabletBreakpoint = 720.0;
 const kDesktopBreakpoint = 1200.0;
