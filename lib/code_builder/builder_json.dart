@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'reflect_info_json.dart';
+import 'info_json.dart';
 
 ///Uses [ReflectJson] to create .reflect_info.json files with meta data from source files using the source_gen package
 class ReflectJsonBuilder implements Builder {

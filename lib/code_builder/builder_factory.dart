@@ -1,8 +1,8 @@
 import 'package:build/build.dart';
 
-import 'reflect_builder_info.dart';
-import 'reflect_builder_json.dart';
-import 'reflect_builder_json_combined.dart';
+import 'builder_info.dart';
+import 'builder_json.dart';
+import 'builder_json_combined.dart';
 
 /// run from command line: flutter packages pub run build_runner build lib --delete-conflicting-outputs
 

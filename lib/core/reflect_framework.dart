@@ -1,4 +1,4 @@
-import '../gui/reflect_generated.dart';
+import '../gui/generated.dart';
 import 'reflect_documentation.dart';
 import 'reflect_meta_temp.dart';
 

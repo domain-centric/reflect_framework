@@ -8,7 +8,7 @@ targets:
 
 builders:
   reflect_info_builder:
-    import: 'package:reflect_framework/reflect_builder_factory.dart'
+    import: 'package:reflect_framework/builder_factory.dart'
     builder_factories: ['reflectInfoJsonBuilder']
     build_extensions:
       .txt:

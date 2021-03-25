@@ -5,7 +5,7 @@ import '../core/service_class_info.dart' as _i1;
 import '../domain/acme_domain.dart' as _i2;
 import '../domain/domain_objects.dart' as _i3;
 import '../main.dart' as _i4;
-import 'reflect_gui.dart' as _i5;
+import 'gui.dart' as _i5;
 
 class ApplicationInfo {
   String get displayName {

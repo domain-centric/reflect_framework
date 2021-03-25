@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 
-import 'reflect_info_behavioural.dart';
-import 'reflect_info_json.dart';
+import 'info_behavioural.dart';
+import 'info_json.dart';
 
 // TODO this library to be replaced using [dart_code] library
 

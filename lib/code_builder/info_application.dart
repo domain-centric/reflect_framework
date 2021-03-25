@@ -4,8 +4,8 @@ import 'package:code_builder/code_builder.dart';
 import 'package:recase/recase.dart';
 import 'package:yaml/yaml.dart';
 
-import 'reflect_info_behavioural.dart';
-import 'reflect_info_json.dart';
+import 'info_behavioural.dart';
+import 'info_json.dart';
 
 /// The [ReflectFramework] [ReflectInfoBuilder] creates an [ApplicationInfo] class using [ApplicationInfoFactory].
 class ApplicationInfoFactory {
@@ -30,7 +30,7 @@ class ApplicationInfoFactory {
 
   static ClassJson findApplicationClassJson(ReflectJson reflectJson) {
     const name = 'ReflectGuiApplication';
-    const lib = '/reflect_framework/lib/reflect_gui.dart';
+    const lib = '/reflect_framework/lib/gui.dart';
     List<ClassJson> reflectGuiApplications = reflectJson.classes
         .where((c) =>
             c.extending != null &&

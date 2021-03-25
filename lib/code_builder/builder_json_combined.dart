@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:build/build.dart';
 import 'package:glob/glob.dart';
 
-import 'reflect_info_json.dart';
+import 'info_json.dart';
 
 /// Combines all .reflect_info.json files into one lib/reflect_info.json file
 class CombiningReflectJsonBuilder implements Builder {

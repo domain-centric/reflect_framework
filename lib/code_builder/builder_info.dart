@@ -6,9 +6,9 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
-import 'reflect_info_application.dart';
-import 'reflect_info_json.dart';
-import 'reflect_info_service_code_factory.dart';
+import 'info_application.dart';
+import 'info_json.dart';
+import 'info_service_code_factory.dart';
 
 /// using main because that way we can simply debug:
 /// - Read reflect_info.json
@@ -22,7 +22,7 @@ main() {
   _createReflectGeneratedLibFile(json);
 }
 
-const reflectGeneratedFile = 'reflect_generated.dart';
+const reflectGeneratedFile = 'generated.dart';
 const reflectGeneratedPath = 'lib/' + reflectGeneratedFile;
 
 void _createReflectGeneratedLibFile(json) {

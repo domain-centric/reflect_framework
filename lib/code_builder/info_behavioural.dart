@@ -1,8 +1,8 @@
 import 'package:code_builder/code_builder.dart';
 
 import '../core/reflect_documentation.dart';
-import 'reflect_info_json.dart';
-import 'reflect_translations.dart';
+import 'info_json.dart';
+import 'translations.dart';
 
 /// The [ReflectApplication], [ServiceObject]s and [DomainObject]s can have behavior that defines how the objects act or how they are displayed. Behavior can be defined with:
 /// * [BehavioralAnnotation]s

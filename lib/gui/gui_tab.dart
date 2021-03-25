@@ -167,4 +167,3 @@ class ExampleTabFactory implements TabFactory {
     return ExampleTab();
   }
 }
-

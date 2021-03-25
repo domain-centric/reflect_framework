@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import '../core/annotations.dart';
 import '../core/reflect_framework.dart';
 import '../core/reflect_meta_temp.dart';
-import '../gui/reflect_gui_tab.dart' as ReflectTabs;
-import '../gui/reflect_gui_tab.dart';
-import '../localization/reflect_localizations.dart';
+import '../gui/gui_tab.dart' as ReflectTabs;
+import '../gui/gui_tab.dart';
+import '../localization/localizations.dart';
 
 const kTabletBreakpoint = 720.0;
 const kDesktopBreakpoint = 1200.0;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'gui/reflect_gui.dart';
+import 'gui/gui.dart';
 
 void main() {
   runApp(MyFirstApp());

@@ -1,4 +1,4 @@
-import '../code_builder/reflect_meta_action_method_pre_processor_context.dart';
+import '../code_builder/meta_action_method_pre_processor_context.dart';
 import 'reflect_documentation.dart';
 import 'reflect_framework.dart';
 import 'service_class_info.dart';

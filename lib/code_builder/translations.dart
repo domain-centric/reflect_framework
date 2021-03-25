@@ -3,7 +3,7 @@
 
 import 'package:recase/recase.dart';
 
-import 'reflect_info_json.dart';
+import 'info_json.dart';
 
 class TranslationFactory {
   // static final invalidCharacters = RegExp('[^a-z0-9\.]');

@@ -1,7 +1,7 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 
-import 'reflect_localizations.dart';
+import 'localizations.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps
 
