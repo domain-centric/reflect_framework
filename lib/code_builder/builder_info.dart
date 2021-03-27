@@ -6,9 +6,9 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
-import 'info_application.dart';
+import '../code_builder_code/application_info_code.dart';
+import '../code_builder_code/service_class_info_code.dart';
 import 'info_json.dart';
-import 'info_service_code_factory.dart';
 
 /// using main because that way we can simply debug:
 /// - Read reflect_info.json

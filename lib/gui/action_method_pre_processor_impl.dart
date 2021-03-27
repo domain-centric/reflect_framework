@@ -1,5 +1,5 @@
 import '../core/annotations.dart';
-import 'meta_action_method_pre_processor_context.dart';
+import 'action_method_pre_processor_context.dart';
 
 @ActionMethodPreProcessor(index: 100)
 void executeDirectlyForMethodsWithoutParameter(

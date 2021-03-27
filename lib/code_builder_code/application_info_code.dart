@@ -4,8 +4,8 @@ import 'package:code_builder/code_builder.dart';
 import 'package:recase/recase.dart';
 import 'package:yaml/yaml.dart';
 
-import 'info_behavioural.dart';
-import 'info_json.dart';
+import '../code_builder/info_behavioural.dart';
+import '../code_builder/info_json.dart';
 
 /// The [ReflectFramework] [ReflectInfoBuilder] creates an [ApplicationInfo] class using [ApplicationInfoFactory].
 class ApplicationInfoFactory {
