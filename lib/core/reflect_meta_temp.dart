@@ -6,7 +6,7 @@ import '../gui/gui_tab.dart';
 import '../gui/gui_tab_form.dart';
 import '../gui/gui_tab_table.dart';
 
-//TODO replace this class with a generated class. See [reflect_builder_factory]
+///TODO to be replaced by generated.dart library with a [GeneratedApplicationInfo] class that implements [ApplicationInfo]
 class ServiceObjectInfo {
   final String title;
 

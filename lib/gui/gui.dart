@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../core/annotations.dart';
 import '../core/reflect_framework.dart';
 import '../core/reflect_meta_temp.dart';
+import '../generated.dart';
 import '../gui/gui_tab.dart' as ReflectTabs;
 import '../gui/gui_tab.dart';
 import '../localization/localizations.dart';
@@ -23,7 +24,7 @@ abstract class ReflectGuiApplication extends StatelessWidget
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => Tabs()),
-      Provider(create: (_) => ReflectFrameworkInfo()),
+      Provider(create: (_) => ReflectApplicationInfo()),
     ], child: ReflectMaterialApp(reflectGuiApplication: this));
   }
 
@@ -51,7 +52,7 @@ class ReflectMaterialApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      title: Provider.of<ReflectFrameworkInfo>(context).application.displayName,
+      title: Provider.of<ReflectApplicationInfo>(context).displayName,
       theme: reflectGuiApplication.lightTheme,
       darkTheme: reflectGuiApplication.darkTheme,
       home: Home(),
@@ -84,8 +85,7 @@ class ApplicationTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tabs tabs = Provider.of<Tabs>(context);
-    String appTitle =
-        Provider.of<ReflectFrameworkInfo>(context).application.displayName;
+    String appTitle = Provider.of<ReflectApplicationInfo>(context).displayName;
     return LayoutBuilder(builder: (_, dimens) {
       if (tabs.isEmpty) {
         return Text(appTitle);
@@ -275,7 +275,7 @@ class MainMenu extends StatelessWidget {
 
   List<Widget> createChildren(BuildContext context) {
     List<ServiceObjectInfo> serviceObjectsInfo =
-        Provider.of<ReflectFrameworkInfo>(context).serviceObjects;
+        Provider.of<ReflectApplicationInfo>(context).serviceClasses;
 
     List<Widget> children = List();
 
@@ -298,7 +298,7 @@ class MainMenu extends StatelessWidget {
       height: 88.0, //TODO get from AppBar
       child: DrawerHeader(
         child: Text(
-            Provider.of<ReflectFrameworkInfo>(context).application.displayName,
+            Provider.of<ReflectApplicationInfo>(context).displayName,
             style: Theme.of(context).primaryTextTheme.headline6),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
@@ -374,8 +374,7 @@ class ApplicationTitleTab extends StatelessWidget {
 class ApplicationTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<ReflectFrameworkInfo>(context).application.titleImage ==
-        null) {
+    if (Provider.of<ReflectApplicationInfo>(context).titleImage == null) {
       return ApplicationTitleText();
     } else {
       return ApplicationTitleImage();
@@ -386,8 +385,7 @@ class ApplicationTitleWidget extends StatelessWidget {
 class ApplicationTitleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-        Provider.of<ReflectFrameworkInfo>(context).application.titleImage);
+    return Image.asset(Provider.of<ReflectApplicationInfo>(context).titleImage);
   }
 }
 
@@ -402,7 +400,7 @@ class ApplicationTitleText extends StatelessWidget {
             return Opacity(
                 opacity: 0.7,
                 child: Text(
-                  '${Provider.of<ReflectFrameworkInfo>(context).application.displayName}',
+                  '${Provider.of<ReflectApplicationInfo>(context).displayName}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       shadows: shineShadow.shadows),

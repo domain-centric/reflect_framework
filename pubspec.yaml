@@ -1,5 +1,5 @@
 name: reflect_framework
-homepage: https://github.com/reflect-framework/flutter-reflect-framework
+homepage: https://github.com/efficientyboosters/reflect_framework
 version: 1.0.0+1
 
 environment:
@@ -25,7 +25,10 @@ dev_dependencies:
   recase: ^3.0.1
   test: ^1.15.7
   source_gen: ^0.9.10+1
-  build: ^1.6.1
+  dart_code: ^0.0.3
+  build: ^1.6.2
+  quiver: ^2.1.5
+
 
 
 # For information on the generic Dart part of this file, see the

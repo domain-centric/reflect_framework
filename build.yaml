@@ -1,17 +1,39 @@
 targets:
   $default:
     builders:
-      reflect_framework|reflect_info_builder:
+      reflect_framework|reflect_json_builder:
         generate_for:
           - lib/**.dart
         enabled: True
+      reflect_framework|combining_reflect_json_builder:
+        enabled: True
+      reflect_framework|reflect_info_builder:
+        enabled: True
 
 builders:
-  reflect_info_builder:
-    import: 'package:reflect_framework/builder_factory.dart'
-    builder_factories: ['reflectInfoJsonBuilder']
+  reflect_json_builder:
+    import: 'package:reflect_framework/code_builders/builder_factory.dart'
+    builder_factories: ['reflectJsonBuilder']
     build_extensions:
-      .txt:
-        - .json
+      .dart:
+        - .reflect_info.json
+    build_to: cache
+    auto_apply: root_package
+    runs_before: [reflect_framework|combining_reflect_json_builder]
+  combining_reflect_json_builder:
+    import: 'package:reflect_framework/code_builders/builder_factory.dart'
+    builder_factories: ['combiningReflectJsonBuilder']
+    build_extensions:
+      $lib$:
+        - .combined.json
+    build_to: cache
+    auto_apply: root_package
+    runs_before: [reflect_framework|reflect_info_builder]
+  reflect_info_builder:
+    import: 'package:reflect_framework/code_builders/builder_factory.dart'
+    builder_factories: ['applicationInfoBuilder']
+    build_extensions:
+      .combined.json:
+        - lib/reflect_generated.dart
     build_to: source
     auto_apply: root_package

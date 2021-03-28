@@ -140,6 +140,12 @@
       "languageVersion": "2.3"
     },
     {
+      "name": "dart_code",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_code-0.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.10"
+    },
+    {
       "name": "dart_style",
       "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_style-1.3.10",
       "packageUri": "lib/",
@@ -542,7 +548,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2021-03-24T20:11:37.792305Z",
+  "generated": "2021-03-28T13:23:03.676046Z",
   "generator": "pub",
   "generatorVersion": "2.10.5"
 }

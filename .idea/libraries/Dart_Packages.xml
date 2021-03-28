@@ -163,6 +163,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dart_code">
+          <value>
+            <list>
+              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_code-0.0.3/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="dart_style">
           <value>
             <list>
@@ -651,6 +658,7 @@
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/convert-2.1.1/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/coverage-0.14.2/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/crypto-2.1.5/lib" />
+      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_code-0.0.3/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_style-1.3.10/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/fake_async-1.2.0-nullsafety.1/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/file-5.2.1/lib" />
