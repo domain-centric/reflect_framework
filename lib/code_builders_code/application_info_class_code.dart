@@ -63,9 +63,9 @@ class GeneratedApplicationInfoCode extends Class {
   }
 
   static Method _createServiceClassGetterMethod() {
-    List<Annotation> annotations = [Annotation(Type('override'))];
+    List<Annotation> annotations = [Annotation.override()];
     Type domainClassInfoType =
-        Type('DomainClassInfo', libraryUrl: 'core/reflect_meta_temp.dart');
+        Type('ServiceObjectInfo', libraryUrl: 'core/reflect_meta_temp.dart');
 
     Expression createBody = Expression.ofList([
       Expression.callConstructor(domainClassInfoType,
@@ -115,7 +115,7 @@ class PubSpecYaml {
   }
 
   Method createStringGetterMethod(String name) {
-    List<Annotation> annotations = [Annotation(Type('override'))];
+    List<Annotation> annotations = [Annotation.override()];
     Expression createBody = _createExpression(name);
     return Method.getter(name, createBody,
         type: Type.ofString(), annotations: annotations);
@@ -146,7 +146,7 @@ class PubSpecYaml {
 class TitleImage {
   static Method createGetterMethod(
       ClassJson applicationClassJson, List<String> assets) {
-    List<Annotation> annotations = [Annotation(Type('override'))];
+    List<Annotation> annotations = [Annotation.override()];
     Expression body = _createExpression(applicationClassJson, assets);
     Method method = Method.getter('titleImage', body,
         type: Type.ofString(), annotations: annotations);

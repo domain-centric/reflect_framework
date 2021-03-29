@@ -68,7 +68,7 @@ class DisplayName {
     //TODO String code = "return translation().$key";
     String englishText = TranslationFactory.createEnglishText(typeJson);
     Expression body = Expression.ofString('$englishText');
-    List<Annotation> annotations = [Annotation(Type('override'))];
+    List<Annotation> annotations = [Annotation.override()];
     Method method = Method.getter('displayName', body,
         type: Type.ofString(), annotations: annotations);
     return method;
