@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:build/build.dart';
 
-import '../code_builders_code/application_info_library_code.dart';
+import '../code_builders_code/application_info_library.dart';
 import 'info_json.dart';
 
 /// using main because that way we can simply debug:

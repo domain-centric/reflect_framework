@@ -1,5 +1,7 @@
 name: reflect_framework
 homepage: https://github.com/efficientyboosters/reflect_framework
+repository: https://github.com/efficientyboosters/reflect_framework
+documentation: https://github.com/efficientyboosters/reflect_framework/wiki
 version: 1.0.0+1
 
 environment:
@@ -28,6 +30,8 @@ dev_dependencies:
   dart_code: ^0.0.4
   build: ^1.6.2
   quiver: ^2.1.5
+  collection: ^1.14.13
+  plural_noun: ^0.0.2
 
 
 

@@ -1,3 +1,6 @@
+import 'package:reflect_framework/core/action_method_info.dart';
+import 'package:reflect_framework/core/item.dart';
+
 ///TODO explain what a [ServiceClass] is
 ///
 /// A class is recognized by the [ReflectFramework] if the class:
@@ -19,27 +22,26 @@ class ServiceObject {
   ///For documentation only
 }
 
-abstract class ClassInfo {
-  /// Translated name
-  String get displayName;
-}
+abstract class ClassInfo extends Item {}
 
 /// The [ReflectFramework] creates info classes (with [ServiceClassInfoCode]) that implement [ServiceClassInfo] for all classes that are recognized as [ServiceObject]s.
-abstract class ServiceClassInfo extends ClassInfo {
+abstract class ServiceClassInfo extends ClassInfo implements DynamicItem {
   ///[ServiceObject]s and [DomainObject]s do not have an icon (for now)
 
   /// same (cached) instance of the [ServiceObject]
   /// e.g. final ProductService serviceObject=productServiceFactory();//or ProductService()
-  Object get serviceObject;
+  ///TODO add: Object get serviceObject;
 
   /// If the [ServiceObject] is accessible (e.g. visible in the menu's)
+  @override
   bool get visible {
 //    return actionMethods.any((a) => a.visible);
     return true;
   }
 
-// List<ActionMethodInfo> get actionMethods;
+//TODO replace with List<ActionMethodInfo> get actionMethods;
+  List<ActionMethodInfoOld> get actionMethodInfos;
 
-// /// Order of the [ServiceObject], e.g.: the lower the number, the higher the [ServiceObject] appears in the menu's.
-// double get order;
+  /// Order of the [ServiceObject], e.g.: the lower the number, the higher the [ServiceObject] appears in the menu's.
+  double get order;
 }

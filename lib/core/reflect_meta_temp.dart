@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
 
 import '../gui/gui_tab.dart';
 import '../gui/gui_tab_form.dart';
@@ -12,20 +11,20 @@ class ServiceObjectInfo {
 
   ServiceObjectInfo({this.title});
 
-  final List<ActionMethodInfo> mainMenuItems = _createMainMenuItems();
+  final List<ActionMethodInfoOld> mainMenuItems = _createMainMenuItems();
 
-  static List<ActionMethodInfo> _createMainMenuItems() {
+  static List<ActionMethodInfoOld> _createMainMenuItems() {
     //TODO this is for testing and needs replacing
     return [
-      ActionMethodInfo(
+      ActionMethodInfoOld(
           title: "Random",
           tabFactory: ExampleTabFactory(),
           icon: Icons.tab_sharp),
-      ActionMethodInfo(
+      ActionMethodInfoOld(
           title: "Form",
           tabFactory: FormExampleTabFactory(),
           icon: Icons.table_rows_sharp),
-      ActionMethodInfo(
+      ActionMethodInfoOld(
           title: "Table",
           tabFactory: TableExampleTabFactory(),
           icon: Icons.table_chart_sharp),
@@ -33,18 +32,4 @@ class ServiceObjectInfo {
   }
 }
 
-class ActionMethodInfo {
-  final TabFactory tabFactory;
-  final String title;
-  final IconData icon;
 
-  ActionMethodInfo(
-      {@required this.title, @required this.tabFactory, this.icon});
-
-  void execute(BuildContext context, Object serviceObject) {
-    //TODO create different ways to execute an actionMethod (e.g. open FormTab, open ListTab, showHamburger, dialog etc) with ResultHandlers (provided by the ReflectApplication)
-    var tabs = Provider.of<Tabs>(context, listen: false);
-    var tab = tabFactory.create();
-    tabs.add(tab);
-  }
-}

@@ -1,4 +1,3 @@
-import '../gui/generated.dart';
 import 'reflect_documentation.dart';
 
 ///TODO to be replaced by generated.dart library with a [GeneratedApplicationInfo] class that implements [ApplicationInfo]

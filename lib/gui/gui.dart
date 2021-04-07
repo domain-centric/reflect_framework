@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shine/flutter_shine.dart';
 import 'package:provider/provider.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
+import 'package:reflect_framework/core/service_class_info.dart';
 
 import '../core/annotations.dart';
 import '../core/reflect_framework.dart';
-import '../core/reflect_meta_temp.dart';
 import '../generated.dart';
 import '../gui/gui_tab.dart' as ReflectTabs;
 import '../gui/gui_tab.dart';
@@ -52,7 +53,7 @@ class ReflectMaterialApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      title: Provider.of<ReflectApplicationInfo>(context).displayName,
+      title: Provider.of<ReflectApplicationInfo>(context).name,
       theme: reflectGuiApplication.lightTheme,
       darkTheme: reflectGuiApplication.darkTheme,
       home: Home(),
@@ -85,7 +86,7 @@ class ApplicationTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Tabs tabs = Provider.of<Tabs>(context);
-    String appTitle = Provider.of<ReflectApplicationInfo>(context).displayName;
+    String appTitle = Provider.of<ReflectApplicationInfo>(context).name;
     return LayoutBuilder(builder: (_, dimens) {
       if (tabs.isEmpty) {
         return Text(appTitle);
@@ -257,7 +258,7 @@ class MainMenu extends StatelessWidget {
 
   const MainMenu({Key key, this.isDrawerMenu}) : super(key: key);
 
-  onTab(BuildContext context, ActionMethodInfo actionMethodInfo) {
+  onTab(BuildContext context, ActionMethodInfoOld actionMethodInfo) {
     actionMethodInfo.execute(context, actionMethodInfo.title);
     if (isDrawerMenu) {
       Navigator.pop(context); //Hide Drawer
@@ -274,8 +275,8 @@ class MainMenu extends StatelessWidget {
   }
 
   List<Widget> createChildren(BuildContext context) {
-    List<ServiceObjectInfo> serviceObjectsInfo =
-        Provider.of<ReflectApplicationInfo>(context).serviceClasses;
+    List<ServiceClassInfo> serviceClassInfo =
+        Provider.of<ReflectApplicationInfo>(context).serviceClassInfos;
 
     List<Widget> children = List();
 
@@ -283,10 +284,10 @@ class MainMenu extends StatelessWidget {
       children.add(createDrawerHeader(context));
     }
 
-    for (ServiceObjectInfo serviceObjectInfo in serviceObjectsInfo) {
-      children.add(createServiceObjectTile(serviceObjectInfo));
-      for (ActionMethodInfo actionMethodInfo
-          in serviceObjectInfo.mainMenuItems) {
+    for (ServiceClassInfo serviceObjectClassInfo in serviceClassInfo) {
+      children.add(createServiceObjectTile(serviceObjectClassInfo));
+      for (ActionMethodInfoOld actionMethodInfo
+          in serviceObjectClassInfo.actionMethodInfos) {
         children.add(createActionMethodTile(actionMethodInfo, context));
       }
     }
@@ -298,7 +299,7 @@ class MainMenu extends StatelessWidget {
       height: 88.0, //TODO get from AppBar
       child: DrawerHeader(
         child: Text(
-            Provider.of<ReflectApplicationInfo>(context).displayName,
+            Provider.of<ReflectApplicationInfo>(context).name,
             style: Theme.of(context).primaryTextTheme.headline6),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
@@ -307,16 +308,16 @@ class MainMenu extends StatelessWidget {
     );
   }
 
-  Container createServiceObjectTile(ServiceObjectInfo serviceObjectInfo) {
+  Container createServiceObjectTile(ServiceClassInfo serviceClassInfo) {
     return Container(
         height: 35,
         child: ListTile(
-            title: Text(serviceObjectInfo.title.toUpperCase(),
+            title: Text(serviceClassInfo.name.toUpperCase(),
                 style: TextStyle(fontWeight: FontWeight.bold))));
   }
 
   ListTile createActionMethodTile(
-      ActionMethodInfo actionMethodInfo, BuildContext context) {
+      ActionMethodInfoOld actionMethodInfo, BuildContext context) {
     return ListTile(
       leading: Icon(actionMethodInfo.icon),
       //TODO of actionMethodInfo.icon=null then
@@ -400,7 +401,7 @@ class ApplicationTitleText extends StatelessWidget {
             return Opacity(
                 opacity: 0.7,
                 child: Text(
-                  '${Provider.of<ReflectApplicationInfo>(context).displayName}',
+                  '${Provider.of<ReflectApplicationInfo>(context).name}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       shadows: shineShadow.shadows),

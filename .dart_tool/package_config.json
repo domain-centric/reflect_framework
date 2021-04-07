@@ -356,6 +356,12 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "plural_noun",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/plural_noun-0.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "pool",
       "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/pool-1.5.0-nullsafety.2",
       "packageUri": "lib/",
@@ -548,7 +554,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2021-03-29T18:23:32.861073Z",
+  "generated": "2021-04-05T11:05:37.886820Z",
   "generator": "pub",
   "generatorVersion": "2.10.5"
 }

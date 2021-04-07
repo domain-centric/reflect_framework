@@ -1,4 +1,6 @@
 import 'package:dart_code/dart_code.dart';
+import 'package:plural_noun/plural_noun.dart';
+import 'package:recase/recase.dart';
 
 import '../core/reflect_documentation.dart';
 import 'info_json.dart';
@@ -34,7 +36,7 @@ abstract class BehavioralMethod extends ConceptDocumentation {}
 
 ///Class names, [DomainObjectProperty] names and [ActionMethod] names are part of the [ubiquitous language](https://martinfowler.com/bliki/UbiquitousLanguage.html): in terms both understand by users and developers. The [ReflectFramework] therefore displays the same names as used in the program code.
 ///
-/// _[DisplayName] Default_
+/// _[Description] Default_
 /// The Dart code of your program already has English names:
 /// * Classes have names that are formatted in [UpperCamelCase](https://en.wikipedia.org/wiki/Camel_case), e.g. OrderService
 /// * [Property] names are formatted in [lowerCamelCase](https://en.wikipedia.org/wiki/Camel_case), e.g. orderLines
@@ -46,10 +48,10 @@ abstract class BehavioralMethod extends ConceptDocumentation {}
 /// * [Property] names are translated, e.g. "orderLines" becomes "Order lines"
 /// * [ActionMethod] names are translated, e.g. "addOrderLine" becomes "Add order line".
 ///
-/// The [ReflectFramework] supports [DisplayName]s for multiple languages. //TODO explain Translation builder and keys and csv file.
+/// The [ReflectFramework] supports [Description]s for multiple languages. //TODO explain Translation builder and keys and csv file.
 // TODO
-// DisplayName Annotation
-// The ReflectFramework will automatically convert the names used in the program code to a human readable English format by default. In some cases the default DisplayName does not suffice, in example when:
+// Name Annotation
+// The ReflectFramework will automatically convert the names used in the program code to a human readable English format by default. In some cases the default name does not suffice, in example when:
 //
 // A different use of capital case is needed
 // Special characters are needed that can not be used in the code
@@ -61,16 +63,141 @@ abstract class BehavioralMethod extends ConceptDocumentation {}
 // or before a ActionMethod
 // TODO EXAMPLE ACMEWebShop
 
-class DisplayName {
-  /// Creates a Dart method to return a [DisplayName]
-  static Method createGetterMethod(TypeJson typeJson) {
-    //TODO String key = TranslationFactory.createKey(typeJson);
-    //TODO String code = "return translation().$key";
-    String englishText = TranslationFactory.createEnglishText(typeJson);
-    Expression body = Expression.ofString('$englishText');
+class Name {
+  final String key;
+  final String englishName;
+
+  Name.forApplicationClass(ClassJson classJson)
+      : key = TranslationFactory.createKey(classJson.type),
+        englishName = _createEnglishNameForClass(classJson);
+
+  Name.forServiceClass(ClassJson classJson)
+      : key = TranslationFactory.createKey(classJson.type),
+        englishName = _createEnglishNameForServiceClass(classJson);
+
+  Name.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
+      : key = TranslationFactory.createKey(classJson.type) +
+            '.' +
+            methodJson.name,
+        englishName = _createEnglishNameForActionMethod(methodJson);
+
+  static String _createEnglishNameForServiceClass(ClassJson classJson) {
+    // TODO check if serviceClass has translation annotations
+    String nameWithoutServiceSuffix = removeServiceSuffix(classJson.type.name);
+    List<String> words = slitIntoWords(nameWithoutServiceSuffix);
+    makeLastWordPlural(words);
+    return words.join(' ');
+  }
+
+  static void makeLastWordPlural(List<String> words) {
+    int lastWordIndex = words.length - 1;
+    words[lastWordIndex] =
+        PluralRules().convertToPluralNoun(words[lastWordIndex]);
+  }
+
+  static List<String> slitIntoWords(String nameWithoutServiceSuffix) =>
+      nameWithoutServiceSuffix.sentenceCase.split(' ');
+
+  static String removeServiceSuffix(String name) =>
+      name.replaceAll(RegExp("Service\$"), "");
+
+  static String _createEnglishNameForClass(ClassJson classJson) =>
+      //TODO check if Class has translation annotations
+      classJson.type.name.sentenceCase;
+
+  static _createEnglishNameForActionMethod(ExecutableJson methodJson) =>
+      //TODO check if Method has translation annotations
+      methodJson.name.sentenceCase;
+
+  /// Creates a Dart method to return a [Description]
+  Method createGetterMethod() {
+    Expression body = Expression.ofString(englishName);
     List<Annotation> annotations = [Annotation.override()];
-    Method method = Method.getter('displayName', body,
+    Method method = Method.getter('name', body,
         type: Type.ofString(), annotations: annotations);
+    return method;
+  }
+}
+
+class Description {
+  final String key;
+  final String englishName;
+
+  Description.forApplicationClass(ClassJson classJson)
+      : key = TranslationFactory.createKey(classJson.type),
+        englishName = _createEnglishDescriptionForClass(classJson);
+
+  Description.forServiceClass(ClassJson classJson)
+      : key = TranslationFactory.createKey(classJson.type),
+        englishName = _createEnglishDescriptionForServiceClass(classJson);
+
+  Description.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
+      : key = TranslationFactory.createKey(classJson.type) +
+            '.' +
+            methodJson.name,
+        englishName = _createEnglishDescriptionForActionMethod(methodJson);
+
+  static String _createEnglishDescriptionForServiceClass(ClassJson classJson) {
+    // TODO check if serviceClass has translation annotations
+    // TODO String nameWithoutServiceSuffix = removeServiceSuffix(classJson.type.name);
+    // List<String> words = slitIntoWords(nameWithoutServiceSuffix);
+    // makeLastWordPlural(words);
+    // return words.join(' ');
+    return ''; //TODO
+  }
+
+  static String _createEnglishDescriptionForClass(ClassJson classJson) =>
+      //TODO check if Class has translation annotations
+      //TODO classJson.type.name.sentenceCase;
+      '';
+
+  static _createEnglishDescriptionForActionMethod(ExecutableJson methodJson) =>
+      //TODO check if Method has translation annotations
+      //TODO methodJson.name.sentenceCase;
+      '';
+
+  /// Creates a Dart method to return a [Description]
+  Method createGetterMethod() {
+    Expression body = Expression.ofString(englishName);
+    List<Annotation> annotations = [Annotation.override()];
+    Method method = Method.getter('description', body,
+        type: Type.ofString(), annotations: annotations);
+    return method;
+  }
+}
+
+class Visible {
+  Visible.forApplicationClass(ClassJson classJson); //TODO
+
+  Visible.forServiceClass(
+      ClassJson classJson); //TODO include: actionMethods.any((a) => a.visible);
+
+  Visible.forActionMethod(
+      ClassJson classJson, ExecutableJson methodJson); //TODO
+
+  /// Creates a Dart method to return a [Description]
+  Method createGetterMethod() {
+    Expression body = Expression.ofBool(true); //TODO
+    List<Annotation> annotations = [Annotation.override()];
+    Method method = Method.getter('visible', body,
+        type: Type.ofBool(), annotations: annotations);
+    return method;
+  }
+}
+
+class Order {
+  Order.forApplicationClass(ClassJson classJson); //TODO
+
+  Order.forServiceClass(ClassJson classJson); //TODO
+
+  Order.forActionMethod(ClassJson classJson, ExecutableJson methodJson); //TODO
+
+  /// Creates a Dart method to return a [Description]
+  Method createGetterMethod() {
+    Expression body = Expression.ofDouble(100); //TODO
+    List<Annotation> annotations = [Annotation.override()];
+    Method method = Method.getter('order', body,
+        type: Type.ofDouble(), annotations: annotations);
     return method;
   }
 }
