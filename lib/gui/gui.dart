@@ -258,8 +258,8 @@ class MainMenu extends StatelessWidget {
 
   const MainMenu({Key key, this.isDrawerMenu}) : super(key: key);
 
-  onTab(BuildContext context, ActionMethodInfoOld actionMethodInfo) {
-    actionMethodInfo.execute(context, actionMethodInfo.title);
+  onTab(BuildContext context, ActionMethodInfo actionMethodInfo) {
+    actionMethodInfo.execute(context);
     if (isDrawerMenu) {
       Navigator.pop(context); //Hide Drawer
     }
@@ -286,7 +286,7 @@ class MainMenu extends StatelessWidget {
 
     for (ServiceClassInfo serviceObjectClassInfo in serviceClassInfo) {
       children.add(createServiceObjectTile(serviceObjectClassInfo));
-      for (ActionMethodInfoOld actionMethodInfo
+      for (ActionMethodInfo actionMethodInfo
           in serviceObjectClassInfo.actionMethodInfos) {
         children.add(createActionMethodTile(actionMethodInfo, context));
       }
@@ -317,7 +317,7 @@ class MainMenu extends StatelessWidget {
   }
 
   ListTile createActionMethodTile(
-      ActionMethodInfoOld actionMethodInfo, BuildContext context) {
+      ActionMethodInfo actionMethodInfo, BuildContext context) {
     return ListTile(
       leading: Icon(actionMethodInfo.icon),
       //TODO of actionMethodInfo.icon=null then
@@ -329,7 +329,7 @@ class MainMenu extends StatelessWidget {
           //remove extra space between leading and title
           transform: Matrix4.translationValues(-20, 0.0, 0.0),
           child: Text(
-            actionMethodInfo.title,
+            actionMethodInfo.name,
           )),
       onTap: () => {onTab(context, actionMethodInfo)},
     );

@@ -7,8 +7,8 @@ import 'package:reflect_framework/code_builders/info_json.dart';
 import 'package:reflect_framework/code_builders_code/service_class_info_class.dart';
 import 'package:yaml/yaml.dart';
 
-class ReflectApplicationInfoCode extends Class {
-  ReflectApplicationInfoCode(
+class ApplicationInfoClass extends Class {
+  ApplicationInfoClass(
       ReflectJson reflectJson, ServiceClassInfoClasses serviceClassInfoClasses)
       : super('ReflectApplicationInfo',
             implements: _createImplements(),
@@ -71,14 +71,14 @@ class ReflectApplicationInfoCode extends Class {
   static Method _createServiceClassGetterMethod(
       ServiceClassInfoClasses serviceClassInfoClasses) {
     List<Annotation> annotations = [Annotation.override()];
-    Type domainClassInfoType = Type('ServiceClassInfo',
+    Type serviceClassInfoType = Type('ServiceClassInfo',
         libraryUrl: 'package:reflect_framework/core/service_class_info.dart');
 
     Expression createBody = Expression.ofList(serviceClassInfoClasses
         .map((serviceClassInfoClass) =>
             Expression.callConstructor(Type(serviceClassInfoClass.name.name)))
         .toList());
-    Type listOfDomainClassInfo = Type.ofGenericList(domainClassInfoType);
+    Type listOfDomainClassInfo = Type.ofGenericList(serviceClassInfoType);
     return Method.getter('serviceClassInfos', createBody,
         type: listOfDomainClassInfo, annotations: annotations);
   }

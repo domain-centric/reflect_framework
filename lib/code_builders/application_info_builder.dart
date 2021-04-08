@@ -29,8 +29,8 @@ void _createApplicationInfoLibraryFile(json) {
 }
 
 String _createReflectGeneratedLibCode(json) {
-  String dartCode =
-      ApplicationInfoLibraryCode(ReflectJson.fromJson(json)).toString();
+  var reflectJson = ReflectJson.fromJson(json);
+  String dartCode = ApplicationInfoLibraryCode(reflectJson).toString();
   print(dartCode);
   return dartCode;
 }

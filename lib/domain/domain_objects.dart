@@ -62,6 +62,12 @@ class PersonService {
       Person("Nils", "ten Hoeve")
     ];
   }
+
+  @DomainClass() //TODO remove after test
+  @ActionMethodPreProcessor(index: 22) //TODO remove after test
+  void modifyPerson(Person person) {}
+
+  void random() {}
 }
 
 class Person {

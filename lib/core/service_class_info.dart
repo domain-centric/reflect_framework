@@ -40,7 +40,7 @@ abstract class ServiceClassInfo extends ClassInfo implements DynamicItem {
   }
 
 //TODO replace with List<ActionMethodInfo> get actionMethods;
-  List<ActionMethodInfoOld> get actionMethodInfos;
+  List<ActionMethodInfo> get actionMethodInfos;
 
   /// Order of the [ServiceObject], e.g.: the lower the number, the higher the [ServiceObject] appears in the menu's.
   double get order;

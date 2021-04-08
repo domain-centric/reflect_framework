@@ -21,9 +21,16 @@ class ApplicationInfoLibraryCode extends Library {
   static List<Class> createClasses(ReflectJson reflectJson) {
     List<Class> classes = [];
     var serviceClassInfoClasses = ServiceClassInfoClasses(reflectJson);
-    classes
-        .add(ReflectApplicationInfoCode(reflectJson, serviceClassInfoClasses));
-    classes.addAll(serviceClassInfoClasses);
+    classes.add(ApplicationInfoClass(reflectJson, serviceClassInfoClasses));
+
+    for (ServiceClassInfoClass serviceClassInfoClass
+        in serviceClassInfoClasses) {
+      if (serviceClassInfoClass.actionMethodInfoClasses.isNotEmpty) {
+        classes.add(serviceClassInfoClass);
+        classes.addAll(serviceClassInfoClass.actionMethodInfoClasses);
+      }
+    }
+
     return classes;
   }
 }

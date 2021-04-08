@@ -201,3 +201,44 @@ class Order {
     return method;
   }
 }
+
+class Icon {
+  final Expression body;
+
+  Icon.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
+      : body = _createBody(methodJson.name); //TODO
+
+  /// Creates a Dart method to return a [Description]
+  Method createGetterMethod() {
+    List<Annotation> annotations = [Annotation.override()];
+    Method method = Method.getter('icon', body,
+        type: Type('IconData', libraryUrl: 'package:flutter/widgets.dart'),
+        annotations: annotations);
+    return method;
+  }
+
+  //TODO replace with something descent (this is just for testing)
+  static _createBody(String name) {
+    switch (name) {
+      case 'modifyPerson':
+        return Expression([
+          Type('Icons', libraryUrl: 'package:flutter/material.dart'),
+          Code('.table_rows_sharp')
+        ]);
+        break;
+      case 'findPersons':
+        return Expression([
+          Type('Icons', libraryUrl: 'package:flutter/material.dart'),
+          Code('.tab_sharp')
+        ]);
+        break;
+      default:
+        {
+          return Expression([
+            Type('Icons', libraryUrl: 'package:flutter/material.dart'),
+            Code('.table_chart_sharp')
+          ]);
+        }
+    }
+  }
+}
