@@ -30,7 +30,7 @@ void editStringParameterInDialog(
 }
 
 @ActionMethodParameterProcessor(
-    index: 150, actionMethodMustHaveProcessDirectlyAnnotation: true)
+    index: 150, requiredAnnotations: [ExecutionMode.directly])
 void executeDirectlyForMethodsWithProcessDirectlyAnnotation(
     ActionMethodProcessorContext context, Object anyObject) {
   //TODO create parameter?

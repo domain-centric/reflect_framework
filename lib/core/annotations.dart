@@ -18,11 +18,13 @@ class ActionMethodParameterProcessor {
   final double index;
 
   /// If the [ActionMethod] must have a [ProcessDirectly] annotation, in order to be processed by the [ActionMethodParameterProcessor]. Default=false
-  final bool actionMethodMustHaveProcessDirectlyAnnotation;
+  final List<Object> requiredAnnotations;
 
   const ActionMethodParameterProcessor(
-      {this.index, this.actionMethodMustHaveProcessDirectlyAnnotation = false});
+      {this.index, this.requiredAnnotations = const []});
 }
+
+enum ExecutionMode { directly, firstAskConformation, firstEditParameter }
 
 /// A [ActionMethodResultProcessor] processed the [ActionMethod] results (e.g. displays the results to the user or sends back an reply)
 ///
