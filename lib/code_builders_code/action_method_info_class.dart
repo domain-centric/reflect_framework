@@ -39,13 +39,12 @@ class ActionMethodInfoClass extends Class {
         Icon.forActionMethod(classJson, methodJson).createGetterMethod(),
         Visible.forActionMethod(classJson, methodJson).createGetterMethod(),
         Order.forActionMethod(classJson, methodJson).createGetterMethod(),
-        _createExecuteMethod(classJson, methodJson),
+        _createStartMethod(classJson, methodJson),
         _createProcessParameterMethod(),
         _createProcessResultMethod(),
       ];
 
-  /// TODO replace with [ActionMethodInfo.preProcess] and [ActionMethodInfo.process]
-  static Method _createExecuteMethod(
+  static Method _createStartMethod(
       ClassJson classJson, ExecutableJson methodJson) {
     Statements body = Statements([
       Statement([
@@ -63,7 +62,7 @@ class ActionMethodInfoClass extends Class {
       Statement([Code('tabs.add(tab)')]),
     ]);
     List<Annotation> annotations = [Annotation.override()];
-    Method method = Method('execute', body,
+    Method method = Method('start', body,
         parameters: Parameters([
           Parameter.required('context',
               type: Type('BuildContext',

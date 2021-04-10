@@ -27,6 +27,9 @@ abstract class ActionMethod extends ConceptDocumentation {}
 abstract class ActionMethodInfo implements DynamicItem {
   IconData get icon;
 
+  /// Starts the ActionMethod process (e.g. when clicking on a menu button)
+  void start(BuildContext context);
+
   /// This method should only be called by menu items (for [ReflectGuiApplication]s) or external commands (for other types of [ReflectApplication]s
   /// It:
   /// - tries to create the parameter value(s) with [ActionMethodParameterFactory]'s (if any)
@@ -44,8 +47,6 @@ abstract class ActionMethodInfo implements DynamicItem {
   void processResult(
       ActionMethodProcessorContext context, List methodParameterValues);
 
-  /// TODO replace with [ActionMethodInfo.preProcess] and [ActionMethodInfo.process]
-  void execute(BuildContext context);
 }
 
 /// [ServiceObjectActionMethod]s are displayed on the main menu of an [ReflectGuiApplication] or are commands that can be accessed from the outside world in other type of [ReflectApplications]

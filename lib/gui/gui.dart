@@ -259,7 +259,7 @@ class MainMenu extends StatelessWidget {
   const MainMenu({Key key, this.isDrawerMenu}) : super(key: key);
 
   onTab(BuildContext context, ActionMethodInfo actionMethodInfo) {
-    actionMethodInfo.execute(context);
+    actionMethodInfo.start(context);
     if (isDrawerMenu) {
       Navigator.pop(context); //Hide Drawer
     }

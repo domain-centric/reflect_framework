@@ -75,7 +75,7 @@ class PersonServiceAllPersonsInfo$ implements _i3.ActionMethodInfo {
   double get order => 100.0;
 
   @override
-  void execute(_i4.BuildContext context) {
+  void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
     var tab = _i7.ExampleTabFactory().create();
     tabs.add(tab);
@@ -111,7 +111,7 @@ class PersonServiceFindPersonsInfo$ implements _i3.ActionMethodInfo {
   double get order => 100.0;
 
   @override
-  void execute(_i4.BuildContext context) {
+  void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
     var tab = _i9.TableExampleTabFactory().create();
     tabs.add(tab);
@@ -147,7 +147,7 @@ class PersonServiceModifyPersonInfo$ implements _i3.ActionMethodInfo {
   double get order => 100.0;
 
   @override
-  void execute(_i4.BuildContext context) {
+  void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
     var tab = _i10.FormExampleTabFactory().create();
     tabs.add(tab);
@@ -183,7 +183,7 @@ class PersonServiceRandomInfo$ implements _i3.ActionMethodInfo {
   double get order => 100.0;
 
   @override
-  void execute(_i4.BuildContext context) {
+  void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
     var tab = _i7.ExampleTabFactory().create();
     tabs.add(tab);
