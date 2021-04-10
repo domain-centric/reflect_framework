@@ -4,7 +4,7 @@ import 'package:provider/provider.dart' as _i6;
 import 'package:reflect_framework/core/action_method_info.dart' as _i3;
 import 'package:reflect_framework/core/application_info.dart' as _i1;
 import 'package:reflect_framework/core/service_class_info.dart' as _i2;
-import 'package:reflect_framework/gui/action_method_pre_processor_context.dart'
+import 'package:reflect_framework/gui/action_method_processor_context.dart'
     as _i8;
 import 'package:reflect_framework/gui/gui_tab.dart' as _i7;
 import 'package:reflect_framework/gui/gui_tab_form.dart' as _i10;
@@ -82,14 +82,14 @@ class PersonServiceAllPersonsInfo$ implements _i3.ActionMethodInfo {
   }
 
   @override
-  void preProcess(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processParameter(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 
   @override
-  void process(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processResult(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 }
@@ -118,14 +118,14 @@ class PersonServiceFindPersonsInfo$ implements _i3.ActionMethodInfo {
   }
 
   @override
-  void preProcess(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processParameter(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 
   @override
-  void process(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processResult(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 }
@@ -154,14 +154,14 @@ class PersonServiceModifyPersonInfo$ implements _i3.ActionMethodInfo {
   }
 
   @override
-  void preProcess(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processParameter(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 
   @override
-  void process(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processResult(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 }
@@ -190,14 +190,14 @@ class PersonServiceRandomInfo$ implements _i3.ActionMethodInfo {
   }
 
   @override
-  void preProcess(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processParameter(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 
   @override
-  void process(
-      _i8.ActionMethodPreProcessorContext context, List methodParameterValues) {
+  void processResult(
+      _i8.ActionMethodProcessorContext context, List methodParameterValues) {
     // TODO: IMPLEMENT
   }
 }

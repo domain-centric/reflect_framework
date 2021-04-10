@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:reflect_framework/core/item.dart';
 
-import '../gui/action_method_pre_processor_context.dart';
+import '../gui/action_method_processor_context.dart';
 import 'reflect_documentation.dart';
 import 'reflect_framework.dart';
 import 'service_class_info.dart';
@@ -33,16 +33,16 @@ abstract class ActionMethodInfo implements DynamicItem {
   /// - and then calls a [ActionMethodPreProcessor]
   /// - and then calls the method (which might be delegated to a form ok or a dialog ok button)
   /// - it will handle any exceptions that could be thrown
-  void preProcess(
-      ActionMethodPreProcessorContext context, List methodParameterValues);
+  void processParameter(
+      ActionMethodProcessorContext context, List methodParameterValues);
 
   /// This method should only be called by a [ActionMethodPreProcessor] (which might be delegated to a form ok or a dialog ok button)
   /// It:
   /// - invokes the method
   /// - and then calls the [ActionMethodProcessor] to process the results
   /// - it will handle any exceptions that could be thrown
-  void process(
-      ActionMethodPreProcessorContext context, List methodParameterValues);
+  void processResult(
+      ActionMethodProcessorContext context, List methodParameterValues);
 
   /// TODO replace with [ActionMethodInfo.preProcess] and [ActionMethodInfo.process]
   void execute(BuildContext context);

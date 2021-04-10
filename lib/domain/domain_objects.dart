@@ -37,10 +37,10 @@ class Address {
 }
 
 @ServiceClass()
-@ActionMethodPreProcessor(index: 11) //TODO remove after test
+@ActionMethodParameterProcessor(index: 11) //TODO remove after test
 class PersonService {
   @DomainClass() //TODO remove after test
-  @ActionMethodPreProcessor(index: 22) //TODO remove after test
+  @ActionMethodParameterProcessor(index: 22) //TODO remove after test
   List<Person> allPersons() {
     return [
       Person("James", "Gosling"),
@@ -52,7 +52,7 @@ class PersonService {
   }
 
   @DomainClass() //TODO remove after test
-  @ActionMethodPreProcessor(index: 33) //TODO remove after test
+  @ActionMethodParameterProcessor(index: 33) //TODO remove after test
   List<Person> findPersons(String query) {
     return [
       Person("James", "Gosling"),
@@ -64,7 +64,7 @@ class PersonService {
   }
 
   @DomainClass() //TODO remove after test
-  @ActionMethodPreProcessor(index: 22) //TODO remove after test
+  @ActionMethodParameterProcessor(index: 22) //TODO remove after test
   void modifyPerson(Person person) {}
 
   void random() {}
@@ -74,11 +74,11 @@ class Person {
   String givenName;
 
   @DomainClass() //TODO remove after test
-  @ActionMethodPreProcessor(index: 111) //TODO remove after test
+  @ActionMethodParameterProcessor(index: 111) //TODO remove after test
   String surName;
 
   @DomainClass() //TODO remove after test
-  @ActionMethodPreProcessor(index: 222) //TODO remove after test
+  @ActionMethodParameterProcessor(index: 222) //TODO remove after test
   String get fullName {
     return givenName ?? "" + " " + surName ?? "".trim();
   }

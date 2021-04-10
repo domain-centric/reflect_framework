@@ -40,8 +40,8 @@ class ActionMethodInfoClass extends Class {
         Visible.forActionMethod(classJson, methodJson).createGetterMethod(),
         Order.forActionMethod(classJson, methodJson).createGetterMethod(),
         _createExecuteMethod(classJson, methodJson),
-        _createPreProcessMethod(),
-        _createProcessMethod(),
+        _createProcessParameterMethod(),
+        _createProcessResultMethod(),
       ];
 
   /// TODO replace with [ActionMethodInfo.preProcess] and [ActionMethodInfo.process]
@@ -92,15 +92,15 @@ class ActionMethodInfoClass extends Class {
     }
   }
 
-  static Method _createPreProcessMethod() {
+  static Method _createProcessParameterMethod() {
     List<Annotation> annotations = [Annotation.override()];
     CodeNode body = Comment.fromString('TODO: IMPLEMENT'); //TODO
-    Method method = Method('preProcess', body,
+    Method method = Method('processParameter', body,
         parameters: Parameters([
           Parameter.required('context',
-              type: Type('ActionMethodPreProcessorContext',
+              type: Type('ActionMethodProcessorContext',
                   libraryUrl:
-                      'package:reflect_framework/gui/action_method_pre_processor_context.dart')),
+                      'package:reflect_framework/gui/action_method_processor_context.dart')),
           Parameter.required('methodParameterValues', type: Type.ofList()),
         ]),
         type: Type('void'),
@@ -108,15 +108,15 @@ class ActionMethodInfoClass extends Class {
     return method;
   }
 
-  static Method _createProcessMethod() {
+  static Method _createProcessResultMethod() {
     List<Annotation> annotations = [Annotation.override()];
     CodeNode body = Comment.fromString('TODO: IMPLEMENT'); //TODO
-    Method method = Method('process', body,
+    Method method = Method('processResult', body,
         parameters: Parameters([
           Parameter.required('context',
-              type: Type('ActionMethodPreProcessorContext',
+              type: Type('ActionMethodProcessorContext',
                   libraryUrl:
-                      'package:reflect_framework/gui/action_method_pre_processor_context.dart')),
+                      'package:reflect_framework/gui/action_method_processor_context.dart')),
           Parameter.required('methodParameterValues', type: Type.ofList()),
         ]),
         type: Type('void'),
