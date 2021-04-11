@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
 
 /// A [ActionMethodParameterProcessor] does something with [ActionMethod] parameters, for a given method parameter signature, before the [ActionMethodResultProcessor] is called to process the method result.
 ///
@@ -24,7 +25,17 @@ class ActionMethodParameterProcessor {
       {this.index, this.requiredAnnotations = const []});
 }
 
-enum ExecutionMode { directly, firstAskConformation, firstEditParameter }
+/// Annotation value for a [ActionMethod] on how to process the parameter value
+enum ExecutionMode {
+  /// Execute the [ActionMethod] directly, by calling [ActionMethodInfo.processResult]
+  directly,
+
+  /// first show the [ActionMethod] parameter value and ask the user to to confirm (e.g. with a dialog). If so, call [ActionMethodInfo.processResult]
+  firstAskConformation,
+
+  /// first let the user edit the [ActionMethod] parameter value (e.g. in a [FormTab]). Then, call [ActionMethodInfo.processResult]
+  firstEditParameter
+}
 
 /// A [ActionMethodResultProcessor] processed the [ActionMethod] results (e.g. displays the results to the user or sends back an reply)
 ///
@@ -47,11 +58,6 @@ class ActionMethodResultProcessor {
   const ActionMethodResultProcessor(this.index);
 }
 
-/// Annotation to indicate that [ActionMethodInfo.preProcess] needs to call [ActionMethodInfo.process] directly.
-class ProcessDirectly {
-  const ProcessDirectly();
-}
-
 /// Annotation to indicate that a class is a [ServiceObject], so that they are recognized by the [ReflectFramework]
 /// See [ServiceClassInfo]
 class ServiceClass {
@@ -64,6 +70,16 @@ class ServiceClass {
 /// - [ActionMethodResultProcessor]s
 class DomainClass {
   const DomainClass();
+}
+
+/// A [ActionMethodParameterFactory] creates an new instance for the [ActionMethod] parameter.
+/// This parameter can than be processed (See [ActionMethodParameterProcessor]) after which it is passed as the [ActionMethodParameter] parameter when the [ActionMethod] is invoked bij the [ActionMethodResultProcessor].
+/// The MainMenu will display all [ActionMethod]s of all registered [ServiceClass]es that can directly be executed . This means that only [ActionMethod]s that either have no method parameter or have an ParameterFactory are displayed as menu items in the MainMenu.
+///
+/// You can put an [ActionMethodParameterFactory] annotation before an [ActionMethod] to indicate that the parameter can be created with an unnamed no-argument constructor.
+/// TODO ActionMethodParameterFactoryMethod
+class ActionMethodParameterFactory {
+  const ActionMethodParameterFactory();
 }
 
 /// The [Translation] annotation is used to add or correct a translatable text.

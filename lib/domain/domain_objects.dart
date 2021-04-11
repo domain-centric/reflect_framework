@@ -43,11 +43,11 @@ class PersonService {
   @ActionMethodParameterProcessor(index: 22) //TODO remove after test
   List<Person> allPersons() {
     return [
-      Person("James", "Gosling"),
-      Person("Eric", "Evans"),
-      Person("Martin", "Fowler"),
-      Person("Richard", "Pawson"),
-      Person("Nils", "ten Hoeve")
+      Person.fromNames("James", "Gosling"),
+      Person.fromNames("Eric", "Evans"),
+      Person.fromNames("Martin", "Fowler"),
+      Person.fromNames("Richard", "Pawson"),
+      Person.fromNames("Nils", "ten Hoeve")
     ];
   }
 
@@ -55,19 +55,29 @@ class PersonService {
   @ActionMethodParameterProcessor(index: 33) //TODO remove after test
   List<Person> findPersons(String query) {
     return [
-      Person("James", "Gosling"),
-      Person("Eric", "Evans"),
-      Person("Martin", "Fowler"),
-      Person("Richard", "Pawson"),
-      Person("Nils", "ten Hoeve")
+      Person.fromNames("James", "Gosling"),
+      Person.fromNames("Eric", "Evans"),
+      Person.fromNames("Martin", "Fowler"),
+      Person.fromNames("Richard", "Pawson"),
+      Person.fromNames("Nils", "ten Hoeve")
     ];
   }
 
-  @DomainClass() //TODO remove after test
-  @ActionMethodParameterProcessor(index: 22) //TODO remove after test
-  void modifyPerson(Person person) {}
+  @ExecutionMode.firstEditParameter
+  void edit(Person person) {}
 
-  void random() {}
+  @ExecutionMode.firstAskConformation
+  void remove(Person person) {}
+
+  @ExecutionMode.firstEditParameter
+  @ActionMethodParameterFactory()
+  void addNew(Person person) {}
+
+  @ExecutionMode.directly
+  void sendEmail(Person person) {}
+
+  //Test: action method without parameter
+  void logout() {}
 }
 
 class Person {
@@ -83,5 +93,7 @@ class Person {
     return givenName ?? "" + " " + surName ?? "".trim();
   }
 
-  Person(this.givenName, this.surName);
+  Person();
+
+  Person.fromNames(this.givenName, this.surName);
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:dart_code/dart_code.dart';
 import 'package:quiver/core.dart';
 import 'package:recase/recase.dart';
 import 'package:source_gen/source_gen.dart';
@@ -307,6 +308,8 @@ class TypeJson {
   final String name;
   final List<TypeJson> genericTypes;
 
+  TypeJson(this.name, this.library, [this.genericTypes]);
+
   TypeJson.fromElement(Element element)
       : library = element.source.fullName,
         name = element.name,
@@ -354,6 +357,16 @@ class TypeJson {
     } else {
       return const [];
     }
+  }
+
+  Type toType() {
+    List<Type> genericTypes = this.genericTypes == null
+        ? const []
+        : this.genericTypes.map((t) => t.toType()).toList();
+    String libraryUrl = library
+        .replaceFirst(RegExp('/lib/'), '/')
+        .replaceFirst('/', 'package:');
+    return Type(name, libraryUrl: libraryUrl, generics: genericTypes);
   }
 
   @override

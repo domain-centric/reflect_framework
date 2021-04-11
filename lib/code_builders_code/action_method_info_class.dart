@@ -21,6 +21,18 @@ class ActionMethodInfoClass extends Class {
             implements: _createImplements(),
             methods: _createMethods(classJson, methodJson));
 
+  static bool _hasParameter(ExecutableJson methodJson) =>
+      methodJson.parameterTypes.isNotEmpty;
+
+  static final parameterFactoryAnnotation = TypeJson(
+      'ActionMethodParameterFactory',
+      '/reflect_framework/lib/core/annotations.dart');
+
+  static bool _hasParameterFactory(ExecutableJson methodJson) =>
+      methodJson.annotations.any((a) =>
+          a.type.name ==
+          'ActionMethodParameterFactory'); //TODO.contains(parameterFactoryAnnotation);
+
   static String _createClassName(
           ClassJson classJson, ExecutableJson methodJson) =>
       classJson.type.name + methodJson.name.pascalCase + 'Info\$';
@@ -31,18 +43,27 @@ class ActionMethodInfoClass extends Class {
                 'package:reflect_framework/core/action_method_info.dart')
       ];
 
+  static _hasReturnValue(ExecutableJson methodJson) =>
+      methodJson.returnType != null;
+
   static List<Method> _createMethods(
-          ClassJson classJson, ExecutableJson methodJson) =>
-      [
-        Name.forActionMethod(classJson, methodJson).createGetterMethod(),
-        Description.forActionMethod(classJson, methodJson).createGetterMethod(),
-        Icon.forActionMethod(classJson, methodJson).createGetterMethod(),
-        Visible.forActionMethod(classJson, methodJson).createGetterMethod(),
-        Order.forActionMethod(classJson, methodJson).createGetterMethod(),
-        _createStartMethod(classJson, methodJson),
-        _createProcessParameterMethod(),
-        _createProcessResultMethod(),
-      ];
+      ClassJson classJson, ExecutableJson methodJson) {
+    bool hasParameter = _hasParameter(methodJson);
+    bool hasParameterFactory = _hasParameterFactory(methodJson);
+    bool hasStartParameter = !hasParameter || hasParameterFactory;
+    bool hasReturnValue = _hasReturnValue(methodJson);
+    return [
+      Name.forActionMethod(classJson, methodJson).createGetterMethod(),
+      Description.forActionMethod(classJson, methodJson).createGetterMethod(),
+      Icon.forActionMethod(classJson, methodJson).createGetterMethod(),
+      Visible.forActionMethod(classJson, methodJson).createGetterMethod(),
+      Order.forActionMethod(classJson, methodJson).createGetterMethod(),
+      _createStartMethod(classJson, methodJson),
+      if (hasParameterFactory) _createParameterFactoryMethod(methodJson),
+      _createProcessParameterMethod(),
+      _createProcessResultMethod(),
+    ];
+  }
 
   static Method _createStartMethod(
       ClassJson classJson, ExecutableJson methodJson) {
@@ -90,6 +111,16 @@ class ActionMethodInfoClass extends Class {
         }
     }
   }
+
+  //TODO create parameterType from serviceObject actionMethodParameterFactoryMethod
+  static _createParameterFactoryMethod(ExecutableJson methodJson) {
+    Type parameterType = _createParameterType(methodJson);
+    Expression body = Expression.callConstructor(parameterType);
+    return Method('_createParameter', body, type: parameterType);
+  }
+
+  static Type _createParameterType(ExecutableJson methodJson) =>
+      methodJson.parameterTypes.first.toType();
 
   static Method _createProcessParameterMethod() {
     List<Annotation> annotations = [Annotation.override()];

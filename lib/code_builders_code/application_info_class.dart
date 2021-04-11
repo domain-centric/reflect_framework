@@ -83,8 +83,6 @@ class ApplicationInfoClass extends Class {
         type: listOfDomainClassInfo, annotations: annotations);
   }
 
-  static _createParameterValues(String name) => ParameterValues(
-      [ParameterValue.named('title', Expression.ofString(name))]);
 }
 
 class PubSpecYaml {
