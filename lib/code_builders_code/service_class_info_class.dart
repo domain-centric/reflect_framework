@@ -1,5 +1,3 @@
-// import 'package:code_builder/code_builder.dart';
-//
 import 'package:collection/collection.dart';
 import 'package:dart_code/dart_code.dart';
 import 'package:reflect_framework/code_builders/info_behavioural.dart';
@@ -47,7 +45,7 @@ class ServiceClassInfoClass extends Class {
 
   ServiceClassInfoClass(this.classJson, this.actionMethodInfoClasses)
       : super(_createClassName(classJson),
-            implements: [_createServiceClassInfoType()],
+            superClass: _createServiceClassInfoType(),
             methods: _createMethods(classJson, actionMethodInfoClasses));
 
   static String _createClassName(ClassJson classJson) =>
@@ -70,7 +68,8 @@ class ServiceClassInfoClass extends Class {
   static _createActionMethodInfosGetterMethod(
       ActionMethodInfoClasses actionMethodInfoClasses) {
     CodeNode body = Expression.ofList(actionMethodInfoClasses
-        .map((a) => Expression.callConstructor(Type(a.name.name)))
+        .map((a) =>
+            Expression.callConstructor(Type(a.name.toUnFormattedString(null))))
         .toList());
     List<Annotation> annotations = [Annotation.override()];
     var actionMethodInfo = Type('ActionMethodInfo',

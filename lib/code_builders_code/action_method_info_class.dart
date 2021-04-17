@@ -16,9 +16,12 @@ class ActionMethodInfoClasses extends DelegatingList<ActionMethodInfoClass> {
 }
 
 class ActionMethodInfoClass extends Class {
+  static Type _createActionMethodType(String name) => Type(name,
+      libraryUrl: 'package:reflect_framework/core/action_method_info.dart');
+
   ActionMethodInfoClass(ClassJson classJson, ExecutableJson methodJson)
       : super(_createClassName(classJson, methodJson),
-            implements: _createImplements(),
+            implements: _createImplementationTypes(methodJson),
             methods: _createMethods(classJson, methodJson));
 
   static bool _hasParameter(ExecutableJson methodJson) =>
@@ -33,14 +36,22 @@ class ActionMethodInfoClass extends Class {
           a.type.name ==
           'ActionMethodParameterFactory'); //TODO.contains(parameterFactoryAnnotation);
 
+  static bool _startWithParameter(ExecutableJson methodJson) =>
+      _hasParameter(methodJson) && !_hasParameterFactory(methodJson);
+
   static String _createClassName(
           ClassJson classJson, ExecutableJson methodJson) =>
       classJson.type.name + methodJson.name.pascalCase + 'Info\$';
 
-  static List<Type> _createImplements() => [
-        Type('ActionMethodInfo',
-            libraryUrl:
-                'package:reflect_framework/core/action_method_info.dart')
+  static List<Type> _createImplementationTypes(ExecutableJson methodJson) => [
+        if (_startWithParameter(methodJson))
+          _createActionMethodType('StartWithParameter')
+        else
+          _createActionMethodType('StartWithoutParameter'),
+        if (_hasParameter(methodJson))
+          _createActionMethodType('InvokeWithParameter')
+        else
+          _createActionMethodType('InvokeWithoutParameter'),
       ];
 
   static _hasReturnValue(ExecutableJson methodJson) =>
@@ -60,13 +71,12 @@ class ActionMethodInfoClass extends Class {
       Order.forActionMethod(classJson, methodJson).createGetterMethod(),
       _createStartMethod(classJson, methodJson),
       if (hasParameterFactory) _createParameterFactoryMethod(methodJson),
-      _createProcessParameterMethod(),
-      _createProcessResultMethod(),
+      if (hasParameter) _createProcessParameterMethod(),
+      _createInvokeMethodAndProcessResultMethod(methodJson),
     ];
   }
 
-  static Method _createStartMethod(
-      ClassJson classJson, ExecutableJson methodJson) {
+  static Method _createStartMethod(ClassJson classJson, ExecutableJson methodJson) {
     Statements body = Statements([
       Statement([
         Code('var tabs = '),
@@ -85,9 +95,9 @@ class ActionMethodInfoClass extends Class {
     List<Annotation> annotations = [Annotation.override()];
     Method method = Method('start', body,
         parameters: Parameters([
-          Parameter.required('context',
-              type: Type('BuildContext',
-                  libraryUrl: 'package:flutter/widgets.dart'))
+          Parameter.required('context', type: _createBuildContextType()),
+          if (_startWithParameter(methodJson))
+            Parameter.required('parameterValue', type: Type('Object')),
         ]),
         type: Type('void'),
         annotations: annotations);
@@ -122,32 +132,32 @@ class ActionMethodInfoClass extends Class {
   static Type _createParameterType(ExecutableJson methodJson) =>
       methodJson.parameterTypes.first.toType();
 
+  static Type _createBuildContextType() =>
+      Type('BuildContext', libraryUrl: 'package:flutter/widgets.dart');
+
   static Method _createProcessParameterMethod() {
-    List<Annotation> annotations = [Annotation.override()];
     CodeNode body = Comment.fromString('TODO: IMPLEMENT'); //TODO
-    Method method = Method('processParameter', body,
-        parameters: Parameters([
-          Parameter.required('context',
-              type: Type('ActionMethodProcessorContext',
-                  libraryUrl:
-                      'package:reflect_framework/gui/action_method_processor_context.dart')),
-          Parameter.required('methodParameterValues', type: Type.ofList()),
-        ]),
-        type: Type('void'),
-        annotations: annotations);
+    Method method = Method(
+      'processParameter',
+      body,
+      parameters: Parameters([
+        Parameter.required('context', type: _createBuildContextType()),
+        Parameter.required('parameterValue', type: Type('Object')),
+      ]),
+      type: Type('void'),
+    );
     return method;
   }
 
-  static Method _createProcessResultMethod() {
+  static Method _createInvokeMethodAndProcessResultMethod(
+      ExecutableJson methodJson) {
     List<Annotation> annotations = [Annotation.override()];
     CodeNode body = Comment.fromString('TODO: IMPLEMENT'); //TODO
-    Method method = Method('processResult', body,
+    Method method = Method('invokeMethodAndProcessResult', body,
         parameters: Parameters([
-          Parameter.required('context',
-              type: Type('ActionMethodProcessorContext',
-                  libraryUrl:
-                      'package:reflect_framework/gui/action_method_processor_context.dart')),
-          Parameter.required('methodParameterValues', type: Type.ofList()),
+          Parameter.required('context', type: _createBuildContextType()),
+          if (_hasParameter(methodJson))
+            Parameter.required('parameterValue', type: Type('Object')),
         ]),
         type: Type('void'),
         annotations: annotations);

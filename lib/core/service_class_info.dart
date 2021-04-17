@@ -39,8 +39,11 @@ abstract class ServiceClassInfo extends ClassInfo implements DynamicItem {
     return true;
   }
 
-//TODO replace with List<ActionMethodInfo> get actionMethods;
   List<ActionMethodInfo> get actionMethodInfos;
+
+  List<ActionMethodInfo> get actionMethodInfosForMainMenu => actionMethodInfos
+      .where((a) => a.visible && a is StartWithoutParameter)
+      .toList();
 
   /// Order of the [ServiceObject], e.g.: the lower the number, the higher the [ServiceObject] appears in the menu's.
   double get order;

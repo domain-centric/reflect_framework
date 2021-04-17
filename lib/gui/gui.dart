@@ -259,9 +259,11 @@ class MainMenu extends StatelessWidget {
   const MainMenu({Key key, this.isDrawerMenu}) : super(key: key);
 
   onTab(BuildContext context, ActionMethodInfo actionMethodInfo) {
-    actionMethodInfo.start(context);
-    if (isDrawerMenu) {
-      Navigator.pop(context); //Hide Drawer
+    if (actionMethodInfo is StartWithoutParameter) {
+      actionMethodInfo.start(context);
+      if (isDrawerMenu) {
+        Navigator.pop(context); //Hide Drawer
+      }
     }
   }
 
@@ -287,7 +289,7 @@ class MainMenu extends StatelessWidget {
     for (ServiceClassInfo serviceObjectClassInfo in serviceClassInfo) {
       children.add(createServiceObjectTile(serviceObjectClassInfo));
       for (ActionMethodInfo actionMethodInfo
-          in serviceObjectClassInfo.actionMethodInfos) {
+          in serviceObjectClassInfo.actionMethodInfosForMainMenu) {
         children.add(createActionMethodTile(actionMethodInfo, context));
       }
     }
@@ -298,8 +300,7 @@ class MainMenu extends StatelessWidget {
     return Container(
       height: 88.0, //TODO get from AppBar
       child: DrawerHeader(
-        child: Text(
-            Provider.of<ReflectApplicationInfo>(context).name,
+        child: Text(Provider.of<ReflectApplicationInfo>(context).name,
             style: Theme.of(context).primaryTextTheme.headline6),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,

@@ -75,8 +75,8 @@ class ApplicationInfoClass extends Class {
         libraryUrl: 'package:reflect_framework/core/service_class_info.dart');
 
     Expression createBody = Expression.ofList(serviceClassInfoClasses
-        .map((serviceClassInfoClass) =>
-            Expression.callConstructor(Type(serviceClassInfoClass.name.name)))
+        .map((serviceClassInfoClass) => Expression.callConstructor(
+            Type(serviceClassInfoClass.name.toUnFormattedString(null))))
         .toList());
     Type listOfDomainClassInfo = Type.ofGenericList(serviceClassInfoType);
     return Method.getter('serviceClassInfos', createBody,

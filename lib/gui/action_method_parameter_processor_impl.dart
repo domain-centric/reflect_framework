@@ -1,39 +1,39 @@
+import 'package:flutter/widgets.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
+
 import '../core/annotations.dart';
-import 'action_method_processor_context.dart';
 
 @ActionMethodParameterProcessor(index: 100)
 void executeDirectlyForMethodsWithoutParameter(
-    ActionMethodProcessorContext context) {
-  context.actionMethodInfo.processResult(context, []);
+    BuildContext context, InvokeWithoutParameter actionMethod) {
+  actionMethod.invokeMethodAndProcessResult(context);
 }
 
 @ActionMethodParameterProcessor(index: 102)
-void editDomainObjectParameterInForm(
-    ActionMethodProcessorContext context, @DomainClass() Object domainObject) {
+void editDomainObjectParameterInForm(BuildContext context,
+    InvokeWithParameter actionMethod, @DomainClass() Object domainObject) {
   // TODO something like:
   // tabs = Provider.of<Tabs>(context.buildContext);
   // FormTab formTab = FormTab(context, domainObject);
   // tabs.add(formTab);
 
   //TODO put in form OK button:
-  context.actionMethodInfo.processResult(context, [domainObject]);
+  actionMethod.invokeMethodAndProcessResult(context, domainObject);
 }
 
 //TODO other Dart types such as int, double,num, bool, DateTime
 @ActionMethodParameterProcessor(index: 103)
 void editStringParameterInDialog(
-    ActionMethodProcessorContext context, String value) {
+    BuildContext context, InvokeWithParameter actionMethod, String string) {
   // TODO create and open dialog
 
   //TODO put in dialog OK button:
-  context.actionMethodInfo.processResult(context, [value]);
+  actionMethod.invokeMethodAndProcessResult(context, string);
 }
 
 @ActionMethodParameterProcessor(
     index: 150, requiredAnnotations: [ExecutionMode.directly])
 void executeDirectlyForMethodsWithProcessDirectlyAnnotation(
-    ActionMethodProcessorContext context, Object anyObject) {
-  //TODO create parameter?
-
-  context.actionMethodInfo.processResult(context, [anyObject]);
+    BuildContext context, InvokeWithParameter actionMethod, Object anyObject) {
+  actionMethod.invokeMethodAndProcessResult(context, anyObject);
 }

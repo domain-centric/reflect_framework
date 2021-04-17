@@ -52,6 +52,7 @@ class PersonService {
   }
 
   @DomainClass() //TODO remove after test
+  @ActionMethodParameterFactory()
   @ActionMethodParameterProcessor(index: 33) //TODO remove after test
   List<Person> findPersons(String query) {
     return [
