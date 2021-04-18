@@ -242,6 +242,19 @@ class Icon {
     // try get default icon from processparameterprocessor
     // return default icon
     //TODO .lens    {default}
-    return createMaterialIconExpression('lens'); //circle
+
+    switch (methodJson.name) {
+      case 'addNew':
+        return createMaterialIconExpression('table_rows_sharp'); //circle
+        break;
+      case 'allPersons':
+      case 'findPersons':
+        return createMaterialIconExpression('table_chart_sharp'); //circle
+        break;
+      default:
+        {
+          return createMaterialIconExpression('lens'); //circle
+        }
+    }
   }
 }

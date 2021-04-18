@@ -106,10 +106,11 @@ class ActionMethodInfoClass extends Class {
 
   static Type _createTabFactoryType(String name) {
     switch (name) {
-      case 'modifyPerson':
+      case 'addNew':
         return Type('FormExampleTabFactory',
             libraryUrl: 'package:reflect_framework/gui/gui_tab_form.dart');
         break;
+      case 'allPersons':
       case 'findPersons':
         return Type('TableExampleTabFactory',
             libraryUrl: 'package:reflect_framework/gui/gui_tab_table.dart');
