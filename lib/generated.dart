@@ -32,16 +32,12 @@ class ReflectApplicationInfo implements _i1.ApplicationInfo {
 class DomainObjectsPersonServiceInfo$ extends _i2.ServiceClassInfo {
   @override
   String get name => 'People';
-
   @override
   String get description => '';
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   List<_i3.ActionMethodInfo> get actionMethodInfos => [
         PersonServiceAllPersonsInfo$(),
@@ -58,16 +54,14 @@ class PersonServiceAllPersonsInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithoutParameter {
   @override
   String get name => 'All persons';
-
   @override
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.table_chart_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
   @override
@@ -92,11 +86,10 @@ class PersonServiceFindPersonsInfo$
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.tab_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
   @override
@@ -109,7 +102,6 @@ class PersonServiceFindPersonsInfo$
   void processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -126,14 +118,12 @@ class PersonServiceEditInfo$
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.table_chart_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context, Object parameterValue) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
@@ -144,7 +134,6 @@ class PersonServiceEditInfo$
   void processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -161,14 +150,12 @@ class PersonServiceRemoveInfo$
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.table_chart_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context, Object parameterValue) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
@@ -179,7 +166,6 @@ class PersonServiceRemoveInfo$
   void processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -196,14 +182,12 @@ class PersonServiceAddNewInfo$
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.table_chart_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
@@ -212,11 +196,9 @@ class PersonServiceAddNewInfo$
   }
 
   _i10.Person _createParameter() => _i10.Person();
-
   void processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -233,14 +215,12 @@ class PersonServiceSendEmailInfo$
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.table_chart_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context, Object parameterValue) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
@@ -251,7 +231,6 @@ class PersonServiceSendEmailInfo$
   void processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -268,11 +247,10 @@ class PersonServiceLogoutInfo$
   String get description => '';
 
   @override
-  _i4.IconData get icon => _i5.Icons.table_chart_sharp;
+  _i4.IconData get icon => _i5.Icons.lens;
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
   @override

@@ -12,10 +12,7 @@ import 'info_json.dart';
 /// - create dart files
 
 main() {
-  String jsonString = File(
-          'C:/Users/nilsth/AndroidStudioProjects/reflect-framework/.dart_tool/build/generated/reflect_framework/lib/reflect_info.combined.json')
-      .readAsStringSync();
-  var json = jsonDecode(jsonString);
+  var json = ReflectJson.readJsonFromGeneratedReflectInfoCombinedFile();
   _createApplicationInfoLibraryFile(json);
 }
 

@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-nth/reflect/reflect_framework/BuildConfig.java
- nth.reflect.reflect_framework.BuildConfig

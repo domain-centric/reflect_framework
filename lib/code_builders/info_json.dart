@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -42,6 +43,17 @@ class ReflectJson {
   ReflectJson.empty()
       : this.functions = [],
         this.classes = [];
+
+  ReflectJson.fromGeneratedReflectInfoCombinedFile()
+      : this.fromJson(readJsonFromGeneratedReflectInfoCombinedFile());
+
+  static Map<String, dynamic> readJsonFromGeneratedReflectInfoCombinedFile() {
+    String jsonString = File(
+            ".dart_tool/build/generated/reflect_framework/lib/reflect_info.combined.json") //
+        .readAsStringSync();
+    var json = jsonDecode(jsonString);
+    return json;
+  }
 
   ReflectJson.fromJson(Map<String, dynamic> json)
       : classes = json[classesAttribute] == null

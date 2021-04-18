@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:reflect_framework/core/action_method_info.dart';
 
 /// A [ActionMethodParameterProcessor] does something with [ActionMethod] parameters, for a given method parameter signature, before the [ActionMethodResultProcessor] is called to process the method result.
@@ -21,8 +22,12 @@ class ActionMethodParameterProcessor {
   /// If the [ActionMethod] must have a [ProcessDirectly] annotation, in order to be processed by the [ActionMethodParameterProcessor]. Default=false
   final List<Object> requiredAnnotations;
 
+  final IconData defaultIcon;
+
   const ActionMethodParameterProcessor(
-      {this.index, this.requiredAnnotations = const []});
+      {@required this.index,
+      this.requiredAnnotations = const [],
+      this.defaultIcon});
 }
 
 /// Annotation value for a [ActionMethod] on how to process the parameter value
@@ -55,7 +60,9 @@ class ActionMethodResultProcessor {
   /// A double is used so that there are endless numbers to put between to existing numbers.
   final double index;
 
-  const ActionMethodResultProcessor(this.index);
+  final IconData defaultIcon;
+
+  const ActionMethodResultProcessor({@required this.index, this.defaultIcon});
 }
 
 /// Annotation to indicate that a class is a [ServiceObject], so that they are recognized by the [ReflectFramework]
@@ -80,6 +87,14 @@ class DomainClass {
 /// TODO ActionMethodParameterFactoryMethod
 class ActionMethodParameterFactory {
   const ActionMethodParameterFactory();
+}
+
+/// Define an icon by adding a [Icon] annotation before an [ActionMethod]
+/// Otherwise the reflect framework will select an icon for you. See [info_behaviour.Icon]
+class Icon {
+  final IconData iconData;
+
+  const Icon(this.iconData);
 }
 
 /// The [Translation] annotation is used to add or correct a translatable text.
@@ -120,3 +135,4 @@ class Translation {
 
   const Translation({this.keySuffix, @required this.englishText});
 }
+

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shine/flutter_shine.dart';
 import 'package:provider/provider.dart';
-import 'package:reflect_framework/core/action_method_info.dart';
-import 'package:reflect_framework/core/service_class_info.dart';
 
-import '../core/annotations.dart';
+import '../core/action_method_info.dart';
+import '../core/annotations.dart' as reflectAnnotation;
 import '../core/reflect_framework.dart';
+import '../core/service_class_info.dart';
 import '../generated.dart';
-import '../gui/gui_tab.dart' as ReflectTabs;
-import '../gui/gui_tab.dart';
+import '../gui/gui_tab.dart' as reflectTabs;
 import '../localization/localizations.dart';
 
 const kTabletBreakpoint = 720.0;
@@ -24,7 +23,7 @@ abstract class ReflectGuiApplication extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => Tabs()),
+      ChangeNotifierProvider(create: (_) => reflectTabs.Tabs()),
       Provider(create: (_) => ReflectApplicationInfo()),
     ], child: ReflectMaterialApp(reflectGuiApplication: this));
   }
@@ -85,7 +84,7 @@ class ApplicationTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Tabs tabs = Provider.of<Tabs>(context);
+    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
     String appTitle = Provider.of<ReflectApplicationInfo>(context).name;
     return LayoutBuilder(builder: (_, dimens) {
       if (tabs.isEmpty) {
@@ -106,7 +105,7 @@ class NarrowScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Tabs tabs = Provider.of<Tabs>(context);
+    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
     return Scaffold(
         appBar: AppBar(
           title: ApplicationTitle(),
@@ -136,7 +135,7 @@ class WideScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Tabs tabs = Provider.of<Tabs>(context);
+    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
     return Scaffold(
         appBar: AppBar(
           title: ApplicationTitle(),
@@ -194,17 +193,20 @@ class TabsIcon extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Align(
                     alignment: Alignment.center,
-                    child: Text('${Provider.of<Tabs>(context).length}')))));
+                    child: Text(
+                        '${Provider.of<reflectTabs.Tabs>(context).length}')))));
   }
 
-  @Translation(keySuffix: 'title', englishText: 'Tabs:')
-  @Translation(keySuffix: 'buttonCloseOthers', englishText: 'Close others')
-  @Translation(keySuffix: 'buttonCloseAll', englishText: 'Close all')
+  @reflectAnnotation.Translation(keySuffix: 'title', englishText: 'Tabs:')
+  @reflectAnnotation.Translation(
+      keySuffix: 'buttonCloseOthers', englishText: 'Close others')
+  @reflectAnnotation.Translation(
+      keySuffix: 'buttonCloseAll', englishText: 'Close all')
   showTabSelectionDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          var tabs = Provider.of<Tabs>(context);
+          var tabs = Provider.of<reflectTabs.Tabs>(context);
           return AlertDialog(
             title: Text(AppLocalizations.of(context).tabs),
             content: Container(
@@ -344,13 +346,13 @@ class TabContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ReflectTabs.Tabs tabs = Provider.of<ReflectTabs.Tabs>(context);
+    final reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
     if (tabs.isEmpty) {
       return ApplicationTitleTab();
     } else {
       return IndexedStack(
         children: [
-          for (ReflectTabs.Tab tab in tabs) tab,
+          for (reflectTabs.Tab tab in tabs) tab,
         ],
         index: tabs.selectedIndex,
       );

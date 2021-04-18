@@ -152,12 +152,6 @@
       "languageVersion": "2.9"
     },
     {
-      "name": "fake_async",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/fake_async-1.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "file",
       "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/file-5.2.1",
       "packageUri": "lib/",
@@ -210,12 +204,6 @@
       "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/flutter_spinkit-4.1.2+1",
       "packageUri": "lib/",
       "languageVersion": "2.5"
-    },
-    {
-      "name": "flutter_test",
-      "rootUri": "file:///C:/src/flutter/packages/flutter_test",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "flutter_typeahead",
@@ -554,7 +542,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2021-04-17T09:39:45.476002Z",
+  "generated": "2021-04-18T11:32:35.196310Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

@@ -206,7 +206,7 @@ class Icon {
   final Expression body;
 
   Icon.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
-      : body = _createBody(methodJson.name); //TODO
+      : body = createExpression(methodJson); //TODO
 
   /// Creates a Dart method to return a [Description]
   Method createGetterMethod() {
@@ -218,27 +218,30 @@ class Icon {
   }
 
   //TODO replace with something descent (this is just for testing)
-  static _createBody(String name) {
-    switch (name) {
-      case 'modifyPerson':
-        return Expression([
-          Type('Icons', libraryUrl: 'package:flutter/material.dart'),
-          Code('.table_rows_sharp')
-        ]);
-        break;
-      case 'findPersons':
-        return Expression([
-          Type('Icons', libraryUrl: 'package:flutter/material.dart'),
-          Code('.tab_sharp')
-        ]);
-        break;
-      default:
-        {
-          return Expression([
-            Type('Icons', libraryUrl: 'package:flutter/material.dart'),
-            Code('.table_chart_sharp')
-          ]);
-        }
-    }
+  static Expression createMaterialIconExpression(String materialIconName) =>
+      Expression([
+        Type('Icons', libraryUrl: 'package:flutter/material.dart'),
+        Code('.' + materialIconName)
+      ]);
+
+  static Expression createExpression(ExecutableJson methodJson) {
+    // if (methodJson.annotations.contains(TypeJson('Icon', '')))
+    // get icon from behavioural method
+    // get icon from annotation
+
+    // try get icon from Icons collection
+    //TODO .add   add/create/new
+    //TODO .delete      remove, delete
+    //TODO .archive     archive
+    //TODO .search      search/find
+    //TODO .settings    settings
+    //TODO .info
+    //TODO .favourite
+    //TODO .schedule
+    // try get default icon from processresultprocessor
+    // try get default icon from processparameterprocessor
+    // return default icon
+    //TODO .lens    {default}
+    return createMaterialIconExpression('lens'); //circle
   }
 }
