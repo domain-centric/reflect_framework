@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
-  List<Tab> _tabs = new List();
+  List<Tab> _tabs = [];
   Tab _selectedTab;
 
   int get length => _tabs.length;

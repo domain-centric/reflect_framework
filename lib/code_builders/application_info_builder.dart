@@ -54,3 +54,24 @@ class ApplicationInfoBuilder implements Builder {
     }
   }
 }
+
+class ApplicationInfoBuilderException implements Exception {
+  final String message;
+
+  ApplicationInfoBuilderException.forClass(ClassJson classJson, String message)
+      : message = createMessage(
+            [classJson.type.library, classJson.type.name], message);
+
+  ApplicationInfoBuilderException.forMethod(
+      ClassJson classJson, ExecutableJson methodJson, String message)
+      : message = createMessage(
+            [classJson.type.library, classJson.type.name, methodJson.name],
+            message);
+
+  static createMessage(List<String> sources, String message) {
+    return 'ApplicationInfoBuilderException:\n${sources.join('.')}:\n$message';
+  }
+
+  @override
+  String toString() => message;
+}

@@ -236,14 +236,14 @@ class TabsIcon extends StatelessWidget {
             ),
             actions: [
               if (tabs.length >= 3)
-                RaisedButton(
+                ElevatedButton(
                     child: Text(AppLocalizations.of(context).closeOthers),
                     onPressed: () {
                       tabs.closeOthers(tabs.selected);
                       Navigator.pop(context);
                     }),
               if (tabs.length >= 2)
-                RaisedButton(
+                ElevatedButton(
                     child: Text(AppLocalizations.of(context).closeAll),
                     onPressed: () {
                       tabs.closeAll();
@@ -282,7 +282,7 @@ class MainMenu extends StatelessWidget {
     List<ServiceClassInfo> serviceClassInfo =
         Provider.of<ReflectApplicationInfo>(context).serviceClassInfos;
 
-    List<Widget> children = List();
+    List<Widget> children = [];
 
     if (isDrawerMenu) {
       children.add(createDrawerHeader(context));

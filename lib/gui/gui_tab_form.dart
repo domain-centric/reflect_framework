@@ -345,22 +345,22 @@ class _PaymentFormState extends State<PaymentForm> {
                 ),
                 ButtonBar(
                   children: <Widget>[
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text("Cancel"),
                       //onPressed: Provider.of<Tabs>(context).close(),
                       onPressed: () {
                         print("Cancel");
                       },
                     ),
-                    RaisedButton(
+                    ElevatedButton(
                       child: loading
                           ? SpinKitWave(
                               size: 15.0,
                             )
                           : Text('Process Payment'),
-                      textColor: Theme.of(context).accentTextTheme.button.color,
-                      highlightColor: Theme.of(context).accentColor,
-                      color: Theme.of(context).accentColor,
+                      //  textColor: Theme.of(context).accentTextTheme.button.color,
+                      // highlightColor: Theme.of(context).accentColor,
+                      // color: Theme.of(context).accentColor,
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
                           setState(() {
@@ -377,7 +377,8 @@ class _PaymentFormState extends State<PaymentForm> {
                             });
                             final snackBar =
                                 SnackBar(content: Text('Payment Proccessed'));
-                            Scaffold.of(context).showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                             print('Saved');
                           });
                         }

@@ -19,6 +19,7 @@ class CombiningReflectJsonBuilder implements Builder {
       final libraryJsonAssets =
           buildStep.findAssets(Glob('**/*${ReflectJson.libraryExtension}'));
       await for (var libraryJsonAsset in libraryJsonAssets) {
+        print(">>" + libraryJsonAsset.path);
         String jsonString = await buildStep.readAsString(libraryJsonAsset);
         combinedReflectInfo.add(jsonString);
       }

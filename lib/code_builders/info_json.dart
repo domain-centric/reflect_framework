@@ -47,9 +47,11 @@ class ReflectJson {
   ReflectJson.fromGeneratedReflectInfoCombinedFile()
       : this.fromJson(readJsonFromGeneratedReflectInfoCombinedFile());
 
+  static final generatedReflectInfoCombinedFilePath =
+      ".dart_tool/build/generated/reflect_framework/lib/reflect_info.combined.json";
+
   static Map<String, dynamic> readJsonFromGeneratedReflectInfoCombinedFile() {
-    String jsonString = File(
-            ".dart_tool/build/generated/reflect_framework/lib/reflect_info.combined.json") //
+    String jsonString = File(generatedReflectInfoCombinedFilePath) //
         .readAsStringSync();
     var json = jsonDecode(jsonString);
     return json;
@@ -91,7 +93,8 @@ class ReflectJson {
 
   static bool _isNeededClass(ClassElement element) {
     return element.isPublic &&
-        !element.source.fullName.contains('lib/reflect_');
+        (element.source == null ||
+            !element.source.fullName.contains('lib/reflect_'));
   }
 
   static List<ExecutableJson> _createFunctions(LibraryReader library) {
@@ -199,8 +202,8 @@ class ClassJson {
             : TypeJson.fromJson(json[extendingAttribute]),
         mixins = json[mixinsAttribute] == null
             ? []
-            : List<TypeJson>.from(json[mixinsAttribute]
-                .map((model) => AnnotationJson.fromJson(model))),
+            : List<TypeJson>.from(
+                json[mixinsAttribute].map((model) => TypeJson.fromJson(model))),
         annotations = json[annotationsAttribute] == null
             ? []
             : List<AnnotationJson>.from(json[annotationsAttribute]
@@ -323,12 +326,14 @@ class TypeJson {
   TypeJson(this.name, this.library, [this.genericTypes]);
 
   TypeJson.fromElement(Element element)
-      : library = element.source.fullName,
+      : library = element.source == null ? null : element.source.fullName,
         name = element.name,
         genericTypes = const [];
 
   TypeJson.fromDartType(DartType dartType)
-      : library = dartType.element.source.fullName,
+      : library = dartType.element.source == null
+            ? null
+            : dartType.element.source.fullName,
         name = dartType.element.name,
         genericTypes = _createGenericTypes(dartType);
 
@@ -351,8 +356,9 @@ class TypeJson {
   String _createLibraryFileName() =>
       library.replaceAll(RegExp('^.*/'), '').replaceAll(RegExp('\.dart\$'), '');
 
-  Map<String, dynamic> toJson() => {
-        libraryAttribute: library,
+  Map<String, dynamic> toJson() =>
+      {
+        if (library != null) libraryAttribute: library,
         nameAttribute: name,
         if (genericTypes != null && genericTypes.isNotEmpty)
           genericTypesAttribute: genericTypes
@@ -375,10 +381,22 @@ class TypeJson {
     List<Type> genericTypes = this.genericTypes == null
         ? const []
         : this.genericTypes.map((t) => t.toType()).toList();
-    String libraryUrl = library
-        .replaceFirst(RegExp('/lib/'), '/')
-        .replaceFirst('/', 'package:');
+    String libraryUrl = _createLibraryUrl();
     return Type(name, libraryUrl: libraryUrl, generics: genericTypes);
+  }
+
+  String _createLibraryUrl() {
+    if (library == null) {
+      return null;
+    } else {
+      String libraryUrl = library
+          .replaceFirst(RegExp('/lib/'), '/')
+          .replaceFirst('/', 'package:');
+      if (libraryUrl.startsWith("dart:corepackage:")) {
+        return null;
+      }
+      return libraryUrl;
+    }
   }
 
   @override
