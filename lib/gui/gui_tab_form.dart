@@ -346,7 +346,9 @@ class _PaymentFormState extends State<PaymentForm> {
                 ButtonBar(
                   children: <Widget>[
                     ElevatedButton(
-                      child: Text("Cancel"),
+                      child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text("Cancel")),
                       //onPressed: Provider.of<Tabs>(context).close(),
                       onPressed: () {
                         print("Cancel");
@@ -357,7 +359,9 @@ class _PaymentFormState extends State<PaymentForm> {
                           ? SpinKitWave(
                               size: 15.0,
                             )
-                          : Text('Process Payment'),
+                          : Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Text('Process Payment')),
                       //  textColor: Theme.of(context).accentTextTheme.button.color,
                       // highlightColor: Theme.of(context).accentColor,
                       // color: Theme.of(context).accentColor,
