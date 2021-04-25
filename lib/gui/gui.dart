@@ -14,6 +14,8 @@ const kTabletBreakpoint = 720.0;
 const kDesktopBreakpoint = 1200.0;
 const kSideMenuWidth = 250.0;
 
+const EdgeInsets buttonPadding = const EdgeInsets.all(15);
+
 abstract class ReflectGuiApplication extends StatelessWidget
     implements ReflectApplication {
   ReflectGuiApplication({
@@ -266,7 +268,7 @@ class TabsIcon extends StatelessWidget {
           return AlertDialog(
             title: Text(AppLocalizations.of(context).tabs),
             content: Container(
-              width: double.minPositive,
+              width: kTabletBreakpoint,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: tabs.length,
@@ -293,14 +295,20 @@ class TabsIcon extends StatelessWidget {
             actions: [
               if (tabs.length >= 3)
                 ElevatedButton(
-                    child: Text(AppLocalizations.of(context).closeOthers),
+                    child: Padding(
+                      padding: buttonPadding,
+                      child: Text(AppLocalizations.of(context).closeOthers),
+                    ),
                     onPressed: () {
                       tabs.closeOthers(tabs.selected);
                       Navigator.pop(context);
                     }),
               if (tabs.length >= 2)
                 ElevatedButton(
-                    child: Text(AppLocalizations.of(context).closeAll),
+                    child: Padding(
+                      padding: buttonPadding,
+                      child: Text(AppLocalizations.of(context).closeAll),
+                    ),
                     onPressed: () {
                       tabs.closeAll();
                       Navigator.pop(context);
