@@ -135,7 +135,7 @@ packages:
     source: hosted
     version: "3.5.0"
   collection:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: collection
       url: "https://pub.dartlang.org"
@@ -540,7 +540,7 @@ packages:
     source: hosted
     version: "1.2.0"
   test:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: test
       url: "https://pub.dartlang.org"

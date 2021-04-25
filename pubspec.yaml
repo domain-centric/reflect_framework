@@ -17,7 +17,7 @@ dependencies:
   http: ^0.12.2
   flutter_typeahead: ^2.0.0
   flutter_shine: ^0.0.5
-  test: ^1.16.5
+  collection: ^1.14.13
 
 dev_dependencies:
   build_config: ^0.4.5
@@ -27,7 +27,7 @@ dev_dependencies:
   dart_code: ^0.0.6
   build: ^1.6.2
   quiver: ^2.1.5
-  collection: ^1.14.13
+  test: ^1.16.5
   plural_noun: ^0.0.2
 
 

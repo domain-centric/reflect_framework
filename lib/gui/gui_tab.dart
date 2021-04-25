@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
 
 class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   List<Tab> _tabs = [];
@@ -114,13 +115,18 @@ abstract class Tab extends StatelessWidget {
 enum TabCloseResult { CANCELED, CLOSED }
 
 abstract class TabFactory {
-  Tab create();
+  Tab create(ActionMethodInfo actionMethodInfo);
 }
 
 ///TODO remove, only intended for testing
 class ExampleTab extends Tab {
-  final String _title =
-      DateFormat('kk:mm:ss \n EEE d MMM').format(DateTime.now());
+  final String _creationDateTime;
+
+  final ActionMethodInfo actionMethodInfo;
+
+  ExampleTab(this.actionMethodInfo)
+      : _creationDateTime =
+            DateFormat('kk:mm:ss \n EEE d MMM').format(DateTime.now());
 
   @override
   bool get canCloseDirectly => true;
@@ -149,13 +155,13 @@ class ExampleTab extends Tab {
 
   @override
   String get title {
-    return _title;
+    return actionMethodInfo.name;
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(_title, textAlign: TextAlign.center),
+      child: Text(_creationDateTime, textAlign: TextAlign.center),
     );
   }
 }
@@ -163,7 +169,7 @@ class ExampleTab extends Tab {
 ///TODO remove, only intended for testing
 class ExampleTabFactory implements TabFactory {
   @override
-  Tab create() {
-    return ExampleTab();
+  Tab create(ActionMethodInfo actionMethodInfo) {
+    return ExampleTab(actionMethodInfo);
   }
 }

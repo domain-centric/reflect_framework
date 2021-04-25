@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
 
 import '../gui/gui_tab.dart' as ReflectTab;
 
 class TableExampleTab extends ReflectTab.Tab {
+  final ActionMethodInfo actionMethodInfo;
+
+  TableExampleTab(this.actionMethodInfo);
+
   final List<_Row> _rows = [
     for (int i = 1; i < 100; i++) _Row('Cell A$i', 'CellB$i', 'CellC$i', i),
   ];
@@ -21,11 +26,11 @@ class TableExampleTab extends ReflectTab.Tab {
         ],
         rows: _rows
             .map((row) => DataRow(cells: [
-                  DataCell(Text(row.valueA)),
-                  DataCell(Text(row.valueB)),
-                  DataCell(Text(row.valueC)),
-                  DataCell(Text(row.valueD.toString()))
-                ]))
+          DataCell(Text(row.valueA)),
+          DataCell(Text(row.valueB)),
+          DataCell(Text(row.valueC)),
+          DataCell(Text(row.valueD.toString()))
+        ]))
             .toList(),
       ),
     ]);
@@ -43,7 +48,7 @@ class TableExampleTab extends ReflectTab.Tab {
   IconData get iconData => Icons.table_chart_sharp;
 
   @override
-  String get title => "Table";
+  String get title => actionMethodInfo.name;
 }
 
 class _Row {
@@ -64,8 +69,8 @@ class _Row {
 
 class TableExampleTabFactory implements ReflectTab.TabFactory {
   @override
-  ReflectTab.Tab create() {
-    return TableExampleTab();
+  ReflectTab.Tab create(ActionMethodInfo actionMethodInfo) {
+    return TableExampleTab(actionMethodInfo);
   }
 }
 // class _DataSource extends DataTableSource {

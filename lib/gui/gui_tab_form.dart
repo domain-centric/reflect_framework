@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:reflect_framework/core/action_method_info.dart';
 
 import '../domain/domain_objects.dart';
 import '../gui/gui_tab.dart' as ReflectTab;
@@ -103,6 +104,10 @@ import '../gui/gui_tab.dart' as ReflectTab;
 // ?DataTableSource?
 ///
 class FormExampleTab extends ReflectTab.Tab {
+  final ActionMethodInfo actionMethodInfo;
+
+  FormExampleTab(this.actionMethodInfo);
+
   @override
   Widget build(BuildContext context) {
     return PaymentForm();
@@ -120,7 +125,7 @@ class FormExampleTab extends ReflectTab.Tab {
   IconData get iconData => Icons.table_rows_sharp;
 
   @override
-  String get title => "Form";
+  String get title => actionMethodInfo.name;
 }
 
 /// Form widgets are stateful widgets
@@ -423,7 +428,7 @@ class _PaymentFormState extends State<PaymentForm> {
 
 class FormExampleTabFactory implements ReflectTab.TabFactory {
   @override
-  ReflectTab.Tab create() {
-    return FormExampleTab();
+  ReflectTab.Tab create(ActionMethodInfo actionMethodInfo) {
+    return FormExampleTab(actionMethodInfo);
   }
 }

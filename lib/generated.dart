@@ -17,18 +17,14 @@ class ReflectApplicationInfo implements _i1.ApplicationInfo {
   String get name => 'My first app';
   @override
   String get description => '';
-
   @override
   String get titleImage => 'assets/my_first_app.png';
-
   @override
   String get homePage =>
       'https://github.com/efficientyboosters/reflect_framework';
-
   @override
   String get documentation =>
       'https://github.com/efficientyboosters/reflect_framework/wiki';
-
   @override
   List<_i2.ServiceClassInfo> get serviceClassInfos => [
         ActionMethodParameterFactoryTestActionMethodParameterFactoryTestServiceInfo$(),
@@ -40,16 +36,12 @@ class ActionMethodParameterFactoryTestActionMethodParameterFactoryTestServiceInf
     extends _i2.ServiceClassInfo {
   @override
   String get name => 'Action method parameter factory tests';
-
   @override
   String get description => '';
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   List<_i3.ActionMethodInfo> get actionMethodInfos => [
         ActionMethodParameterFactoryTestServiceNoParameterInfo$(),
@@ -69,23 +61,18 @@ class ActionMethodParameterFactoryTestServiceNoParameterInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithoutParameter {
   @override
   String get name => 'No parameter';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
@@ -99,23 +86,18 @@ class ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithoutParameter {
   @override
   String get name => 'No parameter factory';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
@@ -129,32 +111,25 @@ class ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInf
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'String parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   String _createParameter() => '';
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -166,32 +141,25 @@ class ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'Bool parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   bool _createParameter() => true;
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -203,32 +171,25 @@ class ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'Int parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   int _createParameter() => 0;
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -240,32 +201,25 @@ class ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInf
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'Double parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   double _createParameter() => 0.0;
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -277,32 +231,25 @@ class ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationI
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'Date time parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   DateTime _createParameter() => DateTime.now();
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -314,32 +261,25 @@ class ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'List parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   List<dynamic> _createParameter() => [];
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -351,32 +291,25 @@ class ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'Set parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   Set<dynamic> _createParameter() => {};
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -388,32 +321,25 @@ class ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$
     implements _i3.StartWithoutParameter, _i3.InvokeWithParameter {
   @override
   String get name => 'Map parameter factory annotation';
-
   @override
   String get description => '';
-
   @override
   _i4.IconData get icon => _i5.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   Map<dynamic, dynamic> _createParameter() => {};
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -424,13 +350,10 @@ class ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$
 class DomainObjectsPersonServiceInfo$ extends _i2.ServiceClassInfo {
   @override
   String get name => 'People';
-
   @override
   String get description => '';
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
   @override
@@ -460,7 +383,7 @@ class PersonServiceAllPersonsInfo$
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i8.TableExampleTabFactory().create();
+    var tab = _i8.TableExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
@@ -480,23 +403,19 @@ class PersonServiceFindPersonsInfo$
   _i4.IconData get icon => _i5.Icons.table_chart_sharp;
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i8.TableExampleTabFactory().create();
+    var tab = _i8.TableExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   String _createParameter() => '';
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -519,14 +438,13 @@ class PersonServiceEditInfo$
   @override
   void start(_i4.BuildContext context, Object parameterValue) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -549,14 +467,13 @@ class PersonServiceRemoveInfo$
   @override
   void start(_i4.BuildContext context, Object parameterValue) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -574,23 +491,19 @@ class PersonServiceAddNewInfo$
   _i4.IconData get icon => _i5.Icons.table_rows_sharp;
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i9.FormExampleTabFactory().create();
+    var tab = _i9.FormExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   _i10.Person _createParameter() => _i10.Person();
-
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -613,14 +526,13 @@ class PersonServiceSendEmailInfo$
   @override
   void start(_i4.BuildContext context, Object parameterValue) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 
   void _processParameter(_i4.BuildContext context, Object parameterValue) {
     // TODO: IMPLEMENT
   }
-
   @override
   void invokeMethodAndProcessResult(
       _i4.BuildContext context, Object parameterValue) {
@@ -643,7 +555,7 @@ class PersonServiceLogoutInfo$
   @override
   void start(_i4.BuildContext context) {
     var tabs = _i6.Provider.of<_i7.Tabs>(context, listen: false);
-    var tab = _i7.ExampleTabFactory().create();
+    var tab = _i7.ExampleTabFactory().create(this);
     tabs.add(tab);
   }
 

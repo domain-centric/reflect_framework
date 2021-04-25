@@ -86,7 +86,7 @@ class ActionMethodInfoClass extends Class {
       Statement([
         Code('var tab = '),
         Expression.callConstructor(_createTabFactoryType(methodJson.name)),
-        Code('.create()')
+        Code('.create(this)')
       ]),
       Statement([Code('tabs.add(tab)')]),
     ]);

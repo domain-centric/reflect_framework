@@ -92,24 +92,80 @@ class ApplicationTitle extends StatelessWidget {
       } else if (dimens.maxWidth < kTabletBreakpoint) {
         return Text(tabs.selected.title);
       } else {
-        return Text('$appTitle - ${tabs.selected.title}');
+        return Row(children: [
+          Text(appTitle),
+          SizedBox(width: 90),
+          TabButtons()
+        ]); //TODO hide title if it does not fit and ensure correct distance (sizeBox)
+        //Text('$appTitle - ${tabs.selected.title}');
       }
     });
   }
 }
 
-class NarrowScaffold extends StatelessWidget {
-  NarrowScaffold({
-    Key key,
-  }) : super(key: key);
+class TabButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    return LayoutBuilder(builder: (_, dimens) {
+      return Row(children: [
+        for (int i = 0; i < tabs.length; i++) TabHeader(tabs[i]),
+      ]); // TODO other tabs
+    });
+  }
+}
 
+class TabHeader extends StatelessWidget {
+  final reflectTabs.Tab tab;
+
+  TabHeader(this.tab);
+
+  @override
+  Widget build(BuildContext context) {
+    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    bool isSelected = tabs.selected == tab;
+    return LayoutBuilder(builder: (_, dimens) {
+      return InkWell(
+        onTap: () {
+          if (!isSelected) {
+            tabs.selected = tab;
+          }
+        },
+        child: Container(
+            padding: new EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Text(tab.title),
+                SizedBox(width: 10),
+                if (isSelected)
+                  InkWell(
+                      onTap: () {
+                        tabs.close(tab);
+                      },
+                      child: Icon(
+                        Icons.close,
+                        size: 17,
+                      ))
+              ],
+            ),
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(
+                        color: isSelected ? Colors.white : Colors.transparent,
+                        width: 4),
+                    top: BorderSide(color: Colors.transparent, width: 4)))),
+      );
+    });
+  }
+}
+
+class NarrowScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
     return Scaffold(
         appBar: AppBar(
           title: ApplicationTitle(),
-          //Text(ReflectFramework().reflection.applicationInfo.title),
           actions: [
             if (tabs.length > 1) TabsIcon(),
           ],

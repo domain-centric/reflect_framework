@@ -12,7 +12,7 @@ import 'gui_tab_form.dart';
 void editDomainObjectParameterInForm(BuildContext context,
     InvokeWithParameter actionMethod, @DomainClass() Object domainObject) {
   Tabs tabs = Provider.of<Tabs>(context);
-  FormExampleTab formTab = FormExampleTab();
+  FormExampleTab formTab = FormExampleTab(actionMethod);
   tabs.add(formTab);
 
   //TODO put in form OK button:  actionMethod.invokeMethodAndProcessResult(context, domainObject);
