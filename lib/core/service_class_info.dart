@@ -25,12 +25,12 @@ class ServiceObject {
 abstract class ClassInfo extends Item {}
 
 /// The [ReflectFramework] creates info classes (with [ServiceClassInfoCode]) that implement [ServiceClassInfo] for all classes that are recognized as [ServiceObject]s.
-abstract class ServiceClassInfo extends ClassInfo implements DynamicItem {
+abstract class ServiceClassInfo<T> extends ClassInfo implements DynamicItem {
   ///[ServiceObject]s and [DomainObject]s do not have an icon (for now)
 
   /// same (cached) instance of the [ServiceObject]
   /// e.g. final ProductService serviceObject=productServiceFactory();//or ProductService()
-  ///TODO add: Object get serviceObject;
+  T get serviceObject;
 
   /// If the [ServiceObject] is accessible (e.g. visible in the menu's)
   @override

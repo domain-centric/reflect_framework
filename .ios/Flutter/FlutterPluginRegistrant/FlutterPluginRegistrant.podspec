@@ -19,5 +19,4 @@ Depends on all your plugins, and provides a function to register them.
   s.static_framework    = true
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.dependency 'Flutter'
-  s.dependency 'flutter_keyboard_visibility'
 end

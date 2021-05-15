@@ -78,12 +78,12 @@ class Name {
   Name.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
       : key = TranslationFactory.createKey(classJson.type) +
             '.' +
-            methodJson.name,
+            methodJson.name!,
         englishName = _createEnglishNameForActionMethod(methodJson);
 
   static String _createEnglishNameForServiceClass(ClassJson classJson) {
     // TODO check if serviceClass has translation annotations
-    String nameWithoutServiceSuffix = removeServiceSuffix(classJson.type.name);
+    String nameWithoutServiceSuffix = removeServiceSuffix(classJson.type.name!);
     List<String> words = slitIntoWords(nameWithoutServiceSuffix);
     makeLastWordPlural(words);
     return words.join(' ');
@@ -103,11 +103,11 @@ class Name {
 
   static String _createEnglishNameForClass(ClassJson classJson) =>
       //TODO check if Class has translation annotations
-      classJson.type.name.sentenceCase;
+      classJson.type.name!.sentenceCase;
 
   static _createEnglishNameForActionMethod(ExecutableJson methodJson) =>
       //TODO check if Method has translation annotations
-      methodJson.name.sentenceCase;
+      methodJson.name!.sentenceCase;
 
   /// Creates a Dart method to return a [Description]
   Method createGetterMethod() {
@@ -134,7 +134,7 @@ class Description {
   Description.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
       : key = TranslationFactory.createKey(classJson.type) +
             '.' +
-            methodJson.name,
+            methodJson.name!,
         englishName = _createEnglishDescriptionForActionMethod(methodJson);
 
   static String _createEnglishDescriptionForServiceClass(ClassJson classJson) {
@@ -212,7 +212,7 @@ class Icon {
   Method createGetterMethod() {
     List<Annotation> annotations = [Annotation.override()];
     Method method = Method.getter('icon', body,
-        type: Type('IconData', libraryUrl: 'package:flutter/widgets.dart'),
+        type: Type('IconData', libraryUri: 'package:flutter/widgets.dart'),
         annotations: annotations);
     return method;
   }
@@ -220,7 +220,7 @@ class Icon {
   //TODO replace with something descent (this is just for testing)
   static Expression createMaterialIconExpression(String materialIconName) =>
       Expression([
-        Type('Icons', libraryUrl: 'package:flutter/material.dart'),
+        Type('Icons', libraryUri: 'package:flutter/material.dart'),
         Code('.' + materialIconName)
       ]);
 
@@ -246,11 +246,9 @@ class Icon {
     switch (methodJson.name) {
       case 'addNew':
         return createMaterialIconExpression('table_rows_sharp'); //circle
-        break;
       case 'allPersons':
       case 'findPersons':
         return createMaterialIconExpression('table_chart_sharp'); //circle
-        break;
       default:
         {
           return createMaterialIconExpression('lens'); //circle

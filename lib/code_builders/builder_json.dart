@@ -22,6 +22,8 @@ class ReflectJsonBuilder implements Builder {
     if (!await resolver.isLibrary(buildStep.inputId)) return;
     final lib = LibraryReader(await buildStep.inputLibrary);
 
+    print('>>> ${buildStep.inputId.path}');
+
     ReflectJson reflectInfo = ReflectJson.fromLibrary(lib);
 
     if (reflectInfo.toJson().isNotEmpty) {

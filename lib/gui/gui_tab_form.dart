@@ -1,11 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import 'package:reflect_framework/core/action_method_info.dart';
 
 import '../domain/domain_objects.dart';
@@ -139,9 +134,9 @@ class _PaymentFormState extends State<PaymentForm> {
     "cardField": false,
     "postCodeField": false
   };
-  String expiryMonth;
-  int expiryYear;
-  bool rememberInfo = false;
+  String? expiryMonth;
+  int? expiryYear;
+  bool? rememberInfo = false;
   Address _paymentAddress = new Address();
   CardDetails _cardDetails = new CardDetails();
   bool loading = false;
@@ -191,8 +186,8 @@ class _PaymentFormState extends State<PaymentForm> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             filled: true,
                             icon: Icon(Icons.credit_card)),
-                        validator: (String value) {
-                          if (value.length != 16)
+                        validator: (String? value) {
+                          if (value!.length != 16)
                             return "Please enter a valid number";
                           return null;
                         },
@@ -205,7 +200,7 @@ class _PaymentFormState extends State<PaymentForm> {
                         margin: EdgeInsets.only(left: formSpacing),
                         child: TextFormField(
                           onSaved: (val) =>
-                              _cardDetails.securityCode = int.parse(val),
+                              _cardDetails.securityCode = int.parse(val!),
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: 'Security Code',
@@ -265,7 +260,7 @@ class _PaymentFormState extends State<PaymentForm> {
                       child: Container(
                         margin: EdgeInsets.only(left: formSpacing),
                         child: DropdownButtonFormField(
-                          onSaved: (val) =>
+                          onSaved: (dynamic val) =>
                               _cardDetails.expiryYear = val.toString(),
                           value: expiryYear,
                           items: yearsList.map<DropdownMenuItem>(
@@ -276,7 +271,7 @@ class _PaymentFormState extends State<PaymentForm> {
                               );
                             },
                           ).toList(),
-                          onChanged: (val) {
+                          onChanged: (dynamic val) {
                             setState(() {
                               expiryYear = val;
                             });
@@ -295,29 +290,13 @@ class _PaymentFormState extends State<PaymentForm> {
                   height: formSpacing,
                 ),
                 TextField(),
-                TypeAheadFormField(
-                  textFieldConfiguration: TextFieldConfiguration(
-                    decoration: InputDecoration(
-                      labelText: 'Post Code',
-                      icon: Icon(Icons.location_on),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      filled: true,
-                    ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Post Code',
+                    icon: Icon(Icons.location_on),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    filled: true,
                   ),
-                  suggestionsCallback: (pattern) async {
-                    return await _fetchAddress(pattern);
-                  },
-                  itemBuilder: (context, Address address) {
-                    return ListTile(
-                      leading: Icon(Icons.location_city),
-                      title: Text(address.addressLine),
-                      subtitle: Text(address.postCode),
-                    );
-                  },
-                  onSuggestionSelected: (Address address) {
-                    _addressLineController.text = address.addressLine;
-                  },
-                  onSaved: (val) => this._paymentAddress.postCode = val,
                 ),
                 SizedBox(
                   height: formSpacing,
@@ -360,22 +339,18 @@ class _PaymentFormState extends State<PaymentForm> {
                       },
                     ),
                     ElevatedButton(
-                      child: loading
-                          ? SpinKitWave(
-                              size: 15.0,
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Text('Process Payment')),
+                      child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text('Process Payment')),
                       //  textColor: Theme.of(context).accentTextTheme.button.color,
                       // highlightColor: Theme.of(context).accentColor,
                       // color: Theme.of(context).accentColor,
                       onPressed: () {
-                        if (_formKey.currentState.validate()) {
+                        if (_formKey.currentState!.validate()) {
                           setState(() {
                             loading = true;
                           });
-                          _formKey.currentState.save();
+                          _formKey.currentState!.save();
                           Timer(Duration(seconds: 4), () {
                             Payment payment = new Payment(
                                 address: _paymentAddress,
@@ -403,27 +378,6 @@ class _PaymentFormState extends State<PaymentForm> {
     );
   }
 
-  Future<List<Address>> _fetchAddress(String postCode) async {
-    final response = await http.get(
-        "https://my-json-server.typicode.com/refactord/deep-dive-db/addresses");
-    if (response.statusCode == 200) {
-      return _searchAddresses(response, postCode);
-    } else {
-      throw Exception('Failed to load addresses');
-    }
-  }
-
-  ///This should be done on the server side but due to the use of a basic custom JSON server
-  /// I'll manually do the search here
-  List<Address> _searchAddresses(Response response, String postCode) {
-    Map<String, dynamic> body = json.decode(response.body);
-    var addresses = body[postCode];
-    if (addresses != null) {
-      addresses = (addresses as List).map((a) => Address.fromJson(a)).toList();
-      return addresses;
-    }
-    return null;
-  }
 }
 
 class FormExampleTabFactory implements ReflectTab.TabFactory {

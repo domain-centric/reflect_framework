@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shine/flutter_shine.dart';
+//import 'package:flutter_shine/flutter_shine.dart';
 import 'package:provider/provider.dart';
 
 import '../core/action_method_info.dart';
@@ -19,7 +19,7 @@ const EdgeInsets buttonPadding = const EdgeInsets.all(15);
 abstract class ReflectGuiApplication extends StatelessWidget
     implements ReflectApplication {
   ReflectGuiApplication({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ abstract class ReflectGuiApplication extends StatelessWidget
 class ReflectMaterialApp extends StatelessWidget {
   final ReflectGuiApplication reflectGuiApplication;
 
-  ReflectMaterialApp({Key key, @required this.reflectGuiApplication})
+  ReflectMaterialApp({Key? key, required this.reflectGuiApplication})
       : super(key: key);
 
   @override
@@ -64,7 +64,7 @@ class ReflectMaterialApp extends StatelessWidget {
 
 class Home extends StatelessWidget implements ReflectApplication {
   Home({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -81,7 +81,7 @@ class Home extends StatelessWidget implements ReflectApplication {
 
 class ApplicationTitle extends StatelessWidget {
   ApplicationTitle({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -118,7 +118,7 @@ class TabButtons extends StatelessWidget {
 }
 
 class TabHeader extends StatelessWidget {
-  final reflectTabs.Tab tab;
+  final reflectTabs.Tab? tab;
 
   TabHeader(this.tab);
 
@@ -130,19 +130,19 @@ class TabHeader extends StatelessWidget {
       return InkWell(
         onTap: () {
           if (!isSelected) {
-            tabs.selected = tab;
+            tabs.selected = tab!;
           }
         },
         child: Container(
             padding: new EdgeInsets.all(12),
             child: Row(
               children: [
-                Text(tab.title),
+                Text(tab!.title),
                 SizedBox(width: 10),
                 if (isSelected)
                   InkWell(
                       onTap: () {
-                        tabs.close(tab);
+                        tabs.close(tab!);
                       },
                       child: Icon(
                         Icons.close,
@@ -188,7 +188,7 @@ class NarrowScaffold extends StatelessWidget {
 
 class WideScaffold extends StatelessWidget {
   WideScaffold({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -229,7 +229,7 @@ class WideScaffold extends StatelessWidget {
 
 class TabsIcon extends StatelessWidget {
   TabsIcon({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -245,8 +245,10 @@ class TabsIcon extends StatelessWidget {
                 padding: const EdgeInsets.all(3.0),
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color:
-                            Theme.of(context).primaryTextTheme.bodyText1.color,
+                        color: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText1!
+                            .color!,
                         width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Align(
@@ -266,7 +268,7 @@ class TabsIcon extends StatelessWidget {
         builder: (BuildContext context) {
           var tabs = Provider.of<reflectTabs.Tabs>(context);
           return AlertDialog(
-            title: Text(AppLocalizations.of(context).tabs),
+            title: Text(AppLocalizations.of(context)!.tabs),
             content: Container(
               width: kTabletBreakpoint,
               child: ListView.builder(
@@ -297,7 +299,7 @@ class TabsIcon extends StatelessWidget {
                 ElevatedButton(
                     child: Padding(
                       padding: buttonPadding,
-                      child: Text(AppLocalizations.of(context).closeOthers),
+                      child: Text(AppLocalizations.of(context)!.closeOthers),
                     ),
                     onPressed: () {
                       tabs.closeOthers(tabs.selected);
@@ -307,7 +309,7 @@ class TabsIcon extends StatelessWidget {
                 ElevatedButton(
                     child: Padding(
                       padding: buttonPadding,
-                      child: Text(AppLocalizations.of(context).closeAll),
+                      child: Text(AppLocalizations.of(context)!.closeAll),
                     ),
                     onPressed: () {
                       tabs.closeAll();
@@ -320,14 +322,14 @@ class TabsIcon extends StatelessWidget {
 }
 
 class MainMenu extends StatelessWidget {
-  final bool isDrawerMenu;
+  final bool? isDrawerMenu;
 
-  const MainMenu({Key key, this.isDrawerMenu}) : super(key: key);
+  const MainMenu({Key? key, this.isDrawerMenu}) : super(key: key);
 
   onTab(BuildContext context, ActionMethodInfo actionMethodInfo) {
     if (actionMethodInfo is StartWithoutParameter) {
       actionMethodInfo.start(context);
-      if (isDrawerMenu) {
+      if (isDrawerMenu!) {
         Navigator.pop(context); //Hide Drawer
       }
     }
@@ -348,7 +350,7 @@ class MainMenu extends StatelessWidget {
 
     List<Widget> children = [];
 
-    if (isDrawerMenu) {
+    if (isDrawerMenu!) {
       children.add(createDrawerHeader(context));
     }
 
@@ -405,7 +407,7 @@ class MainMenu extends StatelessWidget {
 
 class TabContainer extends StatelessWidget {
   TabContainer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -426,7 +428,7 @@ class TabContainer extends StatelessWidget {
 
 class ApplicationTitleTab extends StatelessWidget {
   ApplicationTitleTab({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -453,7 +455,8 @@ class ApplicationTitleWidget extends StatelessWidget {
 class ApplicationTitleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Image.asset(Provider.of<ReflectApplicationInfo>(context).titleImage);
+    return Image.asset(
+        Provider.of<ReflectApplicationInfo>(context).titleImage!);
   }
 }
 
@@ -462,18 +465,17 @@ class ApplicationTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return FittedBox(
         fit: BoxFit.fitWidth,
-        child: FlutterShine(
-          config: Config(offset: 0.05),
-          builder: (BuildContext context, ShineShadow shineShadow) {
-            return Opacity(
-                opacity: 0.7,
-                child: Text(
-                  '${Provider.of<ReflectApplicationInfo>(context).name}',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      shadows: shineShadow.shadows),
-                ));
-          },
-        ));
+        //TODO re-implement flutter_shine when it is null-safe
+        // child: FlutterShine(
+        //   config: Config(offset: 0.05),
+        //   builder: (BuildContext context, ShineShadow shineShadow) {
+        //     return Opacity(
+        //         opacity: 0.7,
+        child: Text('${Provider.of<ReflectApplicationInfo>(context).name}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              //       shadows: shineShadow.shadows),
+              // ));
+            )));
   }
 }

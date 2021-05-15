@@ -9,27 +9,24 @@ import 'package:recase/recase.dart';
 import 'package:source_gen/source_gen.dart';
 
 // We cant use ActionMethodPreProcessorContext type to convert it to a string,
-// because it contains BuildContext and thus imports from a UI package, which does not go will with build_runner.
+// because it contains BuildContext and thus imports from a UI package, which does not go well with build_runner.
 // Maybe this is because build_runner can use code reflection and Flutter does not allow this???
-const actionMethodPreProcessorContextName = 'ActionMethodPreProcessorContext';
+const buildContextName = 'BuildContext';
 
 // We cant use ActionMethodPreProcessor type to convert it to a string,
 // because its library uses a required annotation and thus imports from a UI package, which does not go will with build_runner.
 // Maybe this is because build_runner can use code reflection and Flutter does not allow this???
-const preProcessorAnnotation = '@ActionMethodPreProcessor';
-const processorAnnotation = '@ActionMethodProcessor';
+const parameterProcessorAnnotation = '@ActionMethodParameterProcessor';
 const translationAnnotation = 'Translation';
 
 /// Used by the [ReflectInfoJsonBuilder] to create intermediate json files to generate meta code later by another builder (TODO link to builder).
 /// The meta data comes from source files using the [LibraryElement] class from the source_gen package
 class ReflectJson {
-  static const actionMethodPreProcessorsAttribute = 'actionMethodPreProcessors';
-  static const actionMethodProcessorsAttribute = 'actionMethodProcessors';
   static const functionsAttribute = 'functions';
   static const classesAttribute = 'classes';
   static const voidName = 'void';
 
-  final List<ExecutableJson> functions;
+  final FunctionsJson functions;
   final List<ClassJson> classes;
 
   //TODO functions (ending with factory in name, when needed for service objects and as a replacement for ActionMethodPreProcessorInfo and ActionMethodProcessorInfo)
@@ -37,20 +34,20 @@ class ReflectJson {
   //TODO add TranslatableTextAnnotations
 
   ReflectJson.fromLibrary(LibraryReader library)
-      : this.functions = _createFunctions(library),
+      : this.functions = FunctionsJson.fromLibrary(library),
         this.classes = _createClasses(library);
 
   ReflectJson.empty()
-      : this.functions = [],
+      : this.functions = FunctionsJson.empty(),
         this.classes = [];
 
   ReflectJson.fromGeneratedReflectInfoCombinedFile()
-      : this.fromJson(readJsonFromGeneratedReflectInfoCombinedFile());
+      : this.fromJson(readJsonFromGeneratedReflectInfoCombinedFile()!);
 
   static final generatedReflectInfoCombinedFilePath =
       ".dart_tool/build/generated/reflect_framework/lib/reflect_info.combined.json";
 
-  static Map<String, dynamic> readJsonFromGeneratedReflectInfoCombinedFile() {
+  static Map<String, dynamic>? readJsonFromGeneratedReflectInfoCombinedFile() {
     String jsonString = File(generatedReflectInfoCombinedFilePath) //
         .readAsStringSync();
     var json = jsonDecode(jsonString);
@@ -63,9 +60,8 @@ class ReflectJson {
             : List<ClassJson>.from(json[classesAttribute]
                 .map((model) => ClassJson.fromJson(model))),
         functions = json[functionsAttribute] == null
-            ? []
-            : List<ExecutableJson>.from(json[functionsAttribute]
-                .map((model) => ExecutableJson.fromJson(model)));
+            ? FunctionsJson.empty()
+            : FunctionsJson.fromJson(json[functionsAttribute]);
 
   static const libraryExtension = '.reflect_info.json';
   static const combinedExtension = '.combined.json';
@@ -73,9 +69,10 @@ class ReflectJson {
   static const combinedFilePath = 'lib/' + combinedFileName;
 
   Map<String, dynamic> toJson() => {
-        if (functions != null && functions.isNotEmpty)
+        if (functions.actionMethodResultProcessors.isNotEmpty ||
+            functions.actionMethodParameterProcessors.isNotEmpty)
           functionsAttribute: functions,
-        if (classes != null && classes.isNotEmpty) classesAttribute: classes,
+        if (classes.isNotEmpty) classesAttribute: classes,
       };
 
   static List<ClassJson> _createClasses(LibraryReader library) {
@@ -93,15 +90,21 @@ class ReflectJson {
 
   static bool _isNeededClass(ClassElement element) {
     return element.isPublic &&
-        (element.source == null ||
-            !element.source.fullName.contains('lib/reflect_'));
+        (!element.source.fullName.contains('lib/reflect_'));
   }
 
   static List<ExecutableJson> _createFunctions(LibraryReader library) {
     List<ExecutableJson> functions = [];
     for (Element element in library.allElements) {
       if (_isPublicFunction(element)) {
-        if (_isNeededFunction(element)) {
+        if (ActionMethodParameterProcessorFunction.isValid(element)) {
+          functions.add(ActionMethodParameterProcessorFunction.fromElement(
+              element as ExecutableElement));
+        } else if (ActionMethodResultProcessorFunction.isValid(element)) {
+          functions.add(ActionMethodResultProcessorFunction.fromElement(
+              element as ExecutableElement));
+        } else if (_isPotentialServiceObjectFactoryFunction(
+            element as FunctionElement)) {
           functions.add(ExecutableJson.fromElement(element));
         } else if (_containsTranslationAnnotations(element)) {
           functions.add(
@@ -117,34 +120,11 @@ class ReflectJson {
     return element is FunctionElement && element.isPublic;
   }
 
-  static bool _isNeededFunction(FunctionElement element) {
-    return _isPotentialServiceObjectFactoryFunction(element) ||
-        _isActionMethodPreProcessorFunction(element) ||
-        _isActionMethodProcessorFunction(element) ||
-        _containsTranslationAnnotations(element);
-  }
-
   static _isPotentialServiceObjectFactoryFunction(FunctionElement element) {
     const factory = 'Factory';
     return element.name.endsWith(factory) &&
         element.name.length > factory.length &&
-        element.returnType != null &&
-        element.returnType.element.name != voidName;
-  }
-
-  static bool _isActionMethodPreProcessorFunction(FunctionElement element) {
-    return element.returnType.element == null &&
-        (element.parameters.length == 1 || element.parameters.length == 2) &&
-        element.parameters[0].type.element.name ==
-            actionMethodPreProcessorContextName &&
-        element.metadata.toString().contains(preProcessorAnnotation);
-  }
-
-  static bool _isActionMethodProcessorFunction(FunctionElement element) {
-    return (element.parameters.length == 1 || element.parameters.length == 2) &&
-        element.parameters[0].type.element.name ==
-            actionMethodPreProcessorContextName &&
-        element.metadata.toString().contains(processorAnnotation);
+        element.returnType.element!.name != voidName;
   }
 
   static bool _classContainsTranslationAnnotations(ClassElement classElement) {
@@ -172,7 +152,7 @@ class ClassJson {
   static const propertiesAttribute = 'properties';
 
   final TypeJson type;
-  final TypeJson extending;
+  final TypeJson? extending;
   final List<TypeJson> mixins;
   final List<AnnotationJson> annotations;
   final List<ExecutableJson> methods;
@@ -217,21 +197,20 @@ class ClassJson {
             : List<PropertyJson>.from(json[propertiesAttribute]
                 .map((model) => PropertyJson.fromJson(model)));
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         typeAttribute: type,
         if (extending != null) extendingAttribute: extending,
-        if (mixins != null && mixins.isNotEmpty) mixinsAttribute: mixins,
-        if (annotations != null && annotations.isNotEmpty)
-          annotationsAttribute: annotations,
-        if (methods != null && methods.isNotEmpty) methodsAttribute: methods,
-        if (properties != null && properties.isNotEmpty)
-          propertiesAttribute: properties
+        if (mixins.isNotEmpty) mixinsAttribute: mixins,
+        if (annotations.isNotEmpty) annotationsAttribute: annotations,
+        if (methods.isNotEmpty) methodsAttribute: methods,
+        if (properties.isNotEmpty) propertiesAttribute: properties
       };
 
-  static TypeJson _createExtending(ClassElement element) =>
-      (element.supertype.element.name == 'Object')
+  static TypeJson? _createExtending(ClassElement element) =>
+      (element.supertype!.element.name == 'Object')
           ? null
-          : TypeJson.fromElement(element.supertype.element);
+          : TypeJson.fromElement(element.supertype!.element);
 
   static List<ExecutableJson> _createMethods(ClassElement classElement) {
     return classElement.methods
@@ -314,27 +293,117 @@ class ClassJson {
   }
 }
 
+/// The meta data of different types of functions from source files using the [LibraryElement] class from the source_gen package
+class FunctionsJson {
+  static const actionMethodParameterProcessorsAttribute =
+      'actionMethodParameterProcessors';
+  static const actionMethodResultProcessorsAttribute =
+      'actionMethodResultProcessors';
+  final List<ActionMethodParameterProcessorFunction>
+      actionMethodParameterProcessors;
+  final List<ActionMethodResultProcessorFunction> actionMethodResultProcessors;
+
+  FunctionsJson.fromLibrary(LibraryReader library)
+      : this.actionMethodParameterProcessors =
+            _createActionMethodParameterProcessors(library)
+                as List<ActionMethodParameterProcessorFunction>,
+        this.actionMethodResultProcessors =
+            _createActionMethodResultProcessors(library)
+                as List<ActionMethodResultProcessorFunction>;
+
+  FunctionsJson.fromJson(Map<String, dynamic> json)
+      : actionMethodParameterProcessors = json[
+                    actionMethodParameterProcessorsAttribute] ==
+                null
+            ? []
+            : List<ActionMethodParameterProcessorFunction>.from(
+                json[actionMethodParameterProcessorsAttribute].map((model) =>
+                    ActionMethodParameterProcessorFunction.fromJson(model))),
+        actionMethodResultProcessors =
+            json[actionMethodResultProcessorsAttribute] == null
+                ? []
+                : List<ActionMethodResultProcessorFunction>.from(
+                    json[actionMethodResultProcessorsAttribute].map((model) =>
+                        ActionMethodResultProcessorFunction.fromJson(model)));
+
+  FunctionsJson.empty()
+      : actionMethodParameterProcessors = [],
+        actionMethodResultProcessors = [];
+
+  Map<String, dynamic> toJson() => {
+        if (actionMethodParameterProcessors.isNotEmpty)
+          actionMethodParameterProcessorsAttribute:
+              actionMethodParameterProcessors,
+        if (actionMethodResultProcessors.isNotEmpty)
+          actionMethodResultProcessorsAttribute: actionMethodResultProcessors,
+      };
+
+  static List<ExecutableJson> _createActionMethodParameterProcessors(
+      LibraryReader library) {
+    return library.allElements
+        .where((element) =>
+            ActionMethodParameterProcessorFunction.isValid(element))
+        .map((e) => ActionMethodParameterProcessorFunction.fromElement(
+            e as ExecutableElement))
+        .toList();
+  }
+
+  static List<ExecutableJson> _createActionMethodResultProcessors(
+      LibraryReader library) {
+    return library.allElements
+        .where(
+            (element) => ActionMethodResultProcessorFunction.isValid(element))
+        .map((e) => ActionMethodResultProcessorFunction.fromElement(
+            e as ExecutableElement))
+        .toList();
+  }
+
+  static _isPotentialServiceObjectFactoryFunction(FunctionElement element) {
+    const factory = 'Factory';
+    return element.name.endsWith(factory) &&
+        element.name.length > factory.length &&
+        element.returnType.element!.name != 'void';
+  }
+
+  static bool _classContainsTranslationAnnotations(ClassElement classElement) {
+    return _containsTranslationAnnotations(classElement) ||
+        classElement.accessors
+            .any((element) => _containsTranslationAnnotations(element)) ||
+        classElement.methods
+            .any((element) => _containsTranslationAnnotations(element));
+  }
+
+  void addAll(FunctionsJson functionsJson) {
+    actionMethodParameterProcessors
+        .addAll(functionsJson.actionMethodParameterProcessors);
+    // actionMethodParameterProcessors.sort((a, b) => a.index.compareTo(b.index));
+    actionMethodResultProcessors
+        .addAll(functionsJson.actionMethodResultProcessors);
+    // actionMethodResultProcessors.sort((a, b) => a.index.compareTo(b.index));
+  }
+}
+
 class TypeJson {
   static const libraryAttribute = 'library';
   static const nameAttribute = 'name';
   static const genericTypesAttribute = 'genericTypes';
 
-  final String library;
-  final String name;
-  final List<TypeJson> genericTypes;
+  final String? library;
+  final String? name;
+  final List<TypeJson>? genericTypes;
 
   TypeJson(this.name, this.library, [this.genericTypes]);
 
   TypeJson.fromElement(Element element)
-      : library = element.source == null ? null : element.source.fullName,
+      : library = element.source == null ? null : element.source!.fullName,
         name = element.name,
         genericTypes = const [];
 
   TypeJson.fromDartType(DartType dartType)
-      : library = dartType.element.source == null
+      : library = dartType.element!.source == null
             ? null
-            : dartType.element.source.fullName,
-        name = dartType.element.name,
+            : dartType.element!.source!.fullName,
+        name = dartType.element!.name,
         genericTypes = _createGenericTypes(dartType);
 
   TypeJson.fromJson(Map<String, dynamic> json)
@@ -345,22 +414,47 @@ class TypeJson {
             : List<TypeJson>.from(json[genericTypesAttribute]
                 .map((model) => TypeJson.fromJson(model)));
 
+  TypeJson.buildContext()
+      : library = '/flutter/src/widgets/framework.dart',
+        name = 'BuildContext',
+        genericTypes = null;
+
+  TypeJson.actionMethodInfo()
+      : library = '/framework/lib/core/action_method_info.dart',
+        name = 'ActionMethodInfo',
+        genericTypes = null;
+
+  TypeJson.actionMethodInvokeWithParameter()
+      : library = '/framework/lib/core/action_method_info.dart',
+        name = 'InvokeWithParameter',
+        genericTypes = null;
+
   TypeJson.serviceClassAnnotation()
       : library = '/reflect_framework/lib/core/annotations.dart',
         name = 'ServiceClass',
         genericTypes = null;
 
+  TypeJson.actionMethodParameterProcessorAnnotation()
+      : library = '/reflect_framework/lib/core/annotations.dart',
+        name = 'ActionMethodParameterProcessor',
+        genericTypes = null;
+
+  TypeJson.actionMethodResultProcessorAnnotation()
+      : library = '/reflect_framework/lib/core/annotations.dart',
+        name = 'ActionMethodResultProcessor',
+        genericTypes = null;
+
   ///returns library name with name as a upper camel case name that could be used as a code name
-  String get codeName => ReCase(_createLibraryFileName()).pascalCase + name;
+  String get codeName => ReCase(_createLibraryFileName()).pascalCase + name!;
 
-  String _createLibraryFileName() =>
-      library.replaceAll(RegExp('^.*/'), '').replaceAll(RegExp('\.dart\$'), '');
+  String _createLibraryFileName() => library!
+      .replaceAll(RegExp('^.*/'), '')
+      .replaceAll(RegExp('\.dart\$'), '');
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         if (library != null) libraryAttribute: library,
         nameAttribute: name,
-        if (genericTypes != null && genericTypes.isNotEmpty)
+        if (genericTypes != null && genericTypes!.isNotEmpty)
           genericTypesAttribute: genericTypes
       };
 
@@ -380,16 +474,16 @@ class TypeJson {
   Type toType() {
     List<Type> genericTypes = this.genericTypes == null
         ? const []
-        : this.genericTypes.map((t) => t.toType()).toList();
-    String libraryUrl = _createLibraryUrl();
-    return Type(name, libraryUrl: libraryUrl, generics: genericTypes);
+        : this.genericTypes!.map((t) => t.toType()).toList();
+    String? libraryUri = _createLibraryUri();
+    return Type(name!, libraryUri: libraryUri, generics: genericTypes);
   }
 
-  String _createLibraryUrl() {
+  String? _createLibraryUri() {
     if (library == null) {
       return null;
     } else {
-      String libraryUrl = library
+      String libraryUrl = library!
           .replaceFirst(RegExp('/lib/'), '/')
           .replaceFirst('/', 'package:');
       if (libraryUrl.startsWith("dart:corepackage:")) {
@@ -415,11 +509,11 @@ class AnnotationJson {
   static const valuesAttribute = 'values';
 
   final TypeJson type;
-  final Map<String, Object> values;
+  final Map<String, Object?>? values;
 
   AnnotationJson.fromElement(ElementAnnotation annotationElement)
       : type = TypeJson.fromDartType(
-            annotationElement.computeConstantValue().type),
+            annotationElement.computeConstantValue()!.type!),
         values = _values(annotationElement);
 
   AnnotationJson.fromJson(Map<String, dynamic> json)
@@ -432,16 +526,16 @@ class AnnotationJson {
 
   Map<String, dynamic> toJson() => {
         typeAttribute: type,
-        if (values != null && values.isNotEmpty) valuesAttribute: values
+    if (values != null && values!.isNotEmpty) valuesAttribute: values
       };
 
-  static Map<String, Object> _values(ElementAnnotation annotationElement) {
+  static Map<String, Object?> _values(ElementAnnotation annotationElement) {
     var dartObject = annotationElement.computeConstantValue();
     ConstantReader reader = ConstantReader(dartObject);
-    Map<String, Object> values = {};
+    Map<String, Object?> values = {};
     for (String name in _valueNames(annotationElement)) {
       try {
-        Object value = reader.peek(name).literalValue;
+        Object? value = reader.peek(name)!.literalValue;
         values.putIfAbsent(name, () => value);
       } catch (e) {
         // We will skip the value, if we cant get it (value is likely null)
@@ -494,8 +588,8 @@ class ExecutableJson {
   static const parameterTypesAttribute = 'parameterTypes';
   static const annotationsAttribute = 'annotations';
 
-  final String name;
-  final TypeJson returnType;
+  final String? name;
+  final TypeJson? returnType;
   final List<TypeJson> parameterTypes;
   final List<AnnotationJson> annotations;
 
@@ -527,13 +621,17 @@ class ExecutableJson {
             : List<AnnotationJson>.from(json[annotationsAttribute]
                 .map((model) => AnnotationJson.fromJson(model)));
 
+  bool get isParameterProcessorFunction => annotations.any(
+      (a) => a.type == TypeJson.actionMethodParameterProcessorAnnotation());
+
+  bool get isResultProcessorFunction => annotations
+      .any((a) => a.type == TypeJson.actionMethodResultProcessorAnnotation());
+
   Map<String, dynamic> toJson() => {
         nameAttribute: name,
         if (returnType != null) returnTypeAttribute: returnType,
-        if (parameterTypes != null && parameterTypes.isNotEmpty)
-          parameterTypesAttribute: parameterTypes,
-        if (annotations != null && annotations.isNotEmpty)
-          annotationsAttribute: annotations
+        if (parameterTypes.isNotEmpty) parameterTypesAttribute: parameterTypes,
+        if (annotations.isNotEmpty) annotationsAttribute: annotations
       };
 
   static List<TypeJson> _createParameterTypes(
@@ -543,7 +641,7 @@ class ExecutableJson {
         .toList();
   }
 
-  static TypeJson _createReturnType(ExecutableElement executableElement) {
+  static TypeJson? _createReturnType(ExecutableElement executableElement) {
     DartType returnType = executableElement.returnType;
     var returnTypeVoid = returnType.element == null;
     if (returnTypeVoid) {
@@ -554,6 +652,91 @@ class ExecutableJson {
   }
 }
 
+class ActionMethodParameterProcessorFunction extends ExecutableJson {
+  ActionMethodParameterProcessorFunction.fromElement(
+      ExecutableElement executableElement)
+      : super.fromElement(executableElement);
+
+  ActionMethodParameterProcessorFunction.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json);
+
+  static bool isValid(Element element) {
+    return element is FunctionElement &&
+        element.isPublic &&
+        element.returnType.isVoid &&
+        (element.parameters.length == 2 || element.parameters.length == 3) &&
+        element.parameters[0].type.element!.name ==
+            TypeJson.buildContext().name;
+    //TODO not stored in .dart_tool/..action_method_parameter_processor_impl.reflect_info.json
+    //TODO following does not work
+    // element.parameters[1].type.element.name ==
+    //     TypeJson.actionMethodInvokeWithParameter().name ;//&&
+    // element.metadata.toString().contains(
+    //     '@' + TypeJson.actionMethodParameterProcessorAnnotation().name);
+  }
+
+  double? get index {
+    try {
+      AnnotationJson processorAnnotation = annotations.firstWhere(
+          (p) => p.type == TypeJson.actionMethodParameterProcessorAnnotation());
+      return processorAnnotation.values!['index'] as double?;
+    } on Exception {
+      return double.infinity;
+    }
+  }
+}
+
+class ActionMethodResultProcessorFunction extends ExecutableJson {
+  ActionMethodResultProcessorFunction.fromElement(
+      ExecutableElement executableElement)
+      : super.fromElement(executableElement);
+
+  ActionMethodResultProcessorFunction.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json);
+
+  static bool isValid(Element element) {
+    return element is FunctionElement &&
+        element.isPublic &&
+        (element.parameters.length == 2 || element.parameters.length == 3) &&
+        element.parameters[0].type.element!.name ==
+            TypeJson.buildContext().name &&
+        element.parameters[1].type.element!.name ==
+            TypeJson.actionMethodInfo().name &&
+        element.metadata.toString().contains(
+            '@' + TypeJson.actionMethodResultProcessorAnnotation().name!);
+  }
+
+  bool canProcessMethod(ExecutableJson methodJson) =>
+      (_hasReturnType(methodJson))
+          ? (parameterTypes.length == 3 &&
+              _compatibleTypes(parameterTypes[2], methodJson.returnType))
+          : (parameterTypes.length == 2 && !_hasReturnType(methodJson));
+
+  bool _hasReturnType(ExecutableJson methodJson) =>
+      methodJson.returnType != null && methodJson.returnType!.name != 'void';
+
+//TODO domainObject annotation
+//TODO requiredAnnotations in [ActionMethodRes]
+
+  double? get index {
+    try {
+      AnnotationJson processorAnnotation = annotations.firstWhere(
+          (p) => p.type == TypeJson.actionMethodResultProcessorAnnotation());
+      return processorAnnotation.values!['index'] as double?;
+    } on Exception {
+      return double.infinity;
+    }
+  }
+
+  bool _compatibleTypes(TypeJson type1, TypeJson? type2) {
+    if (type1 == type2) return true;
+    if (type1.library != type2!.library) return false;
+    if (type1.name != type2.name && type1.name != 'Object') return false;
+    //TODO test on type.generics with recursive call
+    return true;
+  }
+}
+
 /// TODO: explain what a property is.
 class PropertyJson {
   static const nameAttribute = 'name';
@@ -561,9 +744,9 @@ class PropertyJson {
   static const hasSetterAttribute = 'hasSetter';
   static const annotationsAttribute = 'annotations';
 
-  final String name;
+  final String? name;
   final TypeJson type;
-  final bool hasSetter;
+  final bool? hasSetter;
   final List<AnnotationJson> annotations;
 
   PropertyJson.fromElements(PropertyAccessorElement propertyGetterElement,
@@ -596,8 +779,7 @@ class PropertyJson {
         nameAttribute: name,
         hasSetterAttribute: hasSetter,
         typeAttribute: type,
-        if (annotations != null && annotations.isNotEmpty)
-          annotationsAttribute: annotations
+    if (annotations.isNotEmpty) annotationsAttribute: annotations
       };
 
   static List<AnnotationJson> _createAnnotationsFrom2Elements(

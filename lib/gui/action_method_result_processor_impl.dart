@@ -9,7 +9,7 @@ import 'package:reflect_framework/gui/gui_tab_table.dart';
 
 
 @ActionMethodResultProcessor(index: 100)
-void showPopupTextForMethodsReturningVoid(
+void showMethodExecutedSnackbarForMethodsReturningVoid(
     BuildContext context, ActionMethodInfo actionMethodInfo) {
   //TODO
 }

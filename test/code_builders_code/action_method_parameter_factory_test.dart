@@ -25,14 +25,14 @@ main() {
 
   group('No parameterFactory', () {
     test('No parameter', () {
-      String actual = createAndFindMethodString(classJson,
+      String actual = createAndFindMethodString(reflectJson, classJson,
           actionMethodName: 'noParameter',
           actionMethodInfoClassMethod: '_createParameter');
       String expected = ''; //should have no _createParameter method
       expect(actual, expected);
     });
     test('No parameter factory', () {
-      String actual = createAndFindMethodString(classJson,
+      String actual = createAndFindMethodString(reflectJson, classJson,
           actionMethodName: 'noParameterFactory',
           actionMethodInfoClassMethod: '_createParameter');
       String expected = ''; //should have no _createParameter method
@@ -43,7 +43,7 @@ main() {
   group('With ParameterFactory annotation', () {
     group('Dart Types', () {
       test('String', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'stringParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'String _createParameter()  => \'\';';
@@ -51,7 +51,7 @@ main() {
       });
 
       test('Bool', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'boolParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'bool _createParameter()  => true;';
@@ -59,7 +59,7 @@ main() {
       });
 
       test('Int', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'intParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'int _createParameter()  => 0;';
@@ -67,7 +67,7 @@ main() {
       });
 
       test('Double', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'doubleParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'double _createParameter()  => 0.0;';
@@ -75,7 +75,7 @@ main() {
       });
 
       test('DateTime', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'dateTimeParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'DateTime _createParameter()  => DateTime.now();';
@@ -83,7 +83,7 @@ main() {
       });
 
       test('List', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'listParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'List<dynamic> _createParameter()  => [];';
@@ -91,7 +91,7 @@ main() {
       });
 
       test('Set', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'setParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'Set<dynamic> _createParameter()  => {};';
@@ -99,7 +99,7 @@ main() {
       });
 
       test('Map', () {
-        String actual = createAndFindMethodString(classJson,
+        String actual = createAndFindMethodString(reflectJson, classJson,
             actionMethodName: 'mapParameterFactoryAnnotation',
             actionMethodInfoClassMethod: '_createParameter');
         String expected = 'Map<dynamic,dynamic> _createParameter()  => {};';
@@ -113,8 +113,8 @@ main() {
         method.parameterTypes.add(TypeJson('Stream', 'dart:asynch'));
 
         expect(
-            () => ActionMethodInfoClass(classJson, method),
-            throwsA(predicate((e) =>
+            () => ActionMethodInfoClass(reflectJson, classJson, method),
+            throwsA(predicate((dynamic e) =>
                 e is ApplicationInfoBuilderException &&
                 e.toString().contains(
                     'Could not create a parameterFactory method for Dart type: Stream. Replace the ParameterFactory annotation with method: Stream stringParameterFactoryAnnotationParameterFactory()'))));
@@ -135,14 +135,14 @@ main() {
   });
 }
 
-String createAndFindMethodString(ClassJson classJson,
-    {String actionMethodName, String actionMethodInfoClassMethod}) {
+String createAndFindMethodString(ReflectJson reflectJson, ClassJson classJson,
+    {String? actionMethodName, String? actionMethodInfoClassMethod}) {
   ExecutableJson methodJson = findMethodJson(classJson, actionMethodName);
 
   ActionMethodInfoClass actionMethodInfoClass =
-      ActionMethodInfoClass(classJson, methodJson);
+      ActionMethodInfoClass(reflectJson, classJson, methodJson);
 
-  List<Method> methods = actionMethodInfoClass.methods
+  List<Method> methods = actionMethodInfoClass.methods!
       .where((m) =>
           CodeFormatter().unFormatted(m.name) == actionMethodInfoClassMethod)
       .toList();
@@ -153,7 +153,7 @@ String createAndFindMethodString(ClassJson classJson,
     return '';
 }
 
-ExecutableJson findMethodJson(ClassJson classJson, String actionMethodName) {
+ExecutableJson findMethodJson(ClassJson classJson, String? actionMethodName) {
   try {
     return classJson.methods.firstWhere((m) => m.name == actionMethodName);
   } on StateError {

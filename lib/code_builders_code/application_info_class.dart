@@ -1,5 +1,6 @@
 import 'dart:io' as Io;
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dart_code/dart_code.dart';
 import 'package:recase/recase.dart';
 import 'package:reflect_framework/code_builders/info_behavioural.dart';
@@ -16,7 +17,7 @@ class ApplicationInfoClass extends Class {
 
   static List<Type> _createImplements() => [
         Type('ApplicationInfo',
-            libraryUrl: 'package:reflect_framework/core/application_info.dart')
+            libraryUri: 'package:reflect_framework/core/application_info.dart')
       ];
 
   static List<Method> _createMethods(ReflectJson reflectJson,
@@ -51,8 +52,8 @@ class ApplicationInfoClass extends Class {
     List<ClassJson> reflectGuiApplications = reflectJson.classes
         .where((c) =>
             c.extending != null &&
-            c.extending.name == name &&
-            c.extending.library == lib)
+            c.extending!.name == name &&
+            c.extending!.library == lib)
         .toList();
 
     if (reflectGuiApplications.length == 0) {
@@ -60,7 +61,7 @@ class ApplicationInfoClass extends Class {
           "One class in your source must extend: $name from library: $lib");
     }
     if (reflectGuiApplications.length > 1) {
-      List<String> reflectApplicationNames =
+      List<String?> reflectApplicationNames =
           reflectGuiApplications.map((c) => c.type.name).toList();
       throw Exception(
           "Only one class in your source code may extend: $name. Found: $reflectApplicationNames");
@@ -72,13 +73,13 @@ class ApplicationInfoClass extends Class {
       ServiceClassInfoClasses serviceClassInfoClasses) {
     List<Annotation> annotations = [Annotation.override()];
     Type serviceClassInfoType = Type('ServiceClassInfo',
-        libraryUrl: 'package:reflect_framework/core/service_class_info.dart');
+        libraryUri: 'package:reflect_framework/core/service_class_info.dart');
 
     Expression createBody = Expression.ofList(serviceClassInfoClasses
         .map((serviceClassInfoClass) => Expression.callConstructor(
-            Type(serviceClassInfoClass.name.toUnFormattedString(null))))
+            Type(CodeFormatter().unFormatted(serviceClassInfoClass.name))))
         .toList());
-    Type listOfDomainClassInfo = Type.ofGenericList(serviceClassInfoType);
+    Type listOfDomainClassInfo = Type.ofList(genericType: serviceClassInfoType);
     return Method.getter('serviceClassInfos', createBody,
         type: listOfDomainClassInfo, annotations: annotations);
   }
@@ -86,12 +87,12 @@ class ApplicationInfoClass extends Class {
 }
 
 class PubSpecYaml {
-  final Map yaml;
+  final Map? yaml;
 
   PubSpecYaml() : yaml = _read();
 
   List<String> get authors {
-    YamlList authors = yaml['authors'];
+    YamlList? authors = yaml!['authors'];
     if (authors == null) {
       return const [];
     }
@@ -99,21 +100,21 @@ class PubSpecYaml {
   }
 
   List<String> get assets {
-    var flutter = yaml['flutter'];
+    var flutter = yaml!['flutter'];
     if (flutter == null) {
       return const [];
     }
-    YamlList assets = flutter['assets'];
+    YamlList? assets = flutter['assets'];
     if (assets == null) {
       return const [];
     }
     return assets.map((asset) => asset.toString()).toList();
   }
 
-  static Map _read() {
+  static Map? _read() {
     Io.File yamlFile = Io.File("pubspec.yaml");
     String yamlString = yamlFile.readAsStringSync();
-    Map yaml = loadYaml(yamlString);
+    Map? yaml = loadYaml(yamlString);
     return yaml;
   }
 
@@ -125,7 +126,7 @@ class PubSpecYaml {
   }
 
   Expression _createExpression(String name) {
-    var value = yaml[name.toLowerCase()];
+    var value = yaml![name.toLowerCase()];
     if (value == null) {
       return Expression.ofString('');
     } else {
@@ -156,20 +157,20 @@ class TitleImage {
     return method;
   }
 
-  static String _findAssetPath(List<String> assets, String fileName) {
+  static String? _findAssetPath(List<String> assets, String fileName) {
     // List<String> assets = _findAssets(pubSpecYaml);
     RegExp imageAsset = RegExp(
         '/' + fileName + '\.(jpeg|webp|gif|png|bmp|wbmp)\$',
         caseSensitive: false);
-    String found = assets.firstWhere((asset) => imageAsset.hasMatch(asset),
-        orElse: () => null);
+    String? found =
+        assets.firstWhereOrNull((asset) => imageAsset.hasMatch(asset));
     return found;
   }
 
   static Expression _createExpression(
       ClassJson applicationClassJson, List<String> assets) {
-    String fileName = ReCase(applicationClassJson.type.name).snakeCase;
-    String foundAssetPath = _findAssetPath(assets, fileName);
+    String fileName = ReCase(applicationClassJson.type.name!).snakeCase;
+    String? foundAssetPath = _findAssetPath(assets, fileName);
     if (foundAssetPath == null) {
       //Show warning
       print(
