@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:reflect_framework/core/action_method_info.dart';
 
@@ -22,10 +21,10 @@ class ActionMethodParameterProcessor {
   /// If the [ActionMethod] must have a [ProcessDirectly] annotation, in order to be processed by the [ActionMethodParameterProcessor]. Default=false
   final List<Object> requiredAnnotations;
 
-  final IconData defaultIcon;
+  final IconData? defaultIcon;
 
   const ActionMethodParameterProcessor(
-      {@required this.index,
+      {required this.index,
       this.requiredAnnotations = const [],
       this.defaultIcon});
 }
@@ -60,9 +59,9 @@ class ActionMethodResultProcessor {
   /// A double is used so that there are endless numbers to put between to existing numbers.
   final double index;
 
-  final IconData defaultIcon;
+  final IconData? defaultIcon;
 
-  const ActionMethodResultProcessor({@required this.index, this.defaultIcon});
+  const ActionMethodResultProcessor({required this.index, this.defaultIcon});
 }
 
 /// Annotation to indicate that a class is a [ServiceObject], so that they are recognized by the [ReflectFramework]
@@ -130,9 +129,9 @@ class Icon {
 class Translation {
   /// If keySuffix=null: than the translation refers to a library member (Class, Method, Property)
   /// If keySuffix=(a camelCase string): than the translation refers to a translatable string that could be used in your dart code
-  final String keySuffix;
+  final String? keySuffix;
   final String englishText;
 
-  const Translation({this.keySuffix, @required this.englishText});
+  const Translation({this.keySuffix, required this.englishText});
 }
 

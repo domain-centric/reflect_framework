@@ -8,7 +8,7 @@ import 'package:reflect_framework/core/action_method_info.dart';
 
 class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   List<Tab> _tabs = [];
-  Tab _selectedTab;
+  Tab? _selectedTab;
 
   int get length => _tabs.length;
 
@@ -40,12 +40,12 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
 
   Tab get selected {
     if (_tabs.contains(_selectedTab)) {
-      return _selectedTab;
+      return _selectedTab!;
     } else if (_tabs.isEmpty) {
-      return null;
+      throw new Exception('No tabs, so no selected tab');
     } else {
       _selectedTab = _tabs.last;
-      return _selectedTab;
+      return _selectedTab!;
     }
   }
 
@@ -58,7 +58,11 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   int get selectedIndex {
-    return _tabs.indexOf(selected);
+    try {
+      return _tabs.indexOf(selected);
+    } on Exception catch (e) {
+      return -1;
+    }
   }
 
   close(Tab tab) {
@@ -86,7 +90,7 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void _closeOneTab() {
-    Tab tabToClose = _findTabToClose();
+    Tab tabToClose = _findTabToClose()!;
     close(tabToClose);
     // We are not going to ask the user the close other tabs if
     // the tab.close result is TabCloseResult.CANCELED.
@@ -94,7 +98,7 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   ///returns a [Tab] that can be closed directly, or otherwise the first (oldest) [Tab]
-  Tab _findTabToClose() {
+  Tab? _findTabToClose() {
     return _tabs.firstWhere((tab) => tab.canCloseDirectly,
         orElse: () => _tabs.first);
   }

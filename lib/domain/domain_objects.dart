@@ -1,18 +1,18 @@
 import '../core/annotations.dart';
 
 class Payment {
-  Address address;
-  CardDetails cardDetails;
+  Address? address;
+  CardDetails? cardDetails;
 
   Payment({this.address, this.cardDetails});
 }
 
 class CardDetails {
-  String cardHolderName;
-  String cardNumber;
-  String expiryMonth;
-  String expiryYear;
-  int securityCode;
+  String? cardHolderName;
+  String? cardNumber;
+  String? expiryMonth;
+  String? expiryYear;
+  int? securityCode;
 
   CardDetails(
       {this.cardHolderName,
@@ -23,8 +23,8 @@ class CardDetails {
 }
 
 class Address {
-  String postCode;
-  String addressLine;
+  String? postCode;
+  String? addressLine;
 
   Address({this.postCode, this.addressLine});
 
@@ -82,16 +82,16 @@ class PersonService {
 }
 
 class Person {
-  String givenName;
+  String? givenName;
 
   @DomainClass() //TODO remove after test
   @ActionMethodParameterProcessor(index: 111) //TODO remove after test
-  String surName;
+  String? surName;
 
   @DomainClass() //TODO remove after test
   @ActionMethodParameterProcessor(index: 222) //TODO remove after test
   String get fullName {
-    return givenName ?? "" + " " + surName ?? "".trim();
+    return (givenName ?? "") + " " + (surName ?? "");
   }
 
   Person();

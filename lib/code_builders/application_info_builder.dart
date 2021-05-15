@@ -12,7 +12,7 @@ import 'info_json.dart';
 /// - create dart files
 
 main() {
-  var json = ReflectJson.readJsonFromGeneratedReflectInfoCombinedFile();
+  var json = ReflectJson.readJsonFromGeneratedReflectInfoCombinedFile()!;
   _createApplicationInfoLibraryFile(json);
 }
 
@@ -60,12 +60,12 @@ class ApplicationInfoBuilderException implements Exception {
 
   ApplicationInfoBuilderException.forClass(ClassJson classJson, String message)
       : message = createMessage(
-            [classJson.type.library, classJson.type.name], message);
+            [classJson.type.library!, classJson.type.name!], message);
 
   ApplicationInfoBuilderException.forMethod(
       ClassJson classJson, ExecutableJson methodJson, String message)
       : message = createMessage(
-            [classJson.type.library, classJson.type.name, methodJson.name],
+      [classJson.type.library!, classJson.type.name!, methodJson.name!],
             message);
 
   static createMessage(List<String> sources, String message) {

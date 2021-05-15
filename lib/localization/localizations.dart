@@ -68,11 +68,11 @@ abstract class AppLocalizations {
   // ignore: unused_field
   final String localeName;
 
-  static AppLocalizations of(BuildContext context) {
+  static AppLocalizations? of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
+  static const LocalizationsDelegate<AppLocalizations?> delegate =
       _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
@@ -110,12 +110,13 @@ abstract class AppLocalizations {
 }
 
 class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+    extends LocalizationsDelegate<AppLocalizations?> {
   const _AppLocalizationsDelegate();
 
   @override
-  Future<AppLocalizations> load(Locale locale) {
-    return SynchronousFuture<AppLocalizations>(_lookupAppLocalizations(locale));
+  Future<AppLocalizations?> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations?>(
+        _lookupAppLocalizations(locale));
   }
 
   @override
@@ -126,7 +127,7 @@ class _AppLocalizationsDelegate
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-AppLocalizations _lookupAppLocalizations(Locale locale) {
+AppLocalizations? _lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en':
