@@ -18,8 +18,13 @@ class ActionMethodInfoClasses extends DelegatingList<ActionMethodInfoClass> {
 }
 
 class ActionMethodInfoClass extends Class {
-  static Type _createActionMethodType(String name) => Type(name,
-      libraryUri: 'package:reflect_framework/core/action_method_info.dart');
+  static Type _createActionMethodType(String name,
+          {ExecutableJson? methodJson}) =>
+      Type(name,
+          libraryUri: 'package:reflect_framework/core/action_method_info.dart',
+          generics: [
+            if (methodJson != null) _createParameterType(methodJson)!
+          ]);
 
   ActionMethodInfoClass(
       ReflectJson reflectJson, ClassJson classJson, ExecutableJson methodJson)
@@ -77,11 +82,11 @@ class ActionMethodInfoClass extends Class {
 
   static List<Type> _createImplementationTypes(ExecutableJson methodJson) => [
         if (_startWithParameter(methodJson))
-          _createActionMethodType('StartWithParameter')
+          _createActionMethodType('StartWithParameter', methodJson: methodJson)
         else
           _createActionMethodType('StartWithoutParameter'),
         if (_hasParameter(methodJson))
-          _createActionMethodType('InvokeWithParameter')
+          _createActionMethodType('InvokeWithParameter', methodJson: methodJson)
         else
           _createActionMethodType('InvokeWithoutParameter'),
       ];
@@ -244,7 +249,8 @@ class ActionMethodInfoClass extends Class {
         parameters: Parameters([
           Parameter.required('context', type: _createBuildContextType()),
           if (_hasParameter(methodJson))
-            Parameter.required('parameterValue', type: Type('Object')),
+            Parameter.required('parameterValue',
+                type: _createParameterType(methodJson)!),
         ]),
         type: Type('void'),
         annotations: annotations);
@@ -260,7 +266,7 @@ class ActionMethodInfoClass extends Class {
             .callMethod(methodJson.name!, parameterValues: parameterValues)
       ]);
     } else {
-      var type = _createInvokeActionMethodReturnType(methodJson);
+      var type = _createReturnType(methodJson);
       return Expression.ofVariable(methodOwnerFieldName)
           .callMethod(methodJson.name!, parameterValues: parameterValues)
           .defineVariable('returnValue', type: type);
@@ -275,7 +281,7 @@ class ActionMethodInfoClass extends Class {
               [ParameterValue(Expression.ofVariable('parameterValue'))])
           : null;
 
-  static Type? _createInvokeActionMethodReturnType(ExecutableJson methodJson) =>
+  static Type? _createReturnType(ExecutableJson methodJson) =>
       _hasReturnValue(methodJson) ? methodJson.returnType!.toType() : null;
 
   static Statement _createInvokeResultProcessorFunction(

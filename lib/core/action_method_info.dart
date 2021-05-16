@@ -41,13 +41,13 @@ abstract class StartWithoutParameter implements ActionMethodInfo {
   void start(BuildContext context);
 }
 
-abstract class StartWithParameter implements ActionMethodInfo {
+abstract class StartWithParameter<T> implements ActionMethodInfo {
   /// Starts the ActionMethod process (e.g. when clicking on a menu button)
   /// This is implemented on a ActionMethodInfoWithParameter
   /// It:
   /// - calls the _processParameter() method
   /// - it will handle any exceptions that could be thrown
-  void start(BuildContext context, Object parameter);
+  void start(BuildContext context, T parameter);
 }
 
 abstract class InvokeWithoutParameter implements ActionMethodInfo {
@@ -55,14 +55,14 @@ abstract class InvokeWithoutParameter implements ActionMethodInfo {
   void invokeMethodAndProcessResult(BuildContext context);
 }
 
-abstract class InvokeWithParameter implements ActionMethodInfo {
+abstract class InvokeWithParameter<T> implements ActionMethodInfo {
   /// This method should only be called by a [ActionMethodParameterProcessor]
   /// (which might be delegated to a form ok or a dialog ok button)
   /// It:
   /// - invokes the method
   /// - and then calls the [ActionMethodResultProcessor] to process the results
   /// - it will handle any exceptions that could be thrown
-  void invokeMethodAndProcessResult(BuildContext context, Object parameter);
+  void invokeMethodAndProcessResult(BuildContext context, T parameter);
 }
 
 // /// [ServiceObjectActionMethod]s are displayed on the main menu of an [ReflectGuiApplication] or are commands that can be accessed from the outside world in other type of [ReflectApplications]

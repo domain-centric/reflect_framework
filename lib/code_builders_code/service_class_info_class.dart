@@ -5,13 +5,14 @@ import 'package:reflect_framework/code_builders/info_behavioural.dart';
 import '../code_builders/info_json.dart';
 import 'action_method_info_class.dart';
 
-class ServiceClassInfoClasses extends DelegatingList<Class> {
+class ServiceClassInfoClasses extends DelegatingList<ServiceClassInfoClass> {
   ServiceClassInfoClasses(ReflectJson reflectJson)
       : super(_createsServiceClassInfoClasses(reflectJson));
 
-  static List<Class> _createsServiceClassInfoClasses(ReflectJson reflectJson) {
+  static List<ServiceClassInfoClass> _createsServiceClassInfoClasses(
+      ReflectJson reflectJson) {
     final serviceClassAnnotation = TypeJson.serviceClassAnnotation();
-    List<Class> serviceClassInfoClasses = [];
+    List<ServiceClassInfoClass> serviceClassInfoClasses = [];
     for (ClassJson classJson in reflectJson.classes) {
       if (classJson.annotations.any((a) => a.type == serviceClassAnnotation)) {
         //TODO check if serviceClasses have a empty constructor or a empty factory constructor or a factory function with name <serviceClassName>Factory that returns the correct type (if not throw exception)
@@ -19,7 +20,7 @@ class ServiceClassInfoClasses extends DelegatingList<Class> {
         var actionMethodInfoClasses =
             ActionMethodInfoClasses(reflectJson, classJson);
         if (actionMethodInfoClasses.isNotEmpty) {
-          Class serviceClassInfoCode =
+          ServiceClassInfoClass serviceClassInfoCode =
               ServiceClassInfoClass(classJson, actionMethodInfoClasses);
           serviceClassInfoClasses.add(serviceClassInfoCode);
         }

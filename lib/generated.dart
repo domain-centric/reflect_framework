@@ -7,7 +7,6 @@ import 'package:reflect_framework/core/service_class_info.dart' as _i2;
 import 'package:reflect_framework/domain/action_method_parameter_factory_test.dart'
     as _i3;
 import 'package:reflect_framework/domain/domain_objects.dart' as _i10;
-import 'package:reflect_framework/gui/action_method_parameter_processor_impl.dart';
 import 'package:reflect_framework/gui/gui_tab.dart' as _i8;
 import 'package:reflect_framework/gui/gui_tab_form.dart' as _i12;
 import 'package:reflect_framework/gui/gui_tab_table.dart' as _i11;
@@ -20,12 +19,11 @@ import 'gui/action_method_result_processor_impl.dart' as _i9;
 class ReflectApplicationInfo implements _i1.ApplicationInfo {
   @override
   String get name => 'My first app';
-
   @override
   String get description => '';
 
   @override
-  String? get titleImage => 'assets/my_first_app.png';
+  String get titleImage => 'assets/my_first_app.png';
 
   @override
   String get homePage =>
@@ -44,19 +42,14 @@ class ActionMethodParameterFactoryTestActionMethodParameterFactoryTestServiceInf
     extends _i2.ServiceClassInfo<_i3.ActionMethodParameterFactoryTestService> {
   @override
   final serviceObject = _i3.ActionMethodParameterFactoryTestService();
-
   @override
   String get name => 'Action method parameter factory tests';
-
   @override
   String get description => '';
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   List<_i4.ActionMethodInfo> get actionMethodInfos => [
         ActionMethodParameterFactoryTestServiceNoParameterInfo$(serviceObject),
@@ -85,24 +78,17 @@ class ActionMethodParameterFactoryTestServiceNoParameterInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
-
   ActionMethodParameterFactoryTestServiceNoParameterInfo$(this.methodOwner);
-
   @override
   String get name => 'No parameter';
-
   @override
   String get description => '';
-
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -121,25 +107,18 @@ class ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
-
   ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$(
       this.methodOwner);
-
   @override
   String get name => 'No parameter factory';
-
   @override
   String get description => '';
-
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -155,7 +134,7 @@ class ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$
 }
 
 class ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<String> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -170,13 +149,10 @@ class ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInf
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -192,14 +168,14 @@ class ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInf
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.stringParameterFactoryAnnotation(parameterValue as String);
+      _i5.BuildContext context, String parameterValue) {
+    methodOwner.stringParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<bool> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -214,13 +190,10 @@ class ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -236,14 +209,14 @@ class ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.boolParameterFactoryAnnotation(parameterValue as bool);
+      _i5.BuildContext context, bool parameterValue) {
+    methodOwner.boolParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<int> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -258,13 +231,10 @@ class ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -280,14 +250,14 @@ class ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.intParameterFactoryAnnotation(parameterValue as int);
+      _i5.BuildContext context, int parameterValue) {
+    methodOwner.intParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<double> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -302,13 +272,10 @@ class ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInf
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -324,14 +291,14 @@ class ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInf
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.doubleParameterFactoryAnnotation(parameterValue as double);
+      _i5.BuildContext context, double parameterValue) {
+    methodOwner.doubleParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<DateTime> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -346,13 +313,10 @@ class ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationI
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -368,14 +332,16 @@ class ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationI
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.dateTimeParameterFactoryAnnotation(parameterValue as DateTime);
+      _i5.BuildContext context, DateTime parameterValue) {
+    methodOwner.dateTimeParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements
+        _i4.StartWithoutParameter,
+        _i4.InvokeWithParameter<List<dynamic>> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -390,13 +356,10 @@ class ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -412,14 +375,16 @@ class ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.listParameterFactoryAnnotation(parameterValue as List<dynamic>);
+      _i5.BuildContext context, List<dynamic> parameterValue) {
+    methodOwner.listParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements
+        _i4.StartWithoutParameter,
+        _i4.InvokeWithParameter<Set<dynamic>> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -434,13 +399,10 @@ class ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -456,14 +418,16 @@ class ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.setParameterFactoryAnnotation(parameterValue as Set<dynamic>);
+      _i5.BuildContext context, Set<dynamic> parameterValue) {
+    methodOwner.setParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements
+        _i4.StartWithoutParameter,
+        _i4.InvokeWithParameter<Map<dynamic, dynamic>> {
   @override
   final _i3.ActionMethodParameterFactoryTestService methodOwner;
 
@@ -478,13 +442,10 @@ class ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$
 
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -500,9 +461,8 @@ class ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner
-        .mapParameterFactoryAnnotation(parameterValue as Map<dynamic, dynamic>);
+      _i5.BuildContext context, Map<dynamic, dynamic> parameterValue) {
+    methodOwner.mapParameterFactoryAnnotation(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
@@ -511,19 +471,14 @@ class DomainObjectsPersonServiceInfo$
     extends _i2.ServiceClassInfo<_i10.PersonService> {
   @override
   final serviceObject = _i10.PersonService();
-
   @override
   String get name => 'People';
-
   @override
   String get description => '';
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   List<_i4.ActionMethodInfo> get actionMethodInfos => [
         PersonServiceAllPersonsInfo$(serviceObject),
@@ -540,24 +495,17 @@ class PersonServiceAllPersonsInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
   @override
   final _i10.PersonService methodOwner;
-
   PersonServiceAllPersonsInfo$(this.methodOwner);
-
   @override
   String get name => 'All persons';
-
   @override
   String get description => '';
-
   @override
   _i5.IconData get icon => _i6.Icons.table_chart_sharp;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -573,7 +521,7 @@ class PersonServiceAllPersonsInfo$
 }
 
 class PersonServiceFindPersonsInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<String> {
   @override
   final _i10.PersonService methodOwner;
 
@@ -596,21 +544,29 @@ class PersonServiceFindPersonsInfo$
 
   @override
   void start(_i5.BuildContext context) {
-    String parameterValue = '';
-    editStringParameterInDialog(context, this, parameterValue);
+    var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
+    var tab = _i11.TableExampleTabFactory().create(this);
+    tabs.add(tab);
+  }
+
+  String _createParameter() => '';
+
+  void _processParameter(_i5.BuildContext context, Object parameterValue) {
+    // TODO: IMPLEMENT
   }
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    List<_i10.Person> returnValue =
-        methodOwner.findPersons(parameterValue as String);
+      _i5.BuildContext context, String parameterValue) {
+    List<_i10.Person> returnValue = methodOwner.findPersons(parameterValue);
     _i9.showListInTableTab(context, this, returnValue);
   }
 }
 
 class PersonServiceEditInfo$
-    implements _i4.StartWithParameter, _i4.InvokeWithParameter {
+    implements
+        _i4.StartWithParameter<_i10.Person>,
+        _i4.InvokeWithParameter<_i10.Person> {
   @override
   final _i10.PersonService methodOwner;
 
@@ -627,10 +583,8 @@ class PersonServiceEditInfo$
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context, Object parameterValue) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -644,14 +598,16 @@ class PersonServiceEditInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.edit(parameterValue as _i10.Person);
+      _i5.BuildContext context, _i10.Person parameterValue) {
+    methodOwner.edit(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class PersonServiceRemoveInfo$
-    implements _i4.StartWithParameter, _i4.InvokeWithParameter {
+    implements
+        _i4.StartWithParameter<_i10.Person>,
+        _i4.InvokeWithParameter<_i10.Person> {
   @override
   final _i10.PersonService methodOwner;
 
@@ -668,10 +624,8 @@ class PersonServiceRemoveInfo$
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context, Object parameterValue) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -685,14 +639,14 @@ class PersonServiceRemoveInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.remove(parameterValue as _i10.Person);
+      _i5.BuildContext context, _i10.Person parameterValue) {
+    methodOwner.remove(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class PersonServiceAddNewInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<_i10.Person> {
   @override
   final _i10.PersonService methodOwner;
 
@@ -709,10 +663,8 @@ class PersonServiceAddNewInfo$
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -728,14 +680,16 @@ class PersonServiceAddNewInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.addNew(parameterValue as _i10.Person);
+      _i5.BuildContext context, _i10.Person parameterValue) {
+    methodOwner.addNew(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
 
 class PersonServiceSendEmailInfo$
-    implements _i4.StartWithParameter, _i4.InvokeWithParameter {
+    implements
+        _i4.StartWithParameter<_i10.Person>,
+        _i4.InvokeWithParameter<_i10.Person> {
   @override
   final _i10.PersonService methodOwner;
 
@@ -752,10 +706,8 @@ class PersonServiceSendEmailInfo$
 
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context, Object parameterValue) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);
@@ -769,8 +721,8 @@ class PersonServiceSendEmailInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Object parameterValue) {
-    methodOwner.sendEmail(parameterValue as _i10.Person);
+      _i5.BuildContext context, _i10.Person parameterValue) {
+    methodOwner.sendEmail(parameterValue);
     _i9.showMethodExecutedSnackbarForMethodsReturningVoid(context, this);
   }
 }
@@ -779,24 +731,17 @@ class PersonServiceLogoutInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
   @override
   final _i10.PersonService methodOwner;
-
   PersonServiceLogoutInfo$(this.methodOwner);
-
   @override
   String get name => 'Logout';
-
   @override
   String get description => '';
-
   @override
   _i5.IconData get icon => _i6.Icons.lens;
-
   @override
   bool get visible => true;
-
   @override
   double get order => 100.0;
-
   @override
   void start(_i5.BuildContext context) {
     var tabs = _i7.Provider.of<_i8.Tabs>(context, listen: false);

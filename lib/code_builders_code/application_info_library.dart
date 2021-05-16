@@ -24,7 +24,7 @@ class ApplicationInfoLibraryCode extends Library {
     classes.add(ApplicationInfoClass(reflectJson, serviceClassInfoClasses));
 
     for (ServiceClassInfoClass serviceClassInfoClass
-        in serviceClassInfoClasses as Iterable<ServiceClassInfoClass>) {
+        in serviceClassInfoClasses) {
       if (serviceClassInfoClass.actionMethodInfoClasses.isNotEmpty) {
         classes.add(serviceClassInfoClass);
         classes.addAll(serviceClassInfoClass.actionMethodInfoClasses);
