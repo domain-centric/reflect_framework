@@ -60,7 +60,7 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
   int get selectedIndex {
     try {
       return _tabs.indexOf(selected);
-    } on Exception catch (e) {
+    } on Exception {
       return -1;
     }
   }

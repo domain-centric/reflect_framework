@@ -141,7 +141,7 @@
     },
     {
       "name": "dart_code",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_code-0.1.0",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_code-0.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -482,7 +482,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-05-15T13:44:08.633096Z",
+  "generated": "2021-05-18T18:16:31.068305Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

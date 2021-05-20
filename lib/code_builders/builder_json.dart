@@ -20,17 +20,20 @@ class ReflectJsonBuilder implements Builder {
 
     final resolver = buildStep.resolver;
     if (!await resolver.isLibrary(buildStep.inputId)) return;
-    final lib = LibraryReader(await buildStep.inputLibrary);
 
-    print('>>> ${buildStep.inputId.path}');
+    try {
+      final lib = LibraryReader(await buildStep.inputLibrary);
 
-    ReflectJson reflectInfo = ReflectJson.fromLibrary(lib);
+      ReflectJson reflectInfo = ReflectJson.fromLibrary(lib);
 
-    if (reflectInfo.toJson().isNotEmpty) {
-      var encoder = new JsonEncoder.withIndent("     ");
-      String formattedJson = encoder.convert(reflectInfo);
-      //TODO normally we use jsonEncode(reflectInfo)
-      buildStep.writeAsString(destination, formattedJson);
+      if (reflectInfo.toJson().isNotEmpty) {
+        var encoder = new JsonEncoder.withIndent("     ");
+        String formattedJson = encoder.convert(reflectInfo);
+        //TODO normally we use jsonEncode(reflectInfo)
+        buildStep.writeAsString(destination, formattedJson);
+      }
+    } catch (exception, stackTrace) {
+      print('$exception\n$stackTrace');
     }
   }
 }

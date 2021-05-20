@@ -153,7 +153,7 @@ class TitleImage {
     List<Annotation> annotations = [Annotation.override()];
     Expression body = _createExpression(applicationClassJson, assets);
     Method method = Method.getter('titleImage', body,
-        type: Type.ofString(), annotations: annotations);
+        type: Type.ofString(nullable: true), annotations: annotations);
     return method;
   }
 

@@ -28,7 +28,6 @@ void _createApplicationInfoLibraryFile(json) {
 String _createReflectGeneratedLibCode(json) {
   var reflectJson = ReflectJson.fromJson(json);
   String dartCode = ApplicationInfoLibraryCode(reflectJson).toString();
-  print(dartCode);
   return dartCode;
 }
 
@@ -49,6 +48,8 @@ class ApplicationInfoBuilder implements Builder {
       AssetId destination =
           AssetId(buildStep.inputId.package, reflectGeneratedPath);
       buildStep.writeAsString(destination, dartCode);
+
+      print('Successfully created $destination');
     } catch (exception, stacktrace) {
       print('$exception\n$stacktrace');
     }

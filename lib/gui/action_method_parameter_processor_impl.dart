@@ -8,10 +8,10 @@ import 'gui_tab.dart';
 import 'gui_tab_form.dart';
 
 @ActionMethodParameterProcessor(
-    index: 102, defaultIcon: Icons.table_chart_sharp)
+    index: 102) //, defaultIcon: Icons.table_chart_sharp)
 void editDomainObjectParameterInForm(BuildContext context,
     InvokeWithParameter actionMethod, @DomainClass() Object domainObject) {
-  Tabs tabs = Provider.of<Tabs>(context);
+  Tabs tabs = Provider.of<Tabs>(context, listen: false);
   FormExampleTab formTab = FormExampleTab(actionMethod);
   tabs.add(formTab);
 
@@ -19,8 +19,9 @@ void editDomainObjectParameterInForm(BuildContext context,
 }
 
 //TODO other Dart types such as int, double,num, bool, DateTime
-@ActionMethodParameterProcessor(index: 103, defaultIcon: Icons.crop_7_5)
-void editStringParameterInDialog(BuildContext context, InvokeWithParameter actionMethod, String string) {
+@ActionMethodParameterProcessor(index: 103) //, defaultIcon: Icons.crop_7_5)
+void editStringParameterInDialog(
+    BuildContext context, InvokeWithParameter actionMethod, String string) {
   // TODO create and open dialog
 
   //TODO put in dialog OK button:
@@ -28,7 +29,8 @@ void editStringParameterInDialog(BuildContext context, InvokeWithParameter actio
 }
 
 @ActionMethodParameterProcessor(
-    index: 150, requiredAnnotations: [ExecutionMode.directly])
-void executeDirectlyForMethodsWithProcessDirectlyAnnotation(BuildContext context, InvokeWithParameter actionMethod, Object anyObject) {
+    index: 150) //, requiredAnnotations: [ExecutionMode.directly])
+void executeDirectlyForMethodsWithProcessDirectlyAnnotation(
+    BuildContext context, InvokeWithParameter actionMethod, Object anyObject) {
   actionMethod.invokeMethodAndProcessResult(context, anyObject);
 }

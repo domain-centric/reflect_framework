@@ -62,8 +62,7 @@ import 'localizations_nl.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : assert(locale != null),
-        localeName = intl.Intl.canonicalizedLocale(locale.toString());
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   // ignore: unused_field
   final String localeName;

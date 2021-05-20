@@ -31,13 +31,13 @@ class ActionMethodParameterProcessor {
 
 /// Annotation value for a [ActionMethod] on how to process the parameter value
 enum ExecutionMode {
-  /// Execute the [ActionMethod] directly, by calling [ActionMethodInfo.processResult]
+  /// Execute the [ActionMethod] directly, by calling [ActionMethodInfo.invokeMethodAndProcessResult] in the [ActionMethodInfo.start] method
   directly,
 
-  /// first show the [ActionMethod] parameter value and ask the user to to confirm (e.g. with a dialog). If so, call [ActionMethodInfo.processResult]
+  /// first show the [ActionMethod] parameter value and ask the user to to confirm (e.g. with a dialog). If so, call [ActionMethodInfo.invokeMethodAndProcessResult]
   firstAskConformation,
 
-  /// first let the user edit the [ActionMethod] parameter value (e.g. in a [FormTab]). Then, call [ActionMethodInfo.processResult]
+  /// first let the user edit the [ActionMethod] parameter value (e.g. in a [FormTab]). Then, call [ActionMethodInfo.invokeMethodAndProcessResult]
   firstEditParameter
 }
 

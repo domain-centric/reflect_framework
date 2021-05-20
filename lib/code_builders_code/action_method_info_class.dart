@@ -10,11 +10,21 @@ class ActionMethodInfoClasses extends DelegatingList<ActionMethodInfoClass> {
       : super(_createActionMethodInfoClasses(reflectJson, classJson));
 
   static List<ActionMethodInfoClass> _createActionMethodInfoClasses(
-          ReflectJson reflectJson, ClassJson classJson) =>
-      classJson.methods
-          .map((methodJson) =>
-              ActionMethodInfoClass(reflectJson, classJson, methodJson))
-          .toList();
+      ReflectJson reflectJson, ClassJson classJson) {
+    List<ActionMethodInfoClass> actionMethodInfoClasses = [];
+    for (ExecutableJson methodJson in classJson.methods) {
+      try {
+        var actionMethodInfoClass =
+            ActionMethodInfoClass(reflectJson, classJson, methodJson);
+        actionMethodInfoClasses.add(actionMethodInfoClass);
+      } on Exception catch (e) {
+        // Method was not an action method
+        // TODO log in a report
+        print(e);
+      }
+    }
+    return actionMethodInfoClasses;
+  }
 }
 
 class ActionMethodInfoClass extends Class {
@@ -58,23 +68,13 @@ class ActionMethodInfoClass extends Class {
             ]))
       ];
 
-  static bool _hasParameter(ExecutableJson methodJson) =>
-      methodJson.parameterTypes.isNotEmpty;
-
+  //TODO move to methodJson
   static _hasReturnValue(ExecutableJson methodJson) =>
       methodJson.returnType != null;
 
-  static final parameterFactoryAnnotation = TypeJson(
-      'ActionMethodParameterFactory',
-      '/reflect_framework/lib/core/annotations.dart');
-
-  static bool _hasParameterFactory(ExecutableJson methodJson) =>
-      methodJson.annotations.any((a) =>
-          a.type.name ==
-          'ActionMethodParameterFactory'); //TODO.contains(parameterFactoryAnnotation);
-
+  //TODO move to methodJson
   static bool _startWithParameter(ExecutableJson methodJson) =>
-      _hasParameter(methodJson) && !_hasParameterFactory(methodJson);
+      methodJson.hasParameter && !methodJson.hasParameterFactory;
 
   static String _createClassName(
           ClassJson classJson, ExecutableJson methodJson) =>
@@ -85,7 +85,7 @@ class ActionMethodInfoClass extends Class {
           _createActionMethodType('StartWithParameter', methodJson: methodJson)
         else
           _createActionMethodType('StartWithoutParameter'),
-        if (_hasParameter(methodJson))
+        if (methodJson.hasParameter)
           _createActionMethodType('InvokeWithParameter', methodJson: methodJson)
         else
           _createActionMethodType('InvokeWithoutParameter'),
@@ -93,56 +93,89 @@ class ActionMethodInfoClass extends Class {
 
   static List<Method> _createMethods(
       ReflectJson reflectJson, ClassJson classJson, ExecutableJson methodJson) {
-    bool hasParameter = _hasParameter(methodJson);
-    bool hasParameterFactory = _hasParameterFactory(methodJson);
-    var resultProcessor = reflectJson.functions.actionMethodResultProcessors
-        .firstWhere((p) => p.canProcessMethod(methodJson),
-            orElse: (() => throw ApplicationInfoBuilderException.forMethod(
-                classJson,
-                methodJson,
-                'Could not find a result processor that can process the method result.')));
     return [
       Name.forActionMethod(classJson, methodJson).createGetterMethod(),
       Description.forActionMethod(classJson, methodJson).createGetterMethod(),
       Icon.forActionMethod(classJson, methodJson).createGetterMethod(),
       Visible.forActionMethod(classJson, methodJson).createGetterMethod(),
       Order.forActionMethod(classJson, methodJson).createGetterMethod(),
-      _createStartMethod(classJson, methodJson),
-      if (hasParameterFactory)
-        _createParameterFactoryMethod(classJson, methodJson),
-      if (hasParameter) _createProcessParameterMethod(),
-      _createInvokeMethodAndProcessResultMethod(resultProcessor, methodJson),
+      _createStartMethod(reflectJson, classJson, methodJson),
+      _createInvokeMethodAndProcessResultMethod(
+          reflectJson, classJson, methodJson),
     ];
   }
 
+  static ActionMethodResultProcessorFunction findResultProcessorFunction(
+      ReflectJson reflectJson, ClassJson classJson, ExecutableJson methodJson) {
+    var resultProcessor = reflectJson.functions.actionMethodResultProcessors
+        .firstWhere((p) => p.canProcessMethod(methodJson),
+            orElse: (() => throw ApplicationInfoBuilderException.forMethod(
+                classJson,
+                methodJson,
+                'Could not find a result processor that can process the method result.')));
+    return resultProcessor;
+  }
+
+  static ActionMethodParameterProcessorFunction?
+      _findParameterProcessorFunction(ReflectJson reflectJson,
+          ClassJson classJson, ExecutableJson methodJson) {
+    if (!methodJson.hasParameter) return null;
+    var parameterProcessor = reflectJson
+        .functions.actionMethodParameterProcessors
+        .firstWhere((p) => p.canProcessMethod(methodJson),
+            orElse: (() => throw ApplicationInfoBuilderException.forMethod(
+                classJson,
+                methodJson,
+                'Could not find a parameter processor that can process the method parameter.')));
+    return parameterProcessor;
+  }
+
   static Method _createStartMethod(
-      ClassJson classJson, ExecutableJson methodJson) {
-    //TODO add alarm catching with alarm dialog
-    Statements body = Statements([
-      Statement([
-        Code('var tabs = '),
-        Type('Provider', libraryUri: 'package:provider/provider.dart'),
-        Code('.of<'),
-        Type('Tabs', libraryUri: 'package:reflect_framework/gui/gui_tab.dart'),
-        Code('>(context, listen: false)')
-      ]),
-      Statement([
-        Code('var tab = '),
-        Expression.callConstructor(_createTabFactoryType(methodJson.name)),
-        Code('.create(this)')
-      ]),
-      Statement([Code('tabs.add(tab)')]),
-    ]);
-    List<Annotation> annotations = [Annotation.override()];
-    Method method = Method('start', body,
+      ReflectJson reflectJson, ClassJson classJson, ExecutableJson methodJson) {
+    Method method = Method(
+        'start', _createStartMethodBody(reflectJson, classJson, methodJson),
         parameters: Parameters([
-          Parameter.required('context', type: _createBuildContextType()),
+          Parameter.required(contextVariableName,
+              type: _createBuildContextType()),
           if (_startWithParameter(methodJson))
-            Parameter.required('parameterValue', type: Type('Object')),
+            Parameter.required(parameterValueVariableName,
+                type: Type('Object')),
         ]),
         type: Type('void'),
-        annotations: annotations);
+        annotations: [Annotation.override()]);
     return method;
+  }
+
+  static Statements _createStartMethodBody(
+      ReflectJson reflectJson, ClassJson classJson, ExecutableJson methodJson) {
+    //TODO add alarm catching with alarm dialog
+    ActionMethodParameterProcessorFunction? parameterProcessorFunction =
+        _findParameterProcessorFunction(reflectJson, classJson, methodJson);
+
+    bool hasParameterFactory = methodJson.hasParameterFactory;
+    Statements body = Statements([
+      if (hasParameterFactory) _createParameterValue(classJson, methodJson),
+      if (parameterProcessorFunction == null)
+        _createInvokeInvokeMethodAndProcessResultMethod(methodJson),
+      if (parameterProcessorFunction != null)
+        _createInvokeParameterProcessorFunction(
+            parameterProcessorFunction, methodJson),
+
+      // Statement([
+      //   Code('var tabs = '),
+      //   Type('Provider', libraryUri: 'package:provider/provider.dart'),
+      //   Code('.of<'),
+      //   Type('Tabs', libraryUri: 'package:reflect_framework/gui/gui_tab.dart'),
+      //   Code('>(context, listen: false)')
+      // ]),
+      // Statement([
+      //   Code('var tab = '),
+      //   Expression.callConstructor(_createTabFactoryType(methodJson.name)),
+      //   Code('.create(this)')
+      // ]),
+      // Statement([Code('tabs.add(tab)')]),
+    ]);
+    return body;
   }
 
   static Type _createTabFactoryType(String? name) {
@@ -162,12 +195,13 @@ class ActionMethodInfoClass extends Class {
     }
   }
 
+  static const String parameterValueVariableName = 'parameterValue';
+
   //TODO create parameterType from serviceObject actionMethodParameterFactoryMethod
-  static _createParameterFactoryMethod(
-      ClassJson classJson, ExecutableJson methodJson) {
+  static _createParameterValue(ClassJson classJson, ExecutableJson methodJson) {
     Type? parameterType = _createParameterType(methodJson);
-    Expression body = _creatingOfNewTypeExpression(classJson, methodJson);
-    return Method('_createParameter', body, type: parameterType);
+    return _creatingOfNewTypeExpression(classJson, methodJson)
+        .defineVariable(parameterValueVariableName, type: parameterType);
   }
 
   static Expression _creatingOfNewTypeExpression(
@@ -222,39 +256,60 @@ class ActionMethodInfoClass extends Class {
   static Type _createBuildContextType() =>
       Type('BuildContext', libraryUri: 'package:flutter/widgets.dart');
 
-  static Method _createProcessParameterMethod() {
-    CodeNode body = Comment.fromString('TODO: IMPLEMENT'); //TODO
-    Method method = Method(
-      '_processParameter',
-      body,
-      parameters: Parameters([
-        Parameter.required('context', type: _createBuildContextType()),
-        Parameter.required('parameterValue', type: Type('Object')),
-      ]),
-      type: Type('void'),
-    );
-    return method;
-  }
+  static const String contextVariableName = 'context';
+
+  static Statement _createInvokeParameterProcessorFunction(
+          ExecutableJson parameterProcessorFunction,
+          ExecutableJson methodJson) =>
+      Statement([
+        Expression.callFunction(parameterProcessorFunction.name!,
+            libraryUri: 'gui/action_method_parameter_processor_impl.dart',
+            parameterValues: ParameterValues([
+              ParameterValue(Expression.ofVariable(contextVariableName)),
+              ParameterValue(Expression.ofThis()),
+              ParameterValue(Expression.ofVariable(parameterValueVariableName))
+            ]))
+      ]);
+
+  static const invokeMethodAndProcessResultMethodName =
+      'invokeMethodAndProcessResult';
 
   static Method _createInvokeMethodAndProcessResultMethod(
       //TODO add alarm catching with alarm dialog
-      ExecutableJson resultProcessorFunction,
+      ReflectJson reflectJson,
+      ClassJson classJson,
       ExecutableJson methodJson) {
+    ActionMethodResultProcessorFunction resultProcessorFunction =
+        findResultProcessorFunction(reflectJson, classJson, methodJson);
     List<Annotation> annotations = [Annotation.override()];
     Statements body = Statements([
       _createInvokeActionMethod(methodJson),
       _createInvokeResultProcessorFunction(resultProcessorFunction, methodJson)
     ]);
-    Method method = Method('invokeMethodAndProcessResult', body,
+    Method method = Method(invokeMethodAndProcessResultMethodName, body,
         parameters: Parameters([
-          Parameter.required('context', type: _createBuildContextType()),
-          if (_hasParameter(methodJson))
-            Parameter.required('parameterValue',
+          Parameter.required(contextVariableName,
+              type: _createBuildContextType()),
+          if (methodJson.hasParameter)
+            Parameter.required(parameterValueVariableName,
                 type: _createParameterType(methodJson)!),
         ]),
         type: Type('void'),
         annotations: annotations);
     return method;
+  }
+
+  static Statement _createInvokeInvokeMethodAndProcessResultMethod(
+      ExecutableJson methodJson) {
+    ParameterValues parameterValues = ParameterValues([
+      ParameterValue(Expression.ofVariable(contextVariableName)),
+      if (methodJson.hasParameter)
+        ParameterValue(Expression.ofVariable(parameterValueVariableName)),
+    ]);
+    return Statement([
+      Expression.ofThis().callMethod(invokeMethodAndProcessResultMethodName,
+          parameterValues: parameterValues)
+    ]);
   }
 
   static Statement _createInvokeActionMethod(ExecutableJson methodJson) {
@@ -269,20 +324,23 @@ class ActionMethodInfoClass extends Class {
       var type = _createReturnType(methodJson);
       return Expression.ofVariable(methodOwnerFieldName)
           .callMethod(methodJson.name!, parameterValues: parameterValues)
-          .defineVariable('returnValue', type: type);
+          .defineVariable(returnValueVariableName, type: type);
     }
   }
 
   // TODO named parameters
   static ParameterValues? _createInvokeActionMethodParameterValues(
           ExecutableJson methodJson) =>
-      _hasParameter(methodJson)
-          ? ParameterValues(
-              [ParameterValue(Expression.ofVariable('parameterValue'))])
+      methodJson.hasParameter
+          ? ParameterValues([
+              ParameterValue(Expression.ofVariable(parameterValueVariableName))
+            ])
           : null;
 
   static Type? _createReturnType(ExecutableJson methodJson) =>
       _hasReturnValue(methodJson) ? methodJson.returnType!.toType() : null;
+
+  static const returnValueVariableName = 'returnValue';
 
   static Statement _createInvokeResultProcessorFunction(
           ExecutableJson resultProcessorFunction, ExecutableJson methodJson) =>
@@ -290,10 +348,10 @@ class ActionMethodInfoClass extends Class {
         Expression.callFunction(resultProcessorFunction.name!,
             libraryUri: 'gui/action_method_result_processor_impl.dart',
             parameterValues: ParameterValues([
-              ParameterValue(Expression.ofVariable('context')),
+              ParameterValue(Expression.ofVariable(contextVariableName)),
               ParameterValue(Expression.ofThis()),
               if (_hasReturnValue(methodJson))
-                ParameterValue(Expression.ofVariable('returnValue'))
+                ParameterValue(Expression.ofVariable(returnValueVariableName))
             ]))
       ]);
 }
