@@ -105,6 +105,8 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
 }
 
 abstract class Tab extends StatelessWidget {
+  const Tab({Key? key}) : super(key: key);
+
   String get title;
 
   IconData get iconData;

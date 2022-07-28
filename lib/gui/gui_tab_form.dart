@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:reflect_framework/core/action_method_info.dart';
 
-import '../gui/gui_tab.dart' as ReflectTab;
-import 'gui_tab_form_payment.dart';
+import '../gui/gui_tab.dart' as gui_tab;
+import 'gui_tab_form_example.dart';
 
 ///Forms:
 // ======
@@ -97,23 +96,23 @@ import 'gui_tab_form_payment.dart';
 // streams
 // ?DataTableSource?
 ///
-class FormExampleTab extends ReflectTab.Tab {
+class FormExampleTab extends gui_tab.Tab {
   final ActionMethodInfo actionMethodInfo;
 
-  FormExampleTab(this.actionMethodInfo);
+  const FormExampleTab(this.actionMethodInfo, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return PaymentForm();
+    return const FormExamplePage();
   }
 
-  ///Can not close form directly when containing unsaved data
   @override
-  bool get canCloseDirectly => false;
+  bool get canCloseDirectly =>
+      true; // TODO: Can not close form directly when containing unsaved data
 
   @override
   // TODO: implement close
-  ReflectTab.TabCloseResult get close => throw UnimplementedError();
+  gui_tab.TabCloseResult get close => throw UnimplementedError();
 
   @override
   IconData get iconData => Icons.table_rows_sharp;
@@ -123,9 +122,9 @@ class FormExampleTab extends ReflectTab.Tab {
 }
 
 
-class FormExampleTabFactory implements ReflectTab.TabFactory {
+class FormExampleTabFactory implements gui_tab.TabFactory {
   @override
-  ReflectTab.Tab create(ActionMethodInfo actionMethodInfo) {
+  gui_tab.Tab create(ActionMethodInfo actionMethodInfo) {
     return FormExampleTab(actionMethodInfo);
   }
 }

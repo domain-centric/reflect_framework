@@ -3,9 +3,7 @@ import 'package:flutter/widgets.dart' as _i5;
 import 'package:reflect_framework/core/action_method_info.dart' as _i4;
 import 'package:reflect_framework/core/application_info.dart' as _i1;
 import 'package:reflect_framework/core/service_class_info.dart' as _i2;
-import 'package:reflect_framework/domain/action_method_parameter_factory_test.dart'
-    as _i3;
-import 'package:reflect_framework/domain/domain_objects.dart' as _i9;
+import 'package:reflect_framework/domain/domain_objects.dart' as _i3;
 
 import 'gui/action_method_parameter_processor_impl.dart' as _i8;
 import 'gui/action_method_result_processor_impl.dart' as _i7;
@@ -16,367 +14,27 @@ import 'gui/action_method_result_processor_impl.dart' as _i7;
 class ReflectApplicationInfo implements _i1.ApplicationInfo {
   @override
   String get name => 'My first app';
-
   @override
   String get description => '';
-
   @override
   String? get titleImage => 'assets/my_first_app.png';
-
   @override
   String get homePage =>
       'https://github.com/efficientyboosters/reflect_framework';
+
   @override
   String get documentation =>
       'https://github.com/efficientyboosters/reflect_framework/wiki';
-  @override
-  List<_i2.ServiceClassInfo> get serviceClassInfos => [
-        ActionMethodParameterFactoryTestActionMethodParameterFactoryTestServiceInfo$(),
-        DomainObjectsPersonServiceInfo$()
-      ];
-}
-
-class ActionMethodParameterFactoryTestActionMethodParameterFactoryTestServiceInfo$
-    extends _i2.ServiceClassInfo<_i3.ActionMethodParameterFactoryTestService> {
-  @override
-  final serviceObject = _i3.ActionMethodParameterFactoryTestService();
-  @override
-  String get name => 'Action method parameter factory tests';
-  @override
-  String get description => '';
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  List<_i4.ActionMethodInfo> get actionMethodInfos => [
-        ActionMethodParameterFactoryTestServiceNoParameterInfo$(serviceObject),
-        ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$(
-            serviceObject),
-        ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$(
-            serviceObject)
-      ];
-}
-
-class ActionMethodParameterFactoryTestServiceNoParameterInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceNoParameterInfo$(this.methodOwner);
-  @override
-  String get name => 'No parameter';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    this.invokeMethodAndProcessResult(context);
-  }
 
   @override
-  void invokeMethodAndProcessResult(_i5.BuildContext context) {
-    methodOwner.noParameter();
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceNoParameterFactoryInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'No parameter factory';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    this.invokeMethodAndProcessResult(context);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(_i5.BuildContext context) {
-    methodOwner.noParameterFactory();
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<String> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceStringParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'String parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    String parameterValue = '';
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, String parameterValue) {
-    methodOwner.stringParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<bool> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceBoolParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'Bool parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    bool parameterValue = true;
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, bool parameterValue) {
-    methodOwner.boolParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<int> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceIntParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'Int parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    int parameterValue = 0;
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, int parameterValue) {
-    methodOwner.intParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<double> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceDoubleParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'Double parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    double parameterValue = 0.0;
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, double parameterValue) {
-    methodOwner.doubleParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<DateTime> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceDateTimeParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'Date time parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    DateTime parameterValue = DateTime.now();
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, DateTime parameterValue) {
-    methodOwner.dateTimeParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$
-    implements
-        _i4.StartWithoutParameter,
-        _i4.InvokeWithParameter<List<dynamic>> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceListParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'List parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    List<dynamic> parameterValue = [];
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, List<dynamic> parameterValue) {
-    methodOwner.listParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$
-    implements
-        _i4.StartWithoutParameter,
-        _i4.InvokeWithParameter<Set<dynamic>> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceSetParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'Set parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    Set<dynamic> parameterValue = {};
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Set<dynamic> parameterValue) {
-    methodOwner.setParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
-}
-
-class ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$
-    implements
-        _i4.StartWithoutParameter,
-        _i4.InvokeWithParameter<Map<dynamic, dynamic>> {
-  @override
-  final _i3.ActionMethodParameterFactoryTestService methodOwner;
-  ActionMethodParameterFactoryTestServiceMapParameterFactoryAnnotationInfo$(
-      this.methodOwner);
-  @override
-  String get name => 'Map parameter factory annotation';
-  @override
-  String get description => '';
-  @override
-  _i5.IconData get icon => _i6.Icons.lens;
-  @override
-  bool get visible => true;
-  @override
-  double get order => 100.0;
-  @override
-  void start(_i5.BuildContext context) {
-    Map<dynamic, dynamic> parameterValue = {};
-    _i8.editDomainObjectParameterInForm(context, this, parameterValue);
-  }
-
-  @override
-  void invokeMethodAndProcessResult(
-      _i5.BuildContext context, Map<dynamic, dynamic> parameterValue) {
-    methodOwner.mapParameterFactoryAnnotation(parameterValue);
-    _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
-  }
+  List<_i2.ServiceClassInfo> get serviceClassInfos =>
+      [DomainObjectsPersonServiceInfo$()];
 }
 
 class DomainObjectsPersonServiceInfo$
-    extends _i2.ServiceClassInfo<_i9.PersonService> {
+    extends _i2.ServiceClassInfo<_i3.PersonService> {
   @override
-  final serviceObject = _i9.PersonService();
+  final serviceObject = _i3.PersonService();
 
   @override
   String get name => 'People';
@@ -405,7 +63,7 @@ class DomainObjectsPersonServiceInfo$
 class PersonServiceAllPersonsInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceAllPersonsInfo$(this.methodOwner);
 
@@ -430,7 +88,7 @@ class PersonServiceAllPersonsInfo$
 
   @override
   void invokeMethodAndProcessResult(_i5.BuildContext context) {
-    List<_i9.Person> returnValue = methodOwner.allPersons();
+    List<_i3.Person> returnValue = methodOwner.allPersons();
     _i7.showListInTableTab(context, this, returnValue);
   }
 }
@@ -438,7 +96,7 @@ class PersonServiceAllPersonsInfo$
 class PersonServiceFindPersonsInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<String> {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceFindPersonsInfo$(this.methodOwner);
 
@@ -465,17 +123,17 @@ class PersonServiceFindPersonsInfo$
   @override
   void invokeMethodAndProcessResult(
       _i5.BuildContext context, String parameterValue) {
-    List<_i9.Person> returnValue = methodOwner.findPersons(parameterValue);
+    List<_i3.Person> returnValue = methodOwner.findPersons(parameterValue);
     _i7.showListInTableTab(context, this, returnValue);
   }
 }
 
 class PersonServiceEditInfo$
     implements
-        _i4.StartWithParameter<_i9.Person>,
-        _i4.InvokeWithParameter<_i9.Person> {
+        _i4.StartWithParameter<_i3.Person>,
+        _i4.InvokeWithParameter<_i3.Person> {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceEditInfo$(this.methodOwner);
 
@@ -500,7 +158,7 @@ class PersonServiceEditInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, _i9.Person parameterValue) {
+      _i5.BuildContext context, _i3.Person parameterValue) {
     methodOwner.edit(parameterValue);
     _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
   }
@@ -508,10 +166,10 @@ class PersonServiceEditInfo$
 
 class PersonServiceRemoveInfo$
     implements
-        _i4.StartWithParameter<_i9.Person>,
-        _i4.InvokeWithParameter<_i9.Person> {
+        _i4.StartWithParameter<_i3.Person>,
+        _i4.InvokeWithParameter<_i3.Person> {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceRemoveInfo$(this.methodOwner);
 
@@ -536,16 +194,16 @@ class PersonServiceRemoveInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, _i9.Person parameterValue) {
+      _i5.BuildContext context, _i3.Person parameterValue) {
     methodOwner.remove(parameterValue);
     _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
   }
 }
 
 class PersonServiceAddNewInfo$
-    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<_i9.Person> {
+    implements _i4.StartWithoutParameter, _i4.InvokeWithParameter<_i3.Person> {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceAddNewInfo$(this.methodOwner);
 
@@ -565,13 +223,13 @@ class PersonServiceAddNewInfo$
   double get order => 100.0;
   @override
   void start(_i5.BuildContext context) {
-    _i9.Person parameterValue = _i9.Person();
+    _i3.Person parameterValue = _i3.Person();
     _i8.editDomainObjectParameterInForm(context, this, parameterValue);
   }
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, _i9.Person parameterValue) {
+      _i5.BuildContext context, _i3.Person parameterValue) {
     methodOwner.addNew(parameterValue);
     _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
   }
@@ -579,10 +237,10 @@ class PersonServiceAddNewInfo$
 
 class PersonServiceSendEmailInfo$
     implements
-        _i4.StartWithParameter<_i9.Person>,
-        _i4.InvokeWithParameter<_i9.Person> {
+        _i4.StartWithParameter<_i3.Person>,
+        _i4.InvokeWithParameter<_i3.Person> {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceSendEmailInfo$(this.methodOwner);
 
@@ -607,7 +265,7 @@ class PersonServiceSendEmailInfo$
 
   @override
   void invokeMethodAndProcessResult(
-      _i5.BuildContext context, _i9.Person parameterValue) {
+      _i5.BuildContext context, _i3.Person parameterValue) {
     methodOwner.sendEmail(parameterValue);
     _i7.showMethodExecutedSnackBarForMethodsReturningVoid(context, this);
   }
@@ -616,7 +274,7 @@ class PersonServiceSendEmailInfo$
 class PersonServiceLogoutInfo$
     implements _i4.StartWithoutParameter, _i4.InvokeWithoutParameter {
   @override
-  final _i9.PersonService methodOwner;
+  final _i3.PersonService methodOwner;
 
   PersonServiceLogoutInfo$(this.methodOwner);
 

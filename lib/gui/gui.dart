@@ -32,8 +32,10 @@ abstract class ReflectGuiApplication extends StatelessWidget
 
   /// Can be overridden so you can style your application light theme
   ThemeData get lightTheme {
-    return ThemeData.light()
-        .copyWith(visualDensity: VisualDensity.adaptivePlatformDensity);
+    return ThemeData.light().copyWith(
+        visualDensity: VisualDensity(
+            horizontal: -4,
+            vertical: -4)); //VisualDensity.adaptivePlatformDensity);
   }
 
   /// Can be overridden so you can style your application dark theme

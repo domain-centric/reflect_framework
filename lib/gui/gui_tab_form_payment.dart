@@ -170,7 +170,6 @@ class _PaymentFormState extends State<PaymentForm> {
                 SizedBox(
                   height: formSpacing,
                 ),
-                TextField(),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Post Code',
