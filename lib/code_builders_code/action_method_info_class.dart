@@ -263,7 +263,7 @@ class ActionMethodInfoClass extends Class {
           ExecutableJson methodJson) =>
       Statement([
         Expression.callFunction(parameterProcessorFunction.name!,
-            libraryUri: 'gui/action_method_parameter_processor_impl.dart',
+            libraryUri: 'gui/default_action_method_parameter_processor.dart',
             parameterValues: ParameterValues([
               ParameterValue(Expression.ofVariable(contextVariableName)),
               ParameterValue(Expression.ofThis()),
@@ -346,7 +346,7 @@ class ActionMethodInfoClass extends Class {
           ExecutableJson resultProcessorFunction, ExecutableJson methodJson) =>
       Statement([
         Expression.callFunction(resultProcessorFunction.name!,
-            libraryUri: 'gui/action_method_result_processor_impl.dart',
+            libraryUri: 'gui/default_action_method_result_processor.dart',
             parameterValues: ParameterValues([
               ParameterValue(Expression.ofVariable(contextVariableName)),
               ParameterValue(Expression.ofThis()),
