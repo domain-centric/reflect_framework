@@ -14,10 +14,8 @@ import 'gui/default_action_method_result_processor.dart' as _i7;
 class ReflectApplicationInfo implements _i1.ApplicationInfo {
   @override
   String get name => 'My first app';
-
   @override
   String get description => '';
-
   @override
   String? get titleImage => 'assets/my_first_app.png';
   @override

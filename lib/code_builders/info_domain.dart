@@ -28,7 +28,9 @@ abstract class DomainClassInfo extends ClassInfo {
 
 }
 
-/// [DomainObject]s have [state](https://en.wikipedia.org/wiki/State_(computer_science)). This means the [DomainObject]s contain information that may change over time. This information is represented by [Property]s.
+/// [DomainObject]s have [state](https://en.wikipedia.org/wiki/State_(computer_science)).
+/// This means the [DomainObject]s contain information that may change over time.
+/// This information is represented by [Property]s.
 /// TODO explain Dart property field, getter and setter accessors and readonly properties
 /// TODO explain which property types are supported by the [ReflectFramework]
 abstract class Property extends ConceptDocumentation {}
