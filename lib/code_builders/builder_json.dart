@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:build/build.dart';
+import 'package:logging/logging.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'info_json.dart';
@@ -27,13 +28,13 @@ class ReflectJsonBuilder implements Builder {
       ReflectJson reflectInfo = ReflectJson.fromLibrary(lib);
 
       if (reflectInfo.toJson().isNotEmpty) {
-        var encoder = new JsonEncoder.withIndent("     ");
+        var encoder = const JsonEncoder.withIndent("     ");
         String formattedJson = encoder.convert(reflectInfo);
         //TODO normally we use jsonEncode(reflectInfo)
         buildStep.writeAsString(destination, formattedJson);
       }
     } catch (exception, stackTrace) {
-      print('$exception\n$stackTrace');
+      log.log(Level.SEVERE, exception, stackTrace);
     }
   }
 }

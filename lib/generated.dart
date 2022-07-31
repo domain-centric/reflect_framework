@@ -26,19 +26,23 @@ class ReflectApplicationInfo implements _i1.ApplicationInfo {
       'https://github.com/efficientyboosters/reflect_framework/wiki';
   @override
   List<_i2.ServiceClassInfo> get serviceClassInfos =>
-      [DomainObjectsPersonServiceInfo$()];
+      [DomainObjectsDartPersonServiceInfo$()];
 }
 
-class DomainObjectsPersonServiceInfo$
+class DomainObjectsDartPersonServiceInfo$
     extends _i2.ServiceClassInfo<_i3.PersonService> {
   @override
   final serviceObject = _i3.PersonService();
+
   @override
   String get name => 'People';
+
   @override
   String get description => '';
+
   @override
   bool get visible => true;
+
   @override
   double get order => 100.0;
   @override
@@ -70,7 +74,7 @@ class PersonServiceAllPersonsInfo$
   double get order => 100.0;
   @override
   void start(_i5.BuildContext context) {
-    this.invokeMethodAndProcessResult(context);
+    invokeMethodAndProcessResult(context);
   }
 
   @override
@@ -245,7 +249,7 @@ class PersonServiceLogoutInfo$
   double get order => 100.0;
   @override
   void start(_i5.BuildContext context) {
-    this.invokeMethodAndProcessResult(context);
+    invokeMethodAndProcessResult(context);
   }
 
   @override

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:reflect_framework/core/action_method_info.dart';
 
-import '../gui/gui_tab.dart' as ReflectTab;
+import '../gui/gui_tab.dart' as reflect_tab;
 
-class TableExampleTab extends ReflectTab.Tab {
+class TableExampleTab extends reflect_tab.Tab {
   final ActionMethodInfo actionMethodInfo;
 
-  TableExampleTab(this.actionMethodInfo);
+  TableExampleTab(this.actionMethodInfo, {Key? key}) : super(key: key);
 
   final List<_Row> _rows = [
     for (int i = 1; i < 100; i++) _Row('Cell A$i', 'CellB$i', 'CellC$i', i),
@@ -18,7 +18,7 @@ class TableExampleTab extends ReflectTab.Tab {
       DataTable(
         //header: Text('Header Text'),
         //rowsPerPage: 4,
-        columns: [
+        columns: const [
           DataColumn(label: Text('Header A')),
           DataColumn(label: Text('Header B')),
           DataColumn(label: Text('Header C')),
@@ -26,11 +26,11 @@ class TableExampleTab extends ReflectTab.Tab {
         ],
         rows: _rows
             .map((row) => DataRow(cells: [
-          DataCell(Text(row.valueA)),
-          DataCell(Text(row.valueB)),
-          DataCell(Text(row.valueC)),
-          DataCell(Text(row.valueD.toString()))
-        ]))
+                  DataCell(Text(row.valueA)),
+                  DataCell(Text(row.valueB)),
+                  DataCell(Text(row.valueC)),
+                  DataCell(Text(row.valueD.toString()))
+                ]))
             .toList(),
       ),
     ]);
@@ -42,7 +42,7 @@ class TableExampleTab extends ReflectTab.Tab {
   bool get canCloseDirectly => true;
 
   @override
-  ReflectTab.TabCloseResult get close => throw UnimplementedError();
+  reflect_tab.TabCloseResult get close => throw UnimplementedError();
 
   @override
   IconData get iconData => Icons.table_chart_sharp;
@@ -67,9 +67,9 @@ class _Row {
   bool selected = false;
 }
 
-class TableExampleTabFactory implements ReflectTab.TabFactory {
+class TableExampleTabFactory implements reflect_tab.TabFactory {
   @override
-  ReflectTab.Tab create(ActionMethodInfo actionMethodInfo) {
+  reflect_tab.Tab create(ActionMethodInfo actionMethodInfo) {
     return TableExampleTab(actionMethodInfo);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:build/build.dart';
 import 'package:glob/glob.dart';
+import 'package:logging/logging.dart';
 
 import 'info_json.dart';
 
@@ -23,16 +24,13 @@ class CombiningReflectJsonBuilder implements Builder {
         combinedReflectInfo.add(jsonString);
       }
 
-      var encoder = new JsonEncoder.withIndent("     ");
+      var encoder = const JsonEncoder.withIndent("     ");
       String formattedJson = encoder.convert(combinedReflectInfo);
       var destination =
           AssetId(buildStep.inputId.package, ReflectJson.combinedFilePath);
       buildStep.writeAsString(destination, formattedJson);
-    } catch (e, stacktrace) {
-      print(e);
-      print(stacktrace);
+    } catch (e, stackTrace) {
+      log.log(Level.SEVERE, e, stackTrace);
     }
-
-    //
   }
 }

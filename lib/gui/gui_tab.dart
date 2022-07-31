@@ -7,34 +7,40 @@ import 'package:intl/intl.dart';
 import 'package:reflect_framework/core/action_method_info.dart';
 
 class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
-  List<Tab> _tabs = [];
+  final List<Tab> _tabs = [];
   Tab? _selectedTab;
 
+  @override
   int get length => _tabs.length;
 
+  @override
   set length(int length) {
     _tabs.length = length;
   }
 
+  @override
   void operator []=(int index, Tab value) {
     _tabs[index] = value;
     notifyListeners();
   }
 
+  @override
   Tab operator [](int index) => _tabs[index];
 
-  void add(Tab value) {
+  @override
+  void add(Tab element) {
     if (_tabs.length >= 10) {
       _closeOneTab();
     }
-    _tabs.add(value);
-    _selectedTab = value;
+    _tabs.add(element);
+    _selectedTab = element;
     notifyListeners();
   }
 
-  void addAll(Iterable<Tab> all) {
-    _tabs.addAll(all);
-    _selectedTab = all.last;
+  @override
+  void addAll(Iterable<Tab> iterable) {
+    _tabs.addAll(iterable);
+    _selectedTab = iterable.last;
     notifyListeners();
   }
 
@@ -42,7 +48,7 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
     if (_tabs.contains(_selectedTab)) {
       return _selectedTab!;
     } else if (_tabs.isEmpty) {
-      throw new Exception('No tabs, so no selected tab');
+      throw Exception('No tabs, so no selected tab');
     } else {
       _selectedTab = _tabs.last;
       return _selectedTab!;
@@ -71,7 +77,7 @@ class Tabs extends ListBase<Tab> with ChangeNotifier, DiagnosticableTreeMixin {
       notifyListeners();
     } else {
       var closeResult = tab.close;
-      if (closeResult == TabCloseResult.CLOSED) {
+      if (closeResult == TabCloseResult.closed) {
         _tabs.remove(tab);
         notifyListeners();
       }
@@ -118,7 +124,7 @@ abstract class Tab extends StatelessWidget {
   TabCloseResult get close;
 }
 
-enum TabCloseResult { CANCELED, CLOSED }
+enum TabCloseResult { canceled, closed }
 
 abstract class TabFactory {
   Tab create(ActionMethodInfo actionMethodInfo);
@@ -130,19 +136,20 @@ class ExampleTab extends Tab {
 
   final ActionMethodInfo actionMethodInfo;
 
-  ExampleTab(this.actionMethodInfo)
+  ExampleTab(this.actionMethodInfo, {Key? key})
       : _creationDateTime =
-            DateFormat('kk:mm:ss \n EEE d MMM').format(DateTime.now());
+            DateFormat('kk:mm:ss \n EEE d MMM').format(DateTime.now()),
+        super(key: key);
 
   @override
   bool get canCloseDirectly => true;
 
   @override
-  TabCloseResult get close => TabCloseResult.CLOSED;
+  TabCloseResult get close => TabCloseResult.closed;
 
   @override
   IconData get iconData {
-    var i = new Random().nextInt(5);
+    var i = Random().nextInt(5);
     switch (i) {
       case 0:
         return Icons.favorite;

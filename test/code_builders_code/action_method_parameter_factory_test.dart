@@ -147,17 +147,18 @@ String createAndFindMethodString(ReflectJson reflectJson, ClassJson classJson,
           CodeFormatter().unFormatted(m.name) == actionMethodInfoClassMethod)
       .toList();
 
-  if (methods.length == 1)
+  if (methods.length == 1) {
     return CodeFormatter().unFormatted(methods.first);
-  else
+  } else {
     return '';
+  }
 }
 
 ExecutableJson findMethodJson(ClassJson classJson, String? actionMethodName) {
   try {
     return classJson.methods.firstWhere((m) => m.name == actionMethodName);
   } on StateError {
-    throw new Exception('Could not find action method: $actionMethodName '
+    throw Exception('Could not find action method: $actionMethodName '
         'in:  ${ReflectJson.generatedReflectInfoCombinedFilePath}');
   }
 }

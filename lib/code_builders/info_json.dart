@@ -34,17 +34,17 @@ class ReflectJson {
   //TODO add TranslatableTextAnnotations
 
   ReflectJson.fromLibrary(LibraryReader library)
-      : this.functions = FunctionsJson.fromLibrary(library),
-        this.classes = _createClasses(library);
+      : functions = FunctionsJson.fromLibrary(library),
+        classes = _createClasses(library);
 
   ReflectJson.empty()
-      : this.functions = FunctionsJson.empty(),
-        this.classes = [];
+      : functions = FunctionsJson.empty(),
+        classes = [];
 
   ReflectJson.fromGeneratedReflectInfoCombinedFile()
       : this.fromJson(readJsonFromGeneratedReflectInfoCombinedFile()!);
 
-  static final generatedReflectInfoCombinedFilePath =
+  static const generatedReflectInfoCombinedFilePath =
       ".dart_tool/build/generated/reflect_framework/lib/reflect_info.combined.json";
 
   static Map<String, dynamic>? readJsonFromGeneratedReflectInfoCombinedFile() {
@@ -65,8 +65,8 @@ class ReflectJson {
 
   static const libraryExtension = '.reflect_info.json';
   static const combinedExtension = '.combined.json';
-  static const combinedFileName = 'reflect_info' + combinedExtension;
-  static const combinedFilePath = 'lib/' + combinedFileName;
+  static const combinedFileName = 'reflect_info$combinedExtension';
+  static const combinedFilePath = 'lib/$combinedFileName';
 
   Map<String, dynamic> toJson() => {
         if (functions.actionMethodResultProcessors.isNotEmpty ||
@@ -93,39 +93,39 @@ class ReflectJson {
         (!element.source.fullName.contains('lib/reflect_'));
   }
 
-  static List<ExecutableJson> _createFunctions(LibraryReader library) {
-    List<ExecutableJson> functions = [];
-    for (Element element in library.allElements) {
-      if (_isPublicFunction(element)) {
-        if (ActionMethodParameterProcessorFunction.isValid(element)) {
-          functions.add(ActionMethodParameterProcessorFunction.fromElement(
-              element as ExecutableElement));
-        } else if (ActionMethodResultProcessorFunction.isValid(element)) {
-          functions.add(ActionMethodResultProcessorFunction.fromElement(
-              element as ExecutableElement));
-        } else if (_isPotentialServiceObjectFactoryFunction(
-            element as FunctionElement)) {
-          functions.add(ExecutableJson.fromElement(element));
-        } else if (_containsTranslationAnnotations(element)) {
-          functions.add(
-              ExecutableJson.fromElementWithTranslationAnnotationsOnly(
-                  element));
-        }
-      }
-    }
-    return functions;
-  }
+  // static List<ExecutableJson> _createFunctions(LibraryReader library) {
+  //   List<ExecutableJson> functions = [];
+  //   for (Element element in library.allElements) {
+  //     if (_isPublicFunction(element)) {
+  //       if (ActionMethodParameterProcessorFunction.isValid(element)) {
+  //         functions.add(ActionMethodParameterProcessorFunction.fromElement(
+  //             element as ExecutableElement));
+  //       } else if (ActionMethodResultProcessorFunction.isValid(element)) {
+  //         functions.add(ActionMethodResultProcessorFunction.fromElement(
+  //             element as ExecutableElement));
+  //       } else if (_isPotentialServiceObjectFactoryFunction(
+  //           element as FunctionElement)) {
+  //         functions.add(ExecutableJson.fromElement(element));
+  //       } else if (_containsTranslationAnnotations(element)) {
+  //         functions.add(
+  //             ExecutableJson.fromElementWithTranslationAnnotationsOnly(
+  //                 element));
+  //       }
+  //     }
+  //   }
+  //   return functions;
+  // }
 
-  static bool _isPublicFunction(Element element) {
-    return element is FunctionElement && element.isPublic;
-  }
+  // static bool _isPublicFunction(Element element) {
+  //   return element is FunctionElement && element.isPublic;
+  // }
 
-  static _isPotentialServiceObjectFactoryFunction(FunctionElement element) {
-    const factory = 'Factory';
-    return element.name.endsWith(factory) &&
-        element.name.length > factory.length &&
-        element.returnType.element!.name != voidName;
-  }
+  // static _isPotentialServiceObjectFactoryFunction(FunctionElement element) {
+  //   const factory = 'Factory';
+  //   return element.name.endsWith(factory) &&
+  //       element.name.length > factory.length &&
+  //       element.returnType.element!.name != voidName;
+  // }
 
   static bool _classContainsTranslationAnnotations(ClassElement classElement) {
     return _containsTranslationAnnotations(classElement) ||
@@ -245,7 +245,7 @@ class ClassJson {
     for (PropertyAccessorElement getterAccessorElement
         in getterAccessorElements) {
       bool hasSetter = setterAccessorElements
-          .any((element) => element.name == getterAccessorElement.name + "=");
+          .any((element) => element.name == '${getterAccessorElement.name}=');
       FieldElement fieldElement = fieldElements
           .firstWhere((element) => element.name == getterAccessorElement.name);
 
@@ -271,7 +271,7 @@ class ClassJson {
     for (PropertyAccessorElement getterAccessorElement
         in getterAccessorElements) {
       bool hasSetter = setterAccessorElements
-          .any((element) => element.name == getterAccessorElement.name + "=");
+          .any((element) => element.name == '${getterAccessorElement.name}=');
       FieldElement fieldElement = fieldElements
           .firstWhere((element) => element.name == getterAccessorElement.name);
 
@@ -303,10 +303,10 @@ class FunctionsJson {
   final List<ActionMethodResultProcessorFunction> actionMethodResultProcessors;
 
   FunctionsJson.fromLibrary(LibraryReader library)
-      : this.actionMethodParameterProcessors =
+      : actionMethodParameterProcessors =
             _createActionMethodParameterProcessors(library)
                 as List<ActionMethodParameterProcessorFunction>,
-        this.actionMethodResultProcessors =
+        actionMethodResultProcessors =
             _createActionMethodResultProcessors(library)
                 as List<ActionMethodResultProcessorFunction>;
 
@@ -357,20 +357,20 @@ class FunctionsJson {
         .toList();
   }
 
-  static _isPotentialServiceObjectFactoryFunction(FunctionElement element) {
-    const factory = 'Factory';
-    return element.name.endsWith(factory) &&
-        element.name.length > factory.length &&
-        element.returnType.element!.name != 'void';
-  }
-
-  static bool _classContainsTranslationAnnotations(ClassElement classElement) {
-    return _containsTranslationAnnotations(classElement) ||
-        classElement.accessors
-            .any((element) => _containsTranslationAnnotations(element)) ||
-        classElement.methods
-            .any((element) => _containsTranslationAnnotations(element));
-  }
+  // static _isPotentialServiceObjectFactoryFunction(FunctionElement element) {
+  //   const factory = 'Factory';
+  //   return element.name.endsWith(factory) &&
+  //       element.name.length > factory.length &&
+  //       element.returnType.element!.name != 'void';
+  // }
+  //
+  // static bool _classContainsTranslationAnnotations(ClassElement classElement) {
+  //   return _containsTranslationAnnotations(classElement) ||
+  //       classElement.accessors
+  //           .any((element) => _containsTranslationAnnotations(element)) ||
+  //       classElement.methods
+  //           .any((element) => _containsTranslationAnnotations(element));
+  // }
 
   void addAll(FunctionsJson functionsJson) {
     actionMethodParameterProcessors
@@ -461,7 +461,7 @@ class TypeJson {
 
   String _createLibraryFileName() => library!
       .replaceAll(RegExp('^.*/'), '')
-      .replaceAll(RegExp('\.dart\$'), '');
+      .replaceAll(RegExp(r'\.dart\$'), '');
 
   Map<String, dynamic> toJson() => {
         if (library != null) libraryAttribute: library,
@@ -700,7 +700,7 @@ class ActionMethodParameterProcessorFunction extends ExecutableJson {
         element.parameters[1].type.element!.name ==
             TypeJson.actionMethodInvokeWithParameter().name &&
         element.metadata.toString().contains(
-            '@' + TypeJson.actionMethodParameterProcessorAnnotation().name!);
+            '@${TypeJson.actionMethodParameterProcessorAnnotation().name!}');
   }
 
   double? get index {
@@ -737,7 +737,7 @@ class ActionMethodResultProcessorFunction extends ExecutableJson {
         element.parameters[1].type.element!.name ==
             TypeJson.actionMethodInfo().name &&
         element.metadata.toString().contains(
-            '@' + TypeJson.actionMethodResultProcessorAnnotation().name!);
+            '@${TypeJson.actionMethodResultProcessorAnnotation().name!}');
   }
 
   bool canProcessMethod(ExecutableJson methodJson) =>

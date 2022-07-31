@@ -14,9 +14,6 @@ dependencies:
     sdk: flutter
   provider: ^6.0.3
   collection: ^1.16.0
-  responsive_layout_grid: ^1.1.1
-
-dev_dependencies:
   build_config: ^1.1.0
   build_runner: ^2.2.0
   recase: ^4.0.0
@@ -27,6 +24,14 @@ dev_dependencies:
   test: ^1.21.4
   plural_noun: ^0.1.2
   flutter_lints: ^2.0.1
+  logging: ^1.0.2
+  responsive_layout_grid: ^1.1.1
+  glob: ^2.1.0
+  analyzer: ^4.3.1
+  yaml: ^3.1.1
+  intl: ^0.17.0
+
+dev_dependencies:
 
 
 
@@ -41,8 +46,3 @@ flutter:
 
   assets:
     - assets/my_first_app.png
-
-  module:
-    androidX: true
-    androidPackage: nth.reflect.reflect_framework
-    iosBundleIdentifier: nth.reflect.reflectFramework

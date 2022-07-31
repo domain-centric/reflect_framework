@@ -91,7 +91,7 @@ class Person {
   @DomainClass() //TODO remove after test
   @ActionMethodParameterProcessor(index: 222) //TODO remove after test
   String get fullName {
-    return (givenName ?? "") + " " + (surName ?? "");
+    return "${givenName ?? ""} ${surName ?? ""}";
   }
 
   Person();

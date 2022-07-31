@@ -7,7 +7,6 @@ import 'package:reflect_framework/gui/gui_tab.dart';
 import 'package:reflect_framework/gui/gui_tab_form.dart';
 import 'package:reflect_framework/gui/gui_tab_table.dart';
 
-
 @ActionMethodResultProcessor(index: 100)
 void showMethodExecutedSnackBarForMethodsReturningVoid(
     BuildContext context, ActionMethodInfo actionMethodInfo) {
@@ -17,7 +16,7 @@ void showMethodExecutedSnackBarForMethodsReturningVoid(
           '${actionMethodInfo.name} has executed successfully.'), //TODO make multilingual
     ),
   );
-  //TODO
+  //TODO catch and show error message dialog
 }
 
 //TODO other dart types e.g. int, double, num, date/time
@@ -25,7 +24,7 @@ void showMethodExecutedSnackBarForMethodsReturningVoid(
 void showStringInDialog(
     BuildContext context, ActionMethodInfo actionMethodInfo, String value) {
   // tabs = Provider.of<Tabs>(context);
-  // TODO
+  //TODO catch and show error message dialog
 }
 
 @ActionMethodResultProcessor(index: 110, defaultIcon: Icons.table_rows_sharp)
@@ -36,6 +35,7 @@ void showDomainObjectInReadonlyFormTab(BuildContext context,
   var formTab =
       FormExampleTab(actionMethodInfo); //TODO readonly + pass domain object
   tabs.add(formTab);
+  //TODO catch and show error message dialog
 }
 
 //TODO other dart types e.g. stream, iterator, etc and for generic dart types e.g. int, double, date/time
@@ -47,6 +47,6 @@ void showListInTableTab(BuildContext context, ActionMethodInfo actionMethodInfo,
     var tableTab = TableExampleTab(actionMethodInfo); // TODO pass collection
     tabs.add(tableTab);
   } catch (e) {
-    print(e);
+    //TODO show error message dialog
   }
 }

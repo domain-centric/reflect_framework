@@ -76,9 +76,9 @@ class TranslationFactory {
   static String createKey(TypeJson typeJson) {
     String libName = typeJson.library!
         .replaceAll(RegExp('^.*lib/'), '')
-        .replaceAll(RegExp('\.dart\$'), '');
+        .replaceAll(RegExp(r'\.dart\$'), '');
     String memberName = typeJson.name!;
-    String key = ReCase(libName).camelCase + '.' + ReCase(memberName).camelCase;
+    String key = '${ReCase(libName).camelCase}.${ReCase(memberName).camelCase}';
     return key;
   }
 

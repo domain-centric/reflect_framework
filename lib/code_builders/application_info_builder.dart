@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:build/build.dart';
+import 'package:logging/logging.dart';
 
 import '../code_builders_code/application_info_library.dart';
 import 'info_json.dart';
@@ -17,7 +18,7 @@ main() {
 }
 
 const reflectGeneratedFile = 'generated.dart';
-const reflectGeneratedPath = 'lib/' + reflectGeneratedFile;
+const reflectGeneratedPath = 'lib/$reflectGeneratedFile';
 
 void _createApplicationInfoLibraryFile(json) {
   File file = File(reflectGeneratedPath);
@@ -35,7 +36,7 @@ String _createReflectGeneratedLibCode(json) {
 class ApplicationInfoBuilder implements Builder {
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.combined.json': ['/../' + reflectGeneratedFile]
+    '.combined.json': ['/../$reflectGeneratedFile']
       };
 
   @override
@@ -48,10 +49,9 @@ class ApplicationInfoBuilder implements Builder {
       AssetId destination =
           AssetId(buildStep.inputId.package, reflectGeneratedPath);
       buildStep.writeAsString(destination, dartCode);
-
-      print('Successfully created $destination');
-    } catch (exception, stacktrace) {
-      print('$exception\n$stacktrace');
+      log.log(Level.INFO, 'Successfully created $destination');
+    } catch (exception, stackTrace) {
+      log.log(Level.SEVERE, exception, stackTrace);
     }
   }
 }

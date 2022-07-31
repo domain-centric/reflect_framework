@@ -30,39 +30,39 @@ abstract class Translations {
     return TranslationsEn();
   }
 
-  _AcmeDomain get acmeDomain;
+  AcmeDomain get acmeDomain;
 }
 
-abstract class _AcmeDomain {
-  _AcmeDomainProduct get product;
+abstract class AcmeDomain {
+  AcmeDomainProduct get product;
 }
 
-abstract class _AcmeDomainProduct {
-  _AcmeDomainProductAvailability get availability;
+abstract class AcmeDomainProduct {
+  AcmeDomainProductAvailability get availability;
 }
 
-abstract class _AcmeDomainProductAvailability {
+abstract class AcmeDomainProductAvailability {
   String get soldOut;
 }
 
 //TODO generate in TranslationsEn lib
 class TranslationsEn extends Translations {
   @override
-  _AcmeDomain get acmeDomain => _AcmeDomainEn();
+  AcmeDomain get acmeDomain => _AcmeDomainEn();
 }
 
-class _AcmeDomainEn extends _AcmeDomain {
+class _AcmeDomainEn extends AcmeDomain {
   @override
-  _AcmeDomainProduct get product => _AcmeDomainProductEn();
+  AcmeDomainProduct get product => _AcmeDomainProductEn();
 }
 
-class _AcmeDomainProductEn extends _AcmeDomainProduct {
+class _AcmeDomainProductEn extends AcmeDomainProduct {
   @override
-  _AcmeDomainProductAvailability get availability =>
+  AcmeDomainProductAvailability get availability =>
       _AcmeDomainProductAvailabilityEn();
 }
 
-class _AcmeDomainProductAvailabilityEn extends _AcmeDomainProductAvailability {
+class _AcmeDomainProductAvailabilityEn extends AcmeDomainProductAvailability {
   @override
   String get soldOut => 'Sold out';
 }

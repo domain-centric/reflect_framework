@@ -46,5 +46,6 @@ abstract class ServiceClassInfo<T> extends ClassInfo implements DynamicItem {
       .toList();
 
   /// Order of the [ServiceObject], e.g.: the lower the number, the higher the [ServiceObject] appears in the menu's.
+  @override
   double get order;
 }

@@ -3,15 +3,15 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/_fe_analyzer_shared-38.0.0",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/_fe_analyzer_shared-43.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/analyzer-3.4.1",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/analyzer-4.3.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.17"
     },
     {
       "name": "args",
@@ -51,7 +51,7 @@
     },
     {
       "name": "build_resolvers",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/build_resolvers-2.0.6",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/build_resolvers-2.0.9",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -141,7 +141,7 @@
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_style-2.2.1",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/dart_style-2.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -183,9 +183,9 @@
     },
     {
       "name": "glob",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/glob-2.0.2",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/glob-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.15"
     },
     {
       "name": "graphs",
@@ -483,7 +483,7 @@
     },
     {
       "name": "yaml",
-      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/yaml-3.1.0",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/yaml-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -494,7 +494,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-07-28T13:21:06.948297Z",
+  "generated": "2022-07-31T12:33:04.648010Z",
   "generator": "pub",
   "generatorVersion": "2.17.5"
 }

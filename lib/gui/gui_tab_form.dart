@@ -121,7 +121,6 @@ class FormExampleTab extends gui_tab.Tab {
   String get title => actionMethodInfo.name;
 }
 
-
 class FormExampleTabFactory implements gui_tab.TabFactory {
   @override
   gui_tab.Tab create(ActionMethodInfo actionMethodInfo) {

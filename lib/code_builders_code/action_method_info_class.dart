@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dart_code/dart_code.dart';
+import 'package:logging/logging.dart';
 import 'package:recase/recase.dart';
 import 'package:reflect_framework/code_builders/application_info_builder.dart';
 import 'package:reflect_framework/code_builders/info_behavioural.dart';
@@ -9,6 +10,8 @@ class ActionMethodInfoClasses extends DelegatingList<ActionMethodInfoClass> {
   ActionMethodInfoClasses(ReflectJson reflectJson, ClassJson classJson)
       : super(_createActionMethodInfoClasses(reflectJson, classJson));
 
+  static final Logger log = Logger('build.fallback');
+
   static List<ActionMethodInfoClass> _createActionMethodInfoClasses(
       ReflectJson reflectJson, ClassJson classJson) {
     List<ActionMethodInfoClass> actionMethodInfoClasses = [];
@@ -17,10 +20,9 @@ class ActionMethodInfoClasses extends DelegatingList<ActionMethodInfoClass> {
         var actionMethodInfoClass =
             ActionMethodInfoClass(reflectJson, classJson, methodJson);
         actionMethodInfoClasses.add(actionMethodInfoClass);
-      } on Exception catch (e) {
+      } on Exception catch (exception, stackTrace) {
         // Method was not an action method
-        // TODO log in a report
-        print(e);
+        log.log(Level.WARNING, exception, stackTrace);
       }
     }
     return actionMethodInfoClasses;
@@ -47,7 +49,7 @@ class ActionMethodInfoClass extends Class {
   static List<Field> _createFields(ClassJson classJson) =>
       [_createMethodOwnerField(classJson)];
 
-  static final methodOwnerFieldName = 'methodOwner';
+  static const methodOwnerFieldName = 'methodOwner';
 
   /// e.g. creates:
   ///     final PersonService methodOwner;
@@ -78,7 +80,7 @@ class ActionMethodInfoClass extends Class {
 
   static String _createClassName(
           ClassJson classJson, ExecutableJson methodJson) =>
-      classJson.type.name! + methodJson.name!.pascalCase + 'Info\$';
+      '${classJson.type.name!}${methodJson.name!.pascalCase}Info\$';
 
   static List<Type> _createImplementationTypes(ExecutableJson methodJson) => [
         if (_startWithParameter(methodJson))
@@ -176,23 +178,6 @@ class ActionMethodInfoClass extends Class {
       // Statement([Code('tabs.add(tab)')]),
     ]);
     return body;
-  }
-
-  static Type _createTabFactoryType(String? name) {
-    switch (name) {
-      case 'addNew':
-        return Type('FormExampleTabFactory',
-            libraryUri: 'package:reflect_framework/gui/gui_tab_form.dart');
-      case 'allPersons':
-      case 'findPersons':
-        return Type('TableExampleTabFactory',
-            libraryUri: 'package:reflect_framework/gui/gui_tab_table.dart');
-      default:
-        {
-          return Type('ExampleTabFactory',
-              libraryUri: 'package:reflect_framework/gui/gui_tab.dart');
-        }
-    }
   }
 
   static const String parameterValueVariableName = 'parameterValue';
@@ -307,8 +292,10 @@ class ActionMethodInfoClass extends Class {
         ParameterValue(Expression.ofVariable(parameterValueVariableName)),
     ]);
     return Statement([
-      Expression.ofThis().callMethod(invokeMethodAndProcessResultMethodName,
-          parameterValues: parameterValues)
+      IdentifierStartingWithLowerCase(invokeMethodAndProcessResultMethodName),
+      Code('('),
+      parameterValues,
+      Code(')'),
     ]);
   }
 

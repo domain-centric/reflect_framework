@@ -1,7 +1,8 @@
-import 'dart:io' as Io;
+import 'dart:io' as io;
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:dart_code/dart_code.dart';
+import 'package:logging/logging.dart';
 import 'package:recase/recase.dart';
 import 'package:reflect_framework/code_builders/info_behavioural.dart';
 import 'package:reflect_framework/code_builders/info_json.dart';
@@ -56,7 +57,7 @@ class ApplicationInfoClass extends Class {
             c.extending!.library == lib)
         .toList();
 
-    if (reflectGuiApplications.length == 0) {
+    if (reflectGuiApplications.isEmpty) {
       throw Exception(
           "One class in your source must extend: $name from library: $lib");
     }
@@ -83,7 +84,6 @@ class ApplicationInfoClass extends Class {
     return Method.getter('serviceClassInfos', createBody,
         type: listOfDomainClassInfo, annotations: annotations);
   }
-
 }
 
 class PubSpecYaml {
@@ -112,7 +112,7 @@ class PubSpecYaml {
   }
 
   static Map? _read() {
-    Io.File yamlFile = Io.File("pubspec.yaml");
+    io.File yamlFile = io.File("pubspec.yaml");
     String yamlString = yamlFile.readAsStringSync();
     Map? yaml = loadYaml(yamlString);
     return yaml;
@@ -148,6 +148,8 @@ class PubSpecYaml {
 ///     assets:
 ///     - assets/my_first_app.png
 class TitleImage {
+  static final Logger log = Logger('build.fallback');
+
   static Method createGetterMethod(
       ClassJson applicationClassJson, List<String> assets) {
     List<Annotation> annotations = [Annotation.override()];
@@ -159,8 +161,7 @@ class TitleImage {
 
   static String? _findAssetPath(List<String> assets, String fileName) {
     // List<String> assets = _findAssets(pubSpecYaml);
-    RegExp imageAsset = RegExp(
-        '/' + fileName + '\.(jpeg|webp|gif|png|bmp|wbmp)\$',
+    RegExp imageAsset = RegExp('$fileName.(jpeg|webp|gif|png|bmp|wbmp)\$',
         caseSensitive: false);
     String? found =
         assets.firstWhereOrNull((asset) => imageAsset.hasMatch(asset));
@@ -172,12 +173,11 @@ class TitleImage {
     String fileName = ReCase(applicationClassJson.type.name!).snakeCase;
     String? foundAssetPath = _findAssetPath(assets, fileName);
     if (foundAssetPath == null) {
-      //Show warning
-      print(
+      log.log(Level.WARNING,
           'No title image found. Please define a $fileName asset in pubspec.yaml.');
-      return Expression.ofString('');
+      return Expression([Code('null')]);
     } else {
-      return Expression.ofString('$foundAssetPath');
+      return Expression.ofString(foundAssetPath);
     }
   }
 }

@@ -76,9 +76,8 @@ class Name {
         englishName = _createEnglishNameForServiceClass(classJson);
 
   Name.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
-      : key = TranslationFactory.createKey(classJson.type) +
-            '.' +
-            methodJson.name!,
+      : key =
+            '${TranslationFactory.createKey(classJson.type)}.${methodJson.name!}',
         englishName = _createEnglishNameForActionMethod(methodJson);
 
   static String _createEnglishNameForServiceClass(ClassJson classJson) {
@@ -132,9 +131,8 @@ class Description {
         englishName = _createEnglishDescriptionForServiceClass(classJson);
 
   Description.forActionMethod(ClassJson classJson, ExecutableJson methodJson)
-      : key = TranslationFactory.createKey(classJson.type) +
-            '.' +
-            methodJson.name!,
+      : key =
+            '${TranslationFactory.createKey(classJson.type)}.${methodJson.name!}',
         englishName = _createEnglishDescriptionForActionMethod(methodJson);
 
   static String _createEnglishDescriptionForServiceClass(ClassJson classJson) {
@@ -221,7 +219,7 @@ class Icon {
   static Expression createMaterialIconExpression(String materialIconName) =>
       Expression([
         Type('Icons', libraryUri: 'package:flutter/material.dart'),
-        Code('.' + materialIconName)
+        Code('.$materialIconName')
       ]);
 
   static Expression createExpression(ExecutableJson methodJson) {

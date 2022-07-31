@@ -55,7 +55,7 @@ class ServiceClassInfoClass extends Class {
       [_createServiceObjectField(classJson)];
 
   static String _createClassName(ClassJson classJson) =>
-      classJson.type.codeName + 'Info\$';
+      '${classJson.type.codeName}Info\$';
 
   static Type _createServiceClassInfoType(ClassJson classJson) =>
       Type('ServiceClassInfo',

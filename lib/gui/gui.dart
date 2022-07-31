@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_shine/flutter_shine.dart';
 import 'package:provider/provider.dart';
 
 import '../core/action_method_info.dart';
-import '../core/annotations.dart' as reflectAnnotation;
+import '../core/annotations.dart' as reflect_annotation;
 import '../core/reflect_framework.dart';
 import '../core/service_class_info.dart';
 import '../generated.dart';
-import '../gui/gui_tab.dart' as reflectTabs;
+import '../gui/gui_tab.dart' as reflect_tabs;
 import '../localization/localizations.dart';
 
-const kTabletBreakpoint = 720.0;
-const kDesktopBreakpoint = 1200.0;
-const kSideMenuWidth = 250.0;
+const tabletWidthBreakpoint = 720.0;
+const desktopWidthBreakpoint = 1200.0;
+const sideMenuWidth = 250.0;
 
-const EdgeInsets buttonPadding = const EdgeInsets.all(15);
+const EdgeInsets buttonPadding = EdgeInsets.all(15);
 
 abstract class ReflectGuiApplication extends StatelessWidget
     implements ReflectApplication {
-  ReflectGuiApplication({
+  const ReflectGuiApplication({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => reflectTabs.Tabs()),
+      ChangeNotifierProvider(create: (_) => reflect_tabs.Tabs()),
       Provider(create: (_) => ReflectApplicationInfo()),
     ], child: ReflectMaterialApp(reflectGuiApplication: this));
   }
@@ -33,7 +32,7 @@ abstract class ReflectGuiApplication extends StatelessWidget
   /// Can be overridden so you can style your application light theme
   ThemeData get lightTheme {
     return ThemeData.light().copyWith(
-        visualDensity: VisualDensity(
+        visualDensity: const VisualDensity(
             horizontal: -4,
             vertical: -4)); //VisualDensity.adaptivePlatformDensity);
   }
@@ -48,7 +47,7 @@ abstract class ReflectGuiApplication extends StatelessWidget
 class ReflectMaterialApp extends StatelessWidget {
   final ReflectGuiApplication reflectGuiApplication;
 
-  ReflectMaterialApp({Key? key, required this.reflectGuiApplication})
+  const ReflectMaterialApp({Key? key, required this.reflectGuiApplication})
       : super(key: key);
 
   @override
@@ -59,47 +58,47 @@ class ReflectMaterialApp extends StatelessWidget {
       title: Provider.of<ReflectApplicationInfo>(context).name,
       theme: reflectGuiApplication.lightTheme,
       darkTheme: reflectGuiApplication.darkTheme,
-      home: Home(),
+      home: const Home(),
     );
   }
 }
 
 class Home extends StatelessWidget implements ReflectApplication {
-  Home({
+  const Home({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, dimens) {
-      if (dimens.maxWidth >= kDesktopBreakpoint) {
-        return WideScaffold();
+      if (dimens.maxWidth >= desktopWidthBreakpoint) {
+        return const WideScaffold();
       } else {
-        return NarrowScaffold();
+        return const NarrowScaffold();
       }
     });
   }
 }
 
 class ApplicationTitle extends StatelessWidget {
-  ApplicationTitle({
+  const ApplicationTitle({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    reflect_tabs.Tabs tabs = Provider.of<reflect_tabs.Tabs>(context);
     String appTitle = Provider.of<ReflectApplicationInfo>(context).name;
     return LayoutBuilder(builder: (_, dimens) {
       if (tabs.isEmpty) {
         return Text(appTitle);
-      } else if (dimens.maxWidth < kTabletBreakpoint) {
+      } else if (dimens.maxWidth < tabletWidthBreakpoint) {
         return Text(tabs.selected.title);
       } else {
         return Row(children: [
           Text(appTitle),
-          SizedBox(width: 90),
-          TabButtons()
+          const SizedBox(width: 90),
+          const TabButtons()
         ]); //TODO hide title if it does not fit and ensure correct distance (sizeBox)
         //Text('$appTitle - ${tabs.selected.title}');
       }
@@ -108,9 +107,11 @@ class ApplicationTitle extends StatelessWidget {
 }
 
 class TabButtons extends StatelessWidget {
+  const TabButtons({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    reflect_tabs.Tabs tabs = Provider.of<reflect_tabs.Tabs>(context);
     return LayoutBuilder(builder: (_, dimens) {
       return Row(children: [
         for (int i = 0; i < tabs.length; i++) TabHeader(tabs[i]),
@@ -120,13 +121,13 @@ class TabButtons extends StatelessWidget {
 }
 
 class TabHeader extends StatelessWidget {
-  final reflectTabs.Tab? tab;
+  final reflect_tabs.Tab? tab;
 
-  TabHeader(this.tab);
+  const TabHeader(this.tab, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    reflect_tabs.Tabs tabs = Provider.of<reflect_tabs.Tabs>(context);
     bool isSelected = tabs.selected == tab;
     return LayoutBuilder(builder: (_, dimens) {
       return InkWell(
@@ -136,45 +137,48 @@ class TabHeader extends StatelessWidget {
           }
         },
         child: Container(
-            padding: new EdgeInsets.all(12),
-            child: Row(
-              children: [
-                Text(tab!.title),
-                SizedBox(width: 10),
-                if (isSelected)
-                  InkWell(
-                      onTap: () {
-                        tabs.close(tab!);
-                      },
-                      child: Icon(
-                        Icons.close,
-                        size: 17,
-                      ))
-              ],
-            ),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
                         color: isSelected ? Colors.white : Colors.transparent,
                         width: 4),
-                    top: BorderSide(color: Colors.transparent, width: 4)))),
+                    top:
+                        const BorderSide(color: Colors.transparent, width: 4))),
+            child: Row(
+              children: [
+                Text(tab!.title),
+                const SizedBox(width: 10),
+                if (isSelected)
+                  InkWell(
+                      onTap: () {
+                        tabs.close(tab!);
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        size: 17,
+                      ))
+              ],
+            )),
       );
     });
   }
 }
 
 class NarrowScaffold extends StatelessWidget {
+  const NarrowScaffold({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    reflect_tabs.Tabs tabs = Provider.of<reflect_tabs.Tabs>(context);
     return Scaffold(
         appBar: AppBar(
-          title: ApplicationTitle(),
+          title: const ApplicationTitle(),
           actions: [
-            if (tabs.length > 1) TabsIcon(),
+            if (tabs.length > 1) const TabsIcon(),
           ],
         ),
-        drawer: Drawer(
+        drawer: const Drawer(
             // Add a ListView to the drawer. This ensures the user can scroll
             // through the options in the drawer if there isn't enough vertical
             // space to fit everything.
@@ -182,39 +186,39 @@ class NarrowScaffold extends StatelessWidget {
           isDrawerMenu: true,
         )),
         body: Container(
-          constraints: BoxConstraints.expand(),
-          child: TabContainer(),
+          constraints: const BoxConstraints.expand(),
+          child: const TabContainer(),
         ));
   }
 }
 
 class WideScaffold extends StatelessWidget {
-  WideScaffold({
+  const WideScaffold({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    reflect_tabs.Tabs tabs = Provider.of<reflect_tabs.Tabs>(context);
     return Scaffold(
         appBar: AppBar(
-          title: ApplicationTitle(),
+          title: const ApplicationTitle(),
           //Text(ReflectFramework().reflection.applicationInfo.title),
           leading: InkWell(
             onTap: () {}, //TODO add
-            child: Icon(
+            child: const Icon(
               Icons.menu, // add custom icons also
             ),
           ),
           actions: [
-            if (tabs.length > 1) TabsIcon(),
+            if (tabs.length > 1) const TabsIcon(),
           ],
         ),
         body: Center(
           child: Row(
-            children: [
-              Container(
-                width: kSideMenuWidth,
+            children: const [
+              SizedBox(
+                width: sideMenuWidth,
                 child: MainMenu(
                   isDrawerMenu: false,
                 ),
@@ -230,7 +234,7 @@ class WideScaffold extends StatelessWidget {
 }
 
 class TabsIcon extends StatelessWidget {
-  TabsIcon({
+  const TabsIcon({
     Key? key,
   }) : super(key: key);
 
@@ -252,27 +256,27 @@ class TabsIcon extends StatelessWidget {
                             .bodyText1!
                             .color!,
                         width: 2),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                        '${Provider.of<reflectTabs.Tabs>(context).length}')))));
+                        '${Provider.of<reflect_tabs.Tabs>(context).length}')))));
   }
 
-  @reflectAnnotation.Translation(keySuffix: 'title', englishText: 'Tabs:')
-  @reflectAnnotation.Translation(
+  @reflect_annotation.Translation(keySuffix: 'title', englishText: 'Tabs:')
+  @reflect_annotation.Translation(
       keySuffix: 'buttonCloseOthers', englishText: 'Close others')
-  @reflectAnnotation.Translation(
+  @reflect_annotation.Translation(
       keySuffix: 'buttonCloseAll', englishText: 'Close all')
   showTabSelectionDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          var tabs = Provider.of<reflectTabs.Tabs>(context);
+          var tabs = Provider.of<reflect_tabs.Tabs>(context);
           return AlertDialog(
             title: Text(AppLocalizations.of(context)!.tabs),
-            content: Container(
-              width: kTabletBreakpoint,
+            content: SizedBox(
+              width: tabletWidthBreakpoint,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: tabs.length,
@@ -282,7 +286,7 @@ class TabsIcon extends StatelessWidget {
                     title: Text(tabs[index].title),
                     leading: Icon(tabs[index].iconData),
                     trailing: InkWell(
-                      child: Icon(Icons.close),
+                      child: const Icon(Icons.close),
                       onTap: () {
                         tabs.close(tabs[index]);
                         Navigator.pop(context);
@@ -324,14 +328,14 @@ class TabsIcon extends StatelessWidget {
 }
 
 class MainMenu extends StatelessWidget {
-  final bool? isDrawerMenu;
+  final bool isDrawerMenu;
 
-  const MainMenu({Key? key, this.isDrawerMenu}) : super(key: key);
+  const MainMenu({Key? key, required this.isDrawerMenu}) : super(key: key);
 
   onTab(BuildContext context, ActionMethodInfo actionMethodInfo) {
     if (actionMethodInfo is StartWithoutParameter) {
       actionMethodInfo.start(context);
-      if (isDrawerMenu!) {
+      if (isDrawerMenu) {
         Navigator.pop(context); //Hide Drawer
       }
     }
@@ -339,11 +343,25 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // Important: Remove any padding from the ListView.
-      padding: EdgeInsets.zero,
-      children: createChildren(context),
-    );
+    if (isDrawerMenu) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(Provider.of<ReflectApplicationInfo>(context).name,
+              style: Theme.of(context).primaryTextTheme.headline6),
+        ),
+        body: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: createChildren(context),
+        ),
+      );
+    } else {
+      return ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: createChildren(context),
+      );
+    }
   }
 
   List<Widget> createChildren(BuildContext context) {
@@ -351,10 +369,6 @@ class MainMenu extends StatelessWidget {
         Provider.of<ReflectApplicationInfo>(context).serviceClassInfos;
 
     List<Widget> children = [];
-
-    if (isDrawerMenu!) {
-      children.add(createDrawerHeader(context));
-    }
 
     for (ServiceClassInfo serviceObjectClassInfo in serviceClassInfo) {
       children.add(createServiceObjectTile(serviceObjectClassInfo));
@@ -366,25 +380,12 @@ class MainMenu extends StatelessWidget {
     return children;
   }
 
-  Container createDrawerHeader(BuildContext context) {
-    return Container(
-      height: 88.0, //TODO get from AppBar
-      child: DrawerHeader(
-        child: Text(Provider.of<ReflectApplicationInfo>(context).name,
-            style: Theme.of(context).primaryTextTheme.headline6),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-    );
-  }
-
-  Container createServiceObjectTile(ServiceClassInfo serviceClassInfo) {
-    return Container(
+  Widget createServiceObjectTile(ServiceClassInfo serviceClassInfo) {
+    return SizedBox(
         height: 35,
         child: ListTile(
             title: Text(serviceClassInfo.name.toUpperCase(),
-                style: TextStyle(fontWeight: FontWeight.bold))));
+                style: const TextStyle(fontWeight: FontWeight.bold))));
   }
 
   ListTile createActionMethodTile(
@@ -408,28 +409,28 @@ class MainMenu extends StatelessWidget {
 }
 
 class TabContainer extends StatelessWidget {
-  TabContainer({
+  const TabContainer({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final reflectTabs.Tabs tabs = Provider.of<reflectTabs.Tabs>(context);
+    final reflect_tabs.Tabs tabs = Provider.of<reflect_tabs.Tabs>(context);
     if (tabs.isEmpty) {
-      return ApplicationTitleTab();
+      return const ApplicationTitleTab();
     } else {
       return IndexedStack(
-        children: [
-          for (reflectTabs.Tab tab in tabs) tab,
-        ],
         index: tabs.selectedIndex,
+        children: [
+          for (reflect_tabs.Tab tab in tabs) tab,
+        ],
       );
     }
   }
 }
 
 class ApplicationTitleTab extends StatelessWidget {
-  ApplicationTitleTab({
+  const ApplicationTitleTab({
     Key? key,
   }) : super(key: key);
 
@@ -439,22 +440,26 @@ class ApplicationTitleTab extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.2,
             vertical: MediaQuery.of(context).size.height * 0.2),
-        child: ApplicationTitleWidget());
+        child: const ApplicationTitleWidget());
   }
 }
 
 class ApplicationTitleWidget extends StatelessWidget {
+  const ApplicationTitleWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     if (Provider.of<ReflectApplicationInfo>(context).titleImage == null) {
-      return ApplicationTitleText();
+      return const ApplicationTitleText();
     } else {
-      return ApplicationTitleImage();
+      return const ApplicationTitleImage();
     }
   }
 }
 
 class ApplicationTitleImage extends StatelessWidget {
+  const ApplicationTitleImage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Image.asset(
@@ -463,6 +468,8 @@ class ApplicationTitleImage extends StatelessWidget {
 }
 
 class ApplicationTitleText extends StatelessWidget {
+  const ApplicationTitleText({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FittedBox(
@@ -473,8 +480,8 @@ class ApplicationTitleText extends StatelessWidget {
         //   builder: (BuildContext context, ShineShadow shineShadow) {
         //     return Opacity(
         //         opacity: 0.7,
-        child: Text('${Provider.of<ReflectApplicationInfo>(context).name}',
-            style: TextStyle(
+        child: Text(Provider.of<ReflectApplicationInfo>(context).name,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               //       shadows: shineShadow.shadows),
               // ));
