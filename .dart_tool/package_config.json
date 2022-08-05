@@ -158,6 +158,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "fluent_regex",
+      "rootUri": "file:///C:/Users/nilsth/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/fluent_regex-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///C:/src/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -494,7 +500,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-07-31T12:33:04.648010Z",
+  "generated": "2022-08-04T14:09:20.088435Z",
   "generator": "pub",
   "generatorVersion": "2.17.5"
 }

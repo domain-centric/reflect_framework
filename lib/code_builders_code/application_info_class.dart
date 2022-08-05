@@ -9,20 +9,31 @@ import 'package:reflect_framework/code_builders/info_json.dart';
 import 'package:reflect_framework/code_builders_code/service_class_info_class.dart';
 import 'package:yaml/yaml.dart';
 
+import 'domain_class_reflection.dart';
+
 class ApplicationInfoClass extends Class {
   ApplicationInfoClass(
-      ReflectJson reflectJson, ServiceClassInfoClasses serviceClassInfoClasses)
-      : super('ReflectApplicationInfo',
+    ReflectJson reflectJson,
+    ServiceClassInfoClasses serviceClassInfoClasses,
+    DomainClassReflections domainClassReflections,
+  ) : super('ReflectApplicationInfo',
             implements: _createImplements(),
-            methods: _createMethods(reflectJson, serviceClassInfoClasses));
+            methods: _createMethods(
+              reflectJson,
+              serviceClassInfoClasses,
+              domainClassReflections,
+            ));
 
   static List<Type> _createImplements() => [
         Type('ApplicationInfo',
             libraryUri: 'package:reflect_framework/core/application_info.dart')
       ];
 
-  static List<Method> _createMethods(ReflectJson reflectJson,
-      ServiceClassInfoClasses serviceClassInfoClasses) {
+  static List<Method> _createMethods(
+    ReflectJson reflectJson,
+    ServiceClassInfoClasses serviceClassInfoClasses,
+    DomainClassReflections domainClassReflections,
+  ) {
     PubSpecYaml pubSpecYaml = PubSpecYaml();
     ClassJson applicationClassJson = _findApplicationClassJson(reflectJson);
     List<Method> methods = [];
@@ -34,6 +45,7 @@ class ApplicationInfoClass extends Class {
     methods.add(pubSpecYaml.createStringGetterMethod('homePage'));
     methods.add(pubSpecYaml.createStringGetterMethod('documentation'));
     methods.add(_createServiceClassGetterMethod(serviceClassInfoClasses));
+    methods.add(_createDomainClassReflections(domainClassReflections));
 
     //TODO Add:
     // List<ExecutableInfo> preProcessors=reflectInfo.findActionMethodPreProcessorFunctions();
@@ -83,6 +95,23 @@ class ApplicationInfoClass extends Class {
     Type listOfDomainClassInfo = Type.ofList(genericType: serviceClassInfoType);
     return Method.getter('serviceClassInfos', createBody,
         type: listOfDomainClassInfo, annotations: annotations);
+  }
+
+  static Method _createDomainClassReflections(
+      DomainClassReflections domainClassReflections) {
+    List<Annotation> annotations = [Annotation.override()];
+    Type domainClassReflectionType = Type('DomainClassReflection',
+        libraryUri:
+            'package:reflect_framework/core/domain_class_reflection.dart');
+
+    Expression createBody = Expression.ofList(domainClassReflections
+        .map((domainClassReflection) => Expression.callConstructor(
+            Type(CodeFormatter().unFormatted(domainClassReflection.name))))
+        .toList());
+    Type listOfDomainClassReflections =
+        Type.ofList(genericType: domainClassReflectionType);
+    return Method.getter('domainClassReflections', createBody,
+        type: listOfDomainClassReflections, annotations: annotations);
   }
 }
 

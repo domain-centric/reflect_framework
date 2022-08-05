@@ -3,6 +3,7 @@ import 'package:reflect_framework/code_builders_code/service_class_info_class.da
 
 import '../code_builders/info_json.dart';
 import 'application_info_class.dart';
+import 'domain_class_reflection.dart';
 
 class ApplicationInfoLibraryCode extends Library {
   ApplicationInfoLibraryCode(ReflectJson reflectJson)
@@ -21,7 +22,10 @@ class ApplicationInfoLibraryCode extends Library {
   static List<Class> createClasses(ReflectJson reflectJson) {
     List<Class> classes = [];
     var serviceClassInfoClasses = ServiceClassInfoClasses(reflectJson);
-    classes.add(ApplicationInfoClass(reflectJson, serviceClassInfoClasses));
+    var domainClassReflections = DomainClassReflections(reflectJson);
+    print(">>> ${domainClassReflections.length}");
+    classes.add(ApplicationInfoClass(
+        reflectJson, serviceClassInfoClasses, domainClassReflections));
 
     for (ServiceClassInfoClass serviceClassInfoClass
         in serviceClassInfoClasses) {
